@@ -108,7 +108,7 @@ function Hero() {
               <BadgeCheck className="size-3 sm:size-4 text-yellow-300" />
             </span>
             <span className="text-[10px] sm:text-sm font-semibold tracking-wide text-white/95 leading-snug text-center">
-              For Pakistani Local Business Owners
+              For Pakistani Service-Based Local Business Owners
             </span>
           </div>
         </div>
