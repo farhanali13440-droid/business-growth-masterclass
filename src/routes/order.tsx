@@ -152,7 +152,7 @@ function OrderPage() {
   const purchaseFiredRef = useRef(false);
 
   useEffect(() => {
-    fbqTrack("InitiateCheckout", { value: 999, currency: "PKR" });
+    fbqTrack("InitiateCheckout", { value: 999, currency: "PKR", content_name: "Business Growth Masterclass" });
   }, []);
 
   const items = useMemo(() => {
@@ -269,11 +269,20 @@ function OrderPage() {
 
     if (!purchaseFiredRef.current) {
       purchaseFiredRef.current = true;
-      fbqTrack("Purchase", {
-        value: total,
-        currency: "PKR",
-        content_name: "Business Growth Masterclass",
-      });
+      // Main conversion event for Meta ad optimisation: fires once, only after the payment
+      // screenshot is uploaded and the order is saved. eventID = order id (for deduplication).
+      fbqTrack(
+        "Purchase",
+        {
+          value: total,
+          currency: "PKR",
+          content_name: "Business Growth Masterclass",
+          content_type: "product",
+          content_ids: items.map((i) => i.id),
+          num_items: items.length,
+        },
+        savedLeadId,
+      );
       console.log("Meta Pixel Purchase fired after payment screenshot submit");
     }
 
