@@ -4,7 +4,7 @@ import { isComplete, scoreApplication, type ApplicationAnswers } from "./call-qu
 
 const base: ApplicationAnswers = {
   role: "owner",
-  specialty_city: "Dermatologist, Lahore",
+  specialty_city: "Real estate agency, Lahore",
   monthly_patients: "20-50",
   goal: "more_patients",
   preference: "dfy",

@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AuthorityOto } from "@/components/site/AuthorityOto";
 
 /**
- * Google Ads DIY — PKR 5,000 downsell for masterclass buyers whose strategy-call
- * application shows they're not a done-for-you fit (?t=almost also shows the 1:1 session option).
+ * Mini MBA for Your Business — PKR 5,000 downsell for masterclass buyers whose strategy-call
+ * application shows they're not a done-for-you fit, or who skip the call (?t=declined).
+ * ?t=almost also shows the paid 1:1 session option.
  */
 export const Route = createFileRoute("/google-ads-diy")({
   validateSearch: (search: Record<string, unknown>): { lead?: string; t?: string } => ({
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/google-ads-diy")({
   }),
   head: () => ({
     meta: [
-      { title: "Your Recommended Path — Google Ads DIY" },
+      { title: "Your Recommended Path — Mini MBA for Your Business" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),

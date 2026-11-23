@@ -1,7 +1,7 @@
 /**
  * Google Ads for Clinics — one-time offer (upsell, PKR 5,000) and downsell (PKR 3,000).
  * Funnel: /authority → /authority-order → /authority-oto → (no) /authority-downsell → /authority-thank-you
- * "diy" variant — Google Ads DIY (PKR 5,000), the downsell for masterclass buyers who don't qualify
+ * "diy" variant — Mini MBA for Your Business (PKR 5,000), the downsell for masterclass buyers who don't qualify
  * for done-for-you: /order → /strategy-call (application) → /google-ads-diy → /thank-you
  * Layout/copy structure modelled on a proven upsell → "meet halfway" downsell funnel.
  */
@@ -22,7 +22,12 @@ import {
   Loader2,
   Lock,
   MapPin,
+  Megaphone,
   MessageCircle,
+  Search,
+  Workflow,
+  Bot,
+  LineChart,
   MonitorPlay,
   PenLine,
   PhoneCall,
@@ -44,7 +49,7 @@ import drMehwishReview from "@/assets/dr-mehwish-rasheed-review.jpeg.asset.json"
 export type OtoVariant = "upsell" | "downsell" | "diy";
 
 const PRODUCT_NAME = "Google Ads for Clinics";
-const DIY_PRODUCT_NAME = "Google Ads DIY";
+const DIY_PRODUCT_NAME = "Mini MBA for Your Business";
 const FULL_PRICE = 5000;
 const DOWNSELL_PRICE = 3000;
 const PAY_LATER = FULL_PRICE - DOWNSELL_PRICE;
@@ -122,6 +127,63 @@ const COMPONENTS: {
     today: 700,
   },
 ];
+/** Mini MBA for Your Business — the strategy-call downsell. Today's prices add up to FULL_PRICE. */
+const DIY_COMPONENTS: typeof COMPONENTS = [
+  {
+    icon: Search,
+    title: "Google Ads for Local Businesses",
+    short: "Google Ads",
+    tag: "Step-by-step",
+    desc: "Set up and run Google Ads yourself so people in your city who are searching for your service right now find you first.",
+    usual: 6000,
+    today: 1200,
+  },
+  {
+    icon: Megaphone,
+    title: "Advanced Meta Ads Playbook",
+    short: "Meta Ads Pro",
+    tag: "Scale what works",
+    desc: "Go beyond boosting posts: retargeting, lead ads and scaling the Facebook & Instagram ads that bring paying clients.",
+    usual: 4000,
+    today: 800,
+  },
+  {
+    icon: Workflow,
+    title: "Funnels & Landing Pages",
+    short: "Funnels",
+    tag: "Turn clicks into leads",
+    desc: "Build simple pages that turn ad clicks into WhatsApp inquiries and bookings — without a developer.",
+    usual: 4000,
+    today: 800,
+  },
+  {
+    icon: Bot,
+    title: "WhatsApp Automation & CRM",
+    short: "Automation",
+    tag: "No lead forgotten",
+    desc: "Automate replies, reminders and follow-ups so every inquiry gets handled — even when you're busy.",
+    usual: 4000,
+    today: 800,
+  },
+  {
+    icon: LineChart,
+    title: "Tracking & Numbers For Owners",
+    short: "Tracking",
+    tag: "Know your numbers",
+    desc: "See which ads, pages and messages bring clients and what each client costs you — so you spend only on what works.",
+    usual: 3500,
+    today: 700,
+  },
+  {
+    icon: ClipboardCheck,
+    title: "Growth Strategy & Scaling Plan",
+    short: "Growth Plan",
+    tag: "Think like a CEO",
+    desc: "Pricing, offers, repeat business and referrals — the business side of growth that turns marketing into profit.",
+    usual: 3500,
+    today: 700,
+  },
+];
 const TOTAL_VALUE = COMPONENTS.reduce((s, c) => s + c.usual, 0);
 const pctOff = (usual: number, today: number) => Math.round((1 - today / usual) * 100);
 
@@ -146,6 +208,12 @@ const BENEFITS: { strong: string; rest: string }[] = [
     rest: " they search, they find you, and they already trust your name",
   },
   { strong: "Keep full control of your budget and your patients", rest: " — forever" },
+];
+
+const DIY_TESTIMONIALS = [
+  { image: drManalReview.url, name: "Masterclass Student", place: "Lahore" },
+  { image: drJasimReview.url, name: "Masterclass Student", place: "Peshawar" },
+  { image: drMehwishReview.url, name: "Masterclass Student", place: "Pakistan" },
 ];
 
 const TESTIMONIALS = [
@@ -180,25 +248,25 @@ function getTier(): string | null {
 
 const DIY_BENEFITS: { strong: string; rest: string }[] = [
   {
-    strong: "Become the #1 clinic on Google in your area",
-    rest: ' — show up at the top when someone types "your specialty near me"',
+    strong: "Show up at the top of Google in your city",
+    rest: ' — when someone searches for your service "near me"',
   },
   {
-    strong: "Get patients who are searching for your specialty right now",
+    strong: "Get clients who are searching for your service right now",
     rest: " — not months from now",
   },
+  { strong: "Learn the advanced techniques agencies use", rest: " — Google Ads, advanced Meta Ads, funnels and automation" },
   { strong: "Do it yourself, step by step", rest: " — no agency and no monthly management fee, ever" },
-  { strong: "Only pay for people near your clinic", rest: ", not clicks from other cities" },
   {
-    strong: "Start with a small daily budget",
-    rest: " and stop wasting money on the wrong searches",
+    strong: "Know your numbers like a CEO",
+    rest: " — what each client costs you and which ads actually make money",
   },
-  { strong: "Know exactly which ads bring calls and WhatsApp messages", rest: " — no guesswork" },
+  { strong: "Automate your follow-up on WhatsApp", rest: " so no inquiry slips through the cracks" },
   {
-    strong: "Put your Clinic Growth Masterclass strategy to work",
-    rest: " — this is the fastest way to start getting patients from it",
+    strong: "Take your Business Growth Masterclass to the next level",
+    rest: " — this is the advanced part of the system",
   },
-  { strong: "Keep full control of your budget and your patients", rest: " — forever" },
+  { strong: "Keep full control of your budget and your clients", rest: " — forever" },
 ];
 
 /* ---------- Visuals (brand teal #3AA8B4 → blue #326CA1, leaf green #95C05B) ---------- */
@@ -222,26 +290,38 @@ function MiniCard({ c, className = "" }: { c: (typeof COMPONENTS)[number]; class
 }
 
 /** Product bundle collage: Farhan in the centre, component cards fanned around. */
-function BundleVisual({ size = "lg", dark = false }: { size?: "lg" | "sm"; dark?: boolean }) {
+function BundleVisual({
+  size = "lg",
+  dark = false,
+  comps = COMPONENTS,
+  line1 = "Google Ads",
+  line2 = "for Clinics",
+}: {
+  size?: "lg" | "sm";
+  dark?: boolean;
+  comps?: typeof COMPONENTS;
+  line1?: string;
+  line2?: string;
+}) {
   const sm = size === "sm";
   return (
     <div className={`relative mx-auto ${sm ? "max-w-sm" : "max-w-3xl"}`}>
       <div
         className={`text-center font-black leading-none ${dark ? "text-white" : "text-slate-950"} ${sm ? "text-2xl" : "text-4xl md:text-6xl"}`}
       >
-        Google Ads
+        {line1}
       </div>
       <div
         className={`text-center font-black leading-none ${dark ? "text-yellow-300" : "text-sky-600"} ${sm ? "text-2xl" : "text-4xl md:text-6xl"}`}
       >
-        for Clinics
+        {line2}
       </div>
       <div className={`mt-6 flex items-end justify-center ${sm ? "gap-1" : "gap-1.5 sm:gap-3"}`}>
         <MiniCard
-          c={COMPONENTS[0]}
+          c={comps[0]}
           className={`${sm ? "w-16" : "w-16 sm:w-28"} -rotate-12 translate-y-4`}
         />
-        <MiniCard c={COMPONENTS[1]} className={`${sm ? "w-16" : "w-16 sm:w-28"} -rotate-6`} />
+        <MiniCard c={comps[1]} className={`${sm ? "w-16" : "w-16 sm:w-28"} -rotate-6`} />
         <div
           className={`relative z-10 overflow-hidden rounded-2xl bg-[#0f2a44] shadow-[0_20px_50px_rgba(0,0,0,0.6)] ring-2 ring-[#5fd3dc] ${sm ? "w-24" : "w-24 sm:w-40"}`}
         >
@@ -259,9 +339,9 @@ function BundleVisual({ size = "lg", dark = false }: { size?: "lg" | "sm"; dark?
             </div>
           </div>
         </div>
-        <MiniCard c={COMPONENTS[2]} className={`${sm ? "w-16" : "w-16 sm:w-28"} rotate-6`} />
+        <MiniCard c={comps[2]} className={`${sm ? "w-16" : "w-16 sm:w-28"} rotate-6`} />
         <MiniCard
-          c={COMPONENTS[4]}
+          c={comps[4]}
           className={`${sm ? "w-16" : "w-16 sm:w-28"} rotate-12 translate-y-4`}
         />
       </div>
@@ -269,16 +349,22 @@ function BundleVisual({ size = "lg", dark = false }: { size?: "lg" | "sm"; dark?
   );
 }
 
-function Testimonials({ heading }: { heading: React.ReactNode }) {
+function Testimonials({
+  heading,
+  items = TESTIMONIALS,
+}: {
+  heading: React.ReactNode;
+  items?: typeof TESTIMONIALS;
+}) {
   return (
     <section className="hero-bg px-4 py-14 md:py-20">
       <h2 className="mx-auto max-w-4xl text-center text-2xl font-black leading-tight text-white md:text-4xl">
         {heading}
       </h2>
       <div className="mx-auto mt-10 grid max-w-5xl gap-5 md:grid-cols-3">
-        {TESTIMONIALS.map((t) => (
+        {items.map((t) => (
           <div
-            key={t.name}
+            key={t.image}
             className="overflow-hidden rounded-2xl bg-white/[0.04] ring-1 ring-white/10"
           >
             <div className="bg-black/20 p-3">
@@ -309,6 +395,11 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
   const PRODUCT = isDiy ? DIY_PRODUCT_NAME : PRODUCT_NAME;
   const price = variant === "downsell" ? DOWNSELL_PRICE : FULL_PRICE;
   const thankYouPath = isDiy ? "/thank-you" : "/authority-thank-you";
+  const comps = isDiy ? DIY_COMPONENTS : COMPONENTS;
+  const totalValue = comps.reduce((sum, c) => sum + c.usual, 0);
+  const bundle = isDiy
+    ? { comps, line1: "Mini MBA", line2: "for Your Business" }
+    : { comps };
   const [leadId, setLeadId] = useState<string | null>(null);
   const [tier, setTier] = useState<string | null>(null);
   // DIY downsell: checkout is always visible on the page (no extra click needed).
@@ -465,7 +556,7 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
     variant === "upsell"
       ? "YES! I Want Patients Who Are Searching For Me"
       : isDiy
-        ? "YES! Show Me How To Become #1 On Google Myself"
+        ? "YES! I Want The Mini MBA For My Business"
         : `YES – I Want To Try It ALL First For Just ${pkr(DOWNSELL_PRICE)}`;
   const yesSub =
     variant === "downsell"
@@ -530,7 +621,7 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
         ) : isDiy ? (
           <span>
             <span className="text-amber-300">Thank you for your answers</span> — here's the best
-            next step for your clinic right now…
+            next step for your business right now…
           </span>
         ) : (
           <span>
@@ -550,15 +641,15 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
               <h1 className="mx-auto mt-5 max-w-4xl text-2xl font-black leading-tight md:text-5xl md:leading-[1.1]">
                 Okay — If You'd Rather Do It Yourself,{" "}
                 <span className="gradient-highlight">
-                  Learn Google Ads From An Experienced Google Ads Expert
+                  Get The Mini MBA For Your Business
                 </span>{" "}
-                And Put Your Clinic At The Top Of Google — For Just {pkr(FULL_PRICE)}
+                And Learn The Advanced Digital Marketing Agencies Use — For Just {pkr(FULL_PRICE)}
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-6 text-white/80 md:text-lg">
                 No agency. No monthly fees. In <span className="font-bold text-white">{PRODUCT}</span>{" "}
-                I show you, step by step, exactly how to set up and run Google Ads for your own
-                clinic — so patients near you who are searching for your specialty{" "}
-                <i>right now</i> find you and call you first. One-time payment of{" "}
+                I show you, step by step, the advanced techniques — Google Ads, advanced Meta Ads,
+                funnels, automation and your numbers — so people near you who are searching for your
+                service <i>right now</i> find you and contact you first. One-time payment of{" "}
                 <span className="font-bold text-yellow-300">{pkr(FULL_PRICE)}</span>.
               </p>
               <div className="mt-7">
@@ -573,15 +664,15 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
               <h1 className="mx-auto mt-5 max-w-4xl text-2xl font-black leading-tight md:text-5xl md:leading-[1.1]">
                 Based On Your Answers, You Don't Need An Agency Yet —{" "}
                 <span className="gradient-highlight">
-                  Here's How To Become The #1 Clinic On Google In Your Area, Yourself
+                  Here's How To Grow Your Business Like A Pro, Yourself
                 </span>
               </h1>
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-6 text-white/80 md:text-lg">
-                Done-for-you is a fit for clinics that are ready for a monthly team and ad budget.
+                Done-for-you is a fit for businesses that are ready for a monthly team and ad budget.
                 Right now, the faster and smarter path for you is{" "}
-                <span className="font-bold text-white">{PRODUCT}</span> — the exact step-by-step
-                system to put your clinic at the top of Google when patients near you are
-                searching, for a{" "}
+                <span className="font-bold text-white">{PRODUCT}</span> — advanced digital
+                marketing, step by step: Google Ads, advanced Meta Ads, funnels, automation and
+                the numbers behind growth, for a{" "}
                 <span className="font-bold text-yellow-300">one-time {pkr(FULL_PRICE)}</span>. No
                 agency. No monthly fees.
               </p>
@@ -616,15 +707,15 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
                   Prefer personal guidance?
                 </div>
                 <h2 className="mt-2 text-lg font-black text-slate-900 md:text-xl">
-                  Book a 1:1 Clinic Growth Session With Farhan — {pkr(5000)}
+                  Book a 1:1 Business Growth Session With Farhan — {pkr(5000)}
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Your clinic is close to being a fit for our done-for-you service. If you'd like
-                  Farhan to look at your clinic personally and give you a step-by-step plan you can
-                  implement with your own team, book a paid 1:1 session on WhatsApp.
+                  Your business is close to being a fit for our done-for-you service. If you'd like
+                  Farhan to look at your business personally and give you a step-by-step plan you
+                  can implement with your own team, book a paid 1:1 session on WhatsApp.
                 </p>
                 <a
-                  href={`https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Assalam-o-Alaikum, I'd like to book the PKR 5,000 1:1 Clinic Growth Session with Farhan.")}`}
+                  href={`https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Assalam-o-Alaikum, I'd like to book the PKR 5,000 1:1 Business Growth Session with Farhan.")}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => fbqTrack("Lead", { content_name: "1:1 Session Interest" })}
@@ -644,7 +735,7 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
               {isDiy ? "" : " To Your Order Today"}
             </h2>
             <div className="mt-8">
-              <BundleVisual />
+              <BundleVisual {...bundle} />
             </div>
 
             <ol className="mx-auto mt-14 max-w-2xl divide-y divide-slate-200 text-left">
@@ -666,24 +757,34 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
           </section>
 
           <Testimonials
+            items={isDiy ? DIY_TESTIMONIALS : TESTIMONIALS}
             heading={
-              <>
-                Here's What Doctors Are Saying After{" "}
-                <span className="text-yellow-400">Learning From Farhan</span>
-              </>
+              isDiy ? (
+                <>
+                  Here's What Students Are Saying After{" "}
+                  <span className="text-yellow-400">Learning From Farhan</span>
+                </>
+              ) : (
+                <>
+                  Here's What Doctors Are Saying After{" "}
+                  <span className="text-yellow-400">Learning From Farhan</span>
+                </>
+              )
             }
           />
 
           {/* VALUE STACK */}
           <section className="bg-secondary px-4 py-12 md:py-16">
             <h2 className="mx-auto max-w-4xl text-center text-2xl font-black leading-tight md:text-4xl">
-              Everything You Need To Run Google Ads For Your Own Clinic —{" "}
+              {isDiy
+                ? "Everything You Need To Market Your Business Like A Pro — "
+                : "Everything You Need To Run Google Ads For Your Own Clinic — "}
               <span className="gradient-highlight">Without Paying An Agency Every Month</span>
             </h2>
             <p className="mt-4 text-center text-slate-600">
               Here's everything you get for{" "}
               <span className="font-black text-destructive">
-                {pctOff(TOTAL_VALUE, FULL_PRICE)}% OFF
+                {pctOff(totalValue, FULL_PRICE)}% OFF
               </span>
               …
             </p>
@@ -692,7 +793,7 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
             </div>
 
             <div className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {COMPONENTS.map((c) => (
+              {comps.map((c) => (
                 <div
                   key={c.title}
                   className="flex flex-col items-center rounded-2xl border bg-card p-6 text-center shadow-sm"
@@ -716,14 +817,14 @@ export function AuthorityOto({ variant }: { variant: OtoVariant }) {
             </div>
 
             <div className="hero-bg mx-auto mt-12 max-w-md rounded-2xl p-6 text-center text-white shadow-2xl">
-              <BundleVisual size="sm" dark />
+              <BundleVisual size="sm" dark {...bundle} />
               <div className="mt-6 text-lg font-bold">
                 TOTAL VALUE:{" "}
-                <span className="line-through decoration-red-500">{pkr(TOTAL_VALUE)}</span>
+                <span className="line-through decoration-red-500">{pkr(totalValue)}</span>
               </div>
               <div className="mt-1 text-2xl font-black md:text-3xl">
                 Today: <span className="text-yellow-300">Just {pkr(FULL_PRICE)}</span>{" "}
-                <span className="text-white/80">({pctOff(TOTAL_VALUE, FULL_PRICE)}% OFF)</span>
+                <span className="text-white/80">({pctOff(totalValue, FULL_PRICE)}% OFF)</span>
               </div>
             </div>
             {!showPay && (

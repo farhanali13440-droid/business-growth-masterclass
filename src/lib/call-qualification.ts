@@ -3,9 +3,9 @@
  * Pure, browser-safe module (no React, no server imports) so the rules can be unit-tested.
  *
  * Tiers:
- *  - "qualified" → may book the free done-for-you strategy call
- *  - "almost"    → serious but not a DFY fit yet → Google Ads DIY page + paid 1:1 session option
- *  - "diy"       → Google Ads DIY page
+ *  - "qualified" → may book the free implementation call (Calendly)
+ *  - "almost"    → serious but not a fit yet → Mini MBA downsell page + paid 1:1 session option
+ *  - "diy"       → Mini MBA downsell page
  *
  * To change who qualifies, edit QUALIFYING_BUDGETS (or the rules in scoreApplication).
  */
@@ -16,7 +16,7 @@ export type Question = {
   title: string;
   help?: string;
   options?: Option[];
-  /** free-text question (specialty + city) */
+  /** free-text question (business type + city) */
   text?: { placeholder: string };
 };
 
@@ -39,21 +39,21 @@ export const QUESTIONS: Question[] = [
     id: "role",
     title: "Which best describes you?",
     options: [
-      { value: "owner", label: "I own a clinic / hospital" },
-      { value: "partner", label: "I'm a partner in a clinic / hospital" },
-      { value: "manager", label: "I manage a clinic / hospital (admin or marketing)" },
-      { value: "employed", label: "I'm a doctor working at someone else's clinic / hospital" },
-      { value: "student", label: "I'm a student / not practising yet" },
+      { value: "owner", label: "I own the business" },
+      { value: "partner", label: "I'm a partner in the business" },
+      { value: "manager", label: "I manage the business (operations or marketing)" },
+      { value: "employed", label: "I work at someone else's business" },
+      { value: "student", label: "I'm a student / haven't started a business yet" },
     ],
   },
   {
     id: "specialty_city",
-    title: "What is your specialty, and which city is your clinic in?",
-    text: { placeholder: "e.g. Dermatologist, Lahore" },
+    title: "What type of business do you run, and in which city?",
+    text: { placeholder: "e.g. Real estate agency, Lahore" },
   },
   {
     id: "monthly_patients",
-    title: "Roughly how many NEW patients does your clinic get every month?",
+    title: "Roughly how many NEW clients or customers does your business get every month?",
     options: [
       { value: "lt20", label: "Less than 20" },
       { value: "20-50", label: "20 – 50" },
@@ -65,15 +65,15 @@ export const QUESTIONS: Question[] = [
     id: "goal",
     title: "What is your biggest goal right now?",
     options: [
-      { value: "more_patients", label: "Get more new patients consistently" },
-      { value: "new_service", label: "Grow a specific service / procedure" },
-      { value: "new_clinic", label: "Fill a new clinic or a new branch" },
+      { value: "more_patients", label: "Get more new clients consistently" },
+      { value: "new_service", label: "Grow a specific service or product" },
+      { value: "new_clinic", label: "Grow a new business or a new branch" },
       { value: "online_presence", label: "Build my name & online presence in my city" },
     ],
   },
   {
     id: "preference",
-    title: "How would you prefer to grow your clinic?",
+    title: "How would you prefer to grow your business?",
     options: [
       { value: "diy", label: "I want to learn it and do it myself" },
       { value: "dwy", label: "I want expert guidance while I / my team implement it" },
@@ -83,7 +83,7 @@ export const QUESTIONS: Question[] = [
   {
     id: "budget",
     title:
-      "If an expert team handled your clinic's growth for you, how much could you invest in that team every month?",
+      "If an expert team handled your business's marketing for you, how much could you invest in that team every month?",
     help: "Not including ad spend — we'll ask about that next. This helps us recommend the right path for you.",
     options: [
       { value: "lt30k", label: "Less than PKR 30,000" },

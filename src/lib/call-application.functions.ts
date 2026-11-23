@@ -13,20 +13,20 @@ import {
  * Strategy-call application (post-masterclass purchase).
  * Scores the answers on the server, saves them on the buyer's clinic_growth_leads row
  * (as an entry in selected_order_bumps with id "call-application", so it shows on /admin/leads1340),
- * and only returns the booking link to qualified doctors.
+ * and only returns the booking link to qualified applicants.
  *
  * The first submission is locked: pressing Back and changing answers returns the original result.
  */
 
-// Booking link — only ever sent to qualified doctors.
+// Booking link — only ever sent to qualified applicants.
 const BOOKING_URL = "https://calendly.com/farhanali13440/30min";
 
 export const APPLICATION_ID = "call-application";
 
 const TIER_TITLE: Record<Tier, string> = {
   qualified: "Strategy Call Application — QUALIFIED",
-  almost: "Strategy Call Application — ALMOST (1:1 / DIY)",
-  diy: "Strategy Call Application — DIY",
+  almost: "Strategy Call Application — ALMOST (1:1 / Mini MBA)",
+  diy: "Strategy Call Application — Mini MBA (not qualified)",
 };
 
 const schema = z.object({

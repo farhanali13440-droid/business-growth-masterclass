@@ -22,9 +22,9 @@ export const OTO_OFFERS = {
   // Offered on /google-ads-diy to masterclass buyers who don't qualify for done-for-you.
   diy: {
     id: "google-ads-diy",
-    title: "Google Ads DIY (strategy-call downsell)",
+    title: "Mini MBA for Your Business (strategy-call downsell)",
     price: 5000,
-    label: "Google Ads DIY PKR 5,000",
+    label: "Mini MBA PKR 5,000",
   },
 } as const;
 
@@ -80,8 +80,8 @@ export const recordAuthorityOto = createServerFn({ method: "POST" })
       if (!status.includes(offer.label)) status = `${status} + ${offer.label}`;
     } else if (data.offer === "downsell" && !status.includes("Google Ads Declined")) {
       status = `${status} (Google Ads Declined)`;
-    } else if (data.offer === "diy" && !status.includes("Google Ads DIY Declined")) {
-      status = `${status} (Google Ads DIY Declined)`;
+    } else if (data.offer === "diy" && !status.includes("Mini MBA Declined")) {
+      status = `${status} (Mini MBA Declined)`;
     }
 
     const { error: upErr } = await db

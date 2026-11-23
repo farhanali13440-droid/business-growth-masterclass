@@ -7,32 +7,21 @@ import {
   Calendar,
   ArrowRight,
   ArrowLeft,
-  Target,
-  Compass,
-  Zap,
-  Users,
-  Rocket,
   ClipboardList,
   Loader2,
   MessageCircle,
   XCircle,
-  AlertTriangle,
-  PlayCircle,
+  PartyPopper,
 } from "lucide-react";
-import { ForcedVsl } from "@/components/site/ForcedVsl";
 import { isAdminPreview, PREVIEW_LEAD_ID } from "@/lib/admin-preview";
 import { AdminPreviewBadge } from "@/components/site/AdminPreviewBadge";
 import { QUESTIONS, type ApplicationAnswers } from "@/lib/call-qualification";
 import { submitCallApplication } from "@/lib/call-application.functions";
-import diyImg from "@/assets/strategy/diy-vs-support.png.asset.json";
-import systemImg from "@/assets/strategy/clinic-growth-system.png.asset.json";
-import farhanImg from "@/assets/strategy/farhan-strategy-call.png.asset.json";
-import processImg from "@/assets/strategy/three-step-process.png.asset.json";
 
 type Search = { lead?: string; from?: string };
 
-// The booking link is NOT in this file on purpose — the server only returns it to qualified doctors
-// (see src/lib/call-application.functions.ts).
+// The booking link is NOT in this file on purpose — the server only returns it to qualified
+// applicants (see src/lib/call-application.functions.ts).
 
 function track(event: string, params?: Record<string, unknown>) {
   try {
@@ -49,11 +38,11 @@ export const Route = createFileRoute("/strategy-call")({
   }),
   head: () => ({
     meta: [
-      { title: "Optional — Apply for a Free Clinic Growth Strategy Call" },
+      { title: "Optional — Get Help Implementing the Business Growth Masterclass" },
       {
         name: "description",
         content:
-          "Optional: see if your clinic qualifies for done-for-you implementation of the Clinic Growth Masterclass system.",
+          "Optional: book a call to see if your business qualifies for done-for-you implementation of the Business Growth Masterclass system.",
       },
       { name: "robots", content: "noindex,nofollow" },
     ],
@@ -64,7 +53,7 @@ export const Route = createFileRoute("/strategy-call")({
 function StrategyCallPage() {
   const navigate = useNavigate();
   const { lead, from } = Route.useSearch();
-  // Opened from the members area → hide the "registration submitted" banner, "skip" returns to /members.
+  // Opened from the members area → hide the "order submitted" banner, "skip" returns to /members.
   const fromMembers = from === "members";
   const [leadId, setLeadId] = useState<string | null>(null);
   const [gateChecked, setGateChecked] = useState(false);
@@ -74,8 +63,6 @@ function StrategyCallPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [bookingUrl, setBookingUrl] = useState<string | null>(null);
-  // Forced VSL: nothing to click until the video has been watched long enough.
-  const [vslUnlocked, setVslUnlocked] = useState(false);
   const [adminMode, setAdminMode] = useState(false);
 
   useEffect(() => {
@@ -126,6 +113,7 @@ function StrategyCallPage() {
         setView("qualified");
         scrollTop();
       } else {
+        // Not a fit for done-for-you → Mini MBA downsell.
         track("StrategyCallNotQualified", { lead_id: leadId, tier: res.tier });
         navigate({
           to: "/google-ads-diy",
@@ -152,7 +140,7 @@ function StrategyCallPage() {
     }
   }
 
-  /** "No thanks" → Google Ads DIY downsell (PKR 5,000) before the confirmation page. */
+  /** "No thanks" → Mini MBA downsell before the confirmation page. */
   function goToDownsell() {
     if (typeof window === "undefined") return;
     if (fromMembers || !leadId) return goToThankYou();
@@ -179,49 +167,34 @@ function StrategyCallPage() {
     );
   }
 
-  const discussPoints = [
-    "Your clinic's current marketing situation",
-    "The services you want to grow",
-    "Your offer and patient acquisition strategy",
-    "The biggest bottlenecks slowing your growth",
-    "A possible implementation roadmap for your clinic",
-  ];
-
-  const fitPoints = [
-    "Own or run a clinic / hospital and make the growth decisions",
-    "Want an expert team to implement the system for you",
-    "Are ready to invest in a monthly team and an ad budget",
-    "Want to start within the next 30 days",
-    "Value a long-term growth partner over quick hacks",
-  ];
-
-  const notFitPoints = [
-    "You'd rather learn it and do it all yourself",
-    "You work at someone else's clinic and can't make the decision",
-    "You're just exploring and not ready to start yet",
-  ];
-
-  const PrimaryCta = ({ label = "See If My Clinic Qualifies" }: { label?: string }) => (
-    <button
-      type="button"
-      onClick={startApplication}
-      className="btn-cta w-full sm:w-auto justify-center inline-flex items-center gap-2 px-6 py-4 text-base md:text-lg"
-    >
-      <span>{label}</span>
-      <ArrowRight className="btn-cta-arrow size-5" aria-hidden="true" />
-    </button>
+  const BookCta = ({ label = "Book a Call With Us", dark = false }: { label?: string; dark?: boolean }) => (
+    <div className="flex flex-col items-center gap-2">
+      <button
+        type="button"
+        onClick={startApplication}
+        className="btn-cta w-full sm:w-auto justify-center inline-flex items-center gap-2 px-7 py-4 text-base md:text-lg"
+      >
+        <Calendar className="size-5" aria-hidden="true" />
+        <span>{label}</span>
+        <ArrowRight className="btn-cta-arrow size-5" aria-hidden="true" />
+      </button>
+      <span className={`text-xs ${dark ? "text-slate-300" : "text-slate-500"}`}>
+        Answer a few quick questions first — takes about 60 seconds.
+      </span>
+    </div>
   );
 
-  const SkipLink = () => (
+  const SkipLink = ({ dark = false }: { dark?: boolean }) => (
     <button
       type="button"
       onClick={goToDownsell}
-      className="text-sm md:text-base text-slate-600 hover:text-slate-900 underline underline-offset-4"
+      className={`text-sm md:text-base underline underline-offset-4 ${dark ? "text-slate-300 hover:text-white" : "text-slate-600 hover:text-slate-900"}`}
     >
-      {fromMembers ? "No Thanks, Back to the Members Area" : "No Thanks, Continue to the Confirmation Page"}
+      {fromMembers ? "No thanks, back to the members area" : "No thanks, I'll implement it myself"}
     </button>
   );
 
+  /* ---------------- QUESTIONS ---------------- */
   if (view === "apply") {
     const q = QUESTIONS[step];
     const current = answers[q.id] ?? "";
@@ -232,7 +205,7 @@ function StrategyCallPage() {
         <main className="bg-secondary flex-1">
           <div className="mx-auto max-w-2xl px-4 py-8 md:py-12">
             <div className="flex items-center gap-2 text-xs md:text-sm font-bold text-primary">
-              <ClipboardList className="size-4" /> Strategy Call Application
+              <ClipboardList className="size-4" /> Implementation Call Application
             </div>
             <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
               <span>
@@ -241,16 +214,11 @@ function StrategyCallPage() {
               <span>{pct}%</span>
             </div>
             <div className="mt-1.5 h-2 rounded-full bg-slate-200 overflow-hidden">
-              <div
-                className="h-full bg-primary transition-all duration-300"
-                style={{ width: `${pct}%` }}
-              />
+              <div className="h-full bg-primary transition-all duration-300" style={{ width: `${pct}%` }} />
             </div>
 
             <section className="mt-6 bg-card rounded-2xl border shadow-sm p-6 md:p-8">
-              <h1 className="text-lg md:text-2xl font-black leading-snug text-slate-900">
-                {q.title}
-              </h1>
+              <h1 className="text-lg md:text-2xl font-black leading-snug text-slate-900">{q.title}</h1>
               {q.help && <p className="mt-2 text-sm text-slate-500">{q.help}</p>}
 
               {q.options ? (
@@ -338,7 +306,7 @@ function StrategyCallPage() {
                 onClick={goToDownsell}
                 className="text-xs md:text-sm text-slate-500 hover:text-slate-800 underline underline-offset-4"
               >
-                {fromMembers ? "Skip — back to the members area" : "Skip — continue to my confirmation page"}
+                {fromMembers ? "Skip — back to the members area" : "Skip — I'll implement it myself"}
               </button>
             </div>
           </div>
@@ -348,6 +316,7 @@ function StrategyCallPage() {
     );
   }
 
+  /* ---------------- QUALIFIED → CALENDLY ---------------- */
   if (view === "qualified" && bookingUrl) {
     return (
       <div className="min-h-screen flex flex-col">
@@ -359,12 +328,11 @@ function StrategyCallPage() {
                 <CheckCircle2 className="size-10 text-emerald-600" />
               </div>
               <h1 className="mt-4 text-2xl md:text-3xl font-black leading-tight text-slate-900">
-                Great News — Your Clinic Qualifies For a Free Strategy Call
+                Great News — Your Business Qualifies For a Call
               </h1>
               <p className="mt-3 text-sm md:text-base text-slate-700 leading-relaxed">
-                Based on your answers, your clinic is a good fit for our
-                done-for-you implementation. Pick a time below to speak with
-                Farhan Ali.
+                Based on your answers, your business is a good fit for our done-for-you
+                implementation. Pick a time below to speak with Farhan Ali.
               </p>
               <div className="mt-6 flex justify-center">
                 <a
@@ -382,15 +350,13 @@ function StrategyCallPage() {
             </section>
 
             <section className="bg-card rounded-2xl border shadow-sm p-6 md:p-8">
-              <h2 className="text-lg md:text-xl font-black text-slate-900">
-                How to Get the Most From Your Call
-              </h2>
+              <h2 className="text-lg md:text-xl font-black text-slate-900">How to Get the Most From Your Call</h2>
               <ul className="mt-4 grid gap-3">
                 {[
                   "Pick the earliest time that works for you — slots fill up quickly.",
                   "Keep WhatsApp handy: our team will message you to confirm your call.",
-                  "We review your clinic before the call, so we can spend the time on your plan — not on basic questions.",
-                  "Join from a quiet place where you can talk openly about your clinic's goals.",
+                  "We review your business before the call, so we can spend the time on your plan — not on basic questions.",
+                  "Join from a quiet place where you can talk openly about your goals and numbers.",
                 ].map((p) => (
                   <li key={p} className="flex items-start gap-2.5">
                     <MessageCircle className="mt-0.5 size-5 shrink-0 text-primary" />
@@ -401,7 +367,13 @@ function StrategyCallPage() {
             </section>
 
             <div className="text-center">
-              <SkipLink />
+              <button
+                type="button"
+                onClick={goToThankYou}
+                className="text-sm md:text-base text-slate-600 hover:text-slate-900 underline underline-offset-4"
+              >
+                {fromMembers ? "Back to the members area" : "Continue to my confirmation page"}
+              </button>
             </div>
           </div>
         </main>
@@ -410,350 +382,234 @@ function StrategyCallPage() {
     );
   }
 
+  /* ---------------- TEXT SALES LETTER ---------------- */
+  const P = ({ children }: { children: React.ReactNode }) => (
+    <p className="text-base md:text-lg text-slate-800 leading-relaxed">{children}</p>
+  );
+
+  const doneForYou = [
+    "Google Business Profile set up and optimised so people in your city find you first",
+    "Meta Ads (Facebook & Instagram) that bring real local buyers",
+    "Offers and ad creatives built for your business",
+    "Social media content that builds trust",
+    "WhatsApp follow-up and automation so no inquiry is forgotten",
+    "A landing page or website that turns visitors into inquiries",
+  ];
+
+  const fitPoints = [
+    "You own or run the business and make the growth decisions",
+    "You'd rather have an expert team implement this than do it all yourself",
+    "You're ready to invest in a monthly team and an ad budget",
+    "You want to start within the next 30 days",
+  ];
+
+  const notFitPoints = [
+    "You'd rather learn it and do it all yourself",
+    "You don't make the decisions in the business",
+    "You're just exploring and not ready to start yet",
+  ];
+
   return (
     <div className="min-h-screen flex flex-col">
-      {adminMode && (
-        <AdminPreviewBadge
-          action={
-            vslUnlocked
-              ? undefined
-              : { label: "Skip video lock", onClick: () => setVslUnlocked(true) }
-          }
-        />
-      )}
-      {/* Forced-VSL warning bar (post-purchase visitors only) */}
-      {!fromMembers && (
-        <div
-          className={`sticky top-0 z-50 w-full text-white shadow-md ${
-            vslUnlocked ? "bg-emerald-600" : "bg-red-600"
-          }`}
-        >
-          <div className="mx-auto max-w-5xl px-4 py-2.5 md:py-3 flex items-center justify-center gap-2.5 text-center">
-            {vslUnlocked ? (
-              <CheckCircle2 className="size-5 md:size-6 shrink-0" />
-            ) : (
-              <AlertTriangle className="size-5 md:size-6 shrink-0 animate-pulse" />
-            )}
-            <p className="text-xs md:text-base font-bold leading-snug">
-              {vslUnlocked ? (
-                <>Your members area is almost ready — choose your next step below the video.</>
-              ) : (
-                <>
-                  <span className="uppercase">Don't exit this page or click anywhere else.</span>{" "}
-                  <span className="font-semibold">
-                    We are creating your members area so you can access the Clinic Growth
-                    Masterclass. Please watch the video below while it's being set up.
-                  </span>
-                </>
-              )}
-            </p>
-          </div>
-        </div>
-      )}
+      {adminMode && <AdminPreviewBadge />}
       <Topbar />
 
       <main className="bg-secondary flex-1">
-        <div className="mx-auto max-w-6xl px-4 py-8 md:py-12 space-y-10 md:space-y-14">
-          {/* 1. Forced VSL — buttons and the rest of the page appear after it's watched */}
-          <section className="max-w-4xl mx-auto w-full text-center">
-            <span className="inline-flex items-center gap-1.5 text-[11px] md:text-xs font-bold tracking-wider uppercase text-primary bg-primary/10 px-3 py-1 rounded-full">
-              <PlayCircle className="size-3.5" /> Important — Watch This First
-            </span>
-            <h1 className="mt-4 text-2xl md:text-4xl font-black leading-tight text-slate-900">
-              Congratulations, Doctor! Watch This Short Video Before You Continue
-            </h1>
-            <p className="mt-3 text-sm md:text-lg text-slate-700">
-              Why most doctors never implement what they learn — and how our team can do it for you.
-            </p>
-            <div className="mt-6">
-              <ForcedVsl leadId={leadId} onUnlock={() => setVslUnlocked(true)} />
+        {/* Order confirmed bar */}
+        {!fromMembers && (
+          <div className="bg-emerald-600 text-white">
+            <div className="mx-auto max-w-3xl px-4 py-2.5 flex items-center justify-center gap-2 text-center text-xs md:text-sm font-bold">
+              <PartyPopper className="size-4 shrink-0" />
+              Your Business Growth Masterclass order has been received. Read this before you continue.
             </div>
-            {vslUnlocked ? (
-              <div className="mt-7 flex flex-col items-center gap-4 animate-in fade-in slide-in-from-bottom-4 duration-700">
-                <PrimaryCta label="Yes! See If My Clinic Qualifies" />
-                <SkipLink />
-              </div>
-            ) : (
-              <p className="mt-5 text-sm md:text-base font-semibold text-slate-600">
-                🔊 Turn your sound on. Your next step will appear right here while you watch.
-              </p>
-            )}
-          </section>
+          </div>
+        )}
 
-          {vslUnlocked && (
-          <>
-          {/* 2-5. Hero — headline + DIY vs Support image */}
-          <section className="bg-card rounded-2xl border shadow-sm p-6 md:p-10">
-            <div className="grid gap-8 md:gap-10 md:grid-cols-[45fr_55fr] items-center">
-              <div className="order-1 md:order-1 text-center md:text-left">
-                <span className="inline-block text-[11px] md:text-xs font-bold tracking-wider uppercase text-primary bg-primary/10 px-3 py-1 rounded-full">
-                  Optional Next Step
+        <article className="mx-auto max-w-3xl px-4 py-10 md:py-14">
+          <div className="bg-card rounded-2xl border shadow-sm px-5 py-8 md:px-12 md:py-12">
+            {/* Headline */}
+            <div className="text-center">
+              <span className="inline-block text-[11px] md:text-xs font-bold tracking-wider uppercase text-primary bg-primary/10 px-3 py-1 rounded-full">
+                Optional Next Step
+              </span>
+              <h1 className="mt-4 text-2xl md:text-4xl font-black leading-tight text-slate-900">
+                Congratulations! Now, Do You Want Us To{" "}
+                <span className="gradient-highlight">Implement It For You?</span>
+              </h1>
+              <p className="mt-4 text-base md:text-lg text-slate-600">
+                Why most business owners never use what they learn — and the shortcut if you'd
+                rather have it done for you.
+              </p>
+            </div>
+
+            <div className="mt-10 space-y-5">
+              <P>Congratulations — you just made a smart decision for your business.</P>
+              <P>
+                Inside the Business Growth Masterclass you'll learn the complete system: how to get
+                found on Google, run Meta Ads that bring real buyers, use AI for your content, and
+                turn WhatsApp inquiries into paying clients.
+              </P>
+              <P>But I want to be honest with you about something.</P>
+              <P>
+                <span className="font-bold">
+                  Learning the system and getting it implemented are two very different things.
                 </span>
-                <h2 className="mt-4 text-2xl md:text-4xl font-black leading-tight text-slate-900">
-                  Want Our Team to Implement It For Your Clinic?
-                </h2>
-                <p className="mt-4 text-sm md:text-lg text-slate-700 leading-relaxed">
-                  The Clinic Growth Masterclass gives you the strategy and
-                  roadmap. If you'd rather have our team implement it for you,
-                  answer a few quick questions to see if your clinic qualifies
-                  for a free strategy call.
-                </p>
-                <p className="mt-3 text-xs md:text-sm text-slate-500">
-                  We only work with a limited number of clinics at a time, so we
-                  ask first to make sure we can genuinely help. Takes about 60 seconds.
-                </p>
+              </P>
+              <P>
+                Most business owners watch the training, get excited… and then Monday comes. Staff
+                problems. Clients. Suppliers. Payments. Family. By the time you sit down to set up
+                your ads or fix your Google profile, it's 11 PM and you're tired.
+              </P>
+              <P>
+                Weeks pass. The checklists stay unticked. And the business stays exactly where it
+                is — while a competitor down the road, who isn't even better than you, keeps getting
+                the clients that should have been yours.
+              </P>
+              <P>
+                <span className="font-bold">It's not your fault.</span> You're a business owner, not
+                a full-time marketer. Your job is to run the business and serve your clients.
+              </P>
 
-                <div className="mt-6 flex flex-col sm:flex-row md:flex-col lg:flex-row items-center md:items-start gap-3">
-                  <PrimaryCta />
-                </div>
-                <div className="mt-4">
-                  <SkipLink />
-                </div>
-              </div>
-
-              <div className="order-2 md:order-2">
-                <div
-                  className="rounded-2xl overflow-hidden shadow-lg ring-1 ring-amber-200/60 bg-white"
-                  style={{ aspectRatio: "4 / 3" }}
-                >
-                  <img
-                    src={diyImg.url}
-                    alt="Doctor comparing doing clinic marketing alone with implementing a patient acquisition system with professional support."
-                    width={1200}
-                    height={900}
-                    loading="eager"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* 6. Problem awareness */}
-          <section className="bg-card rounded-2xl border shadow-sm p-6 md:p-8 max-w-4xl mx-auto w-full">
-            <h2 className="text-lg md:text-2xl font-black text-slate-900">
-              Knowing What to Do Is Different From Getting It Implemented
-            </h2>
-            <p className="mt-3 text-sm md:text-base text-slate-700 leading-relaxed">
-              Many doctors understand the strategy but still get stuck while
-              creating their offer, building the funnel, setting up ads,
-              improving their Google presence or converting inquiries into
-              appointments.
-            </p>
-            <p className="mt-3 text-sm md:text-base text-slate-700 leading-relaxed">
-              Instead of spending months testing everything through trial and
-              error, you can have our team build and run the complete system
-              for your clinic — if it's the right fit.
-            </p>
-          </section>
-
-          {/* 7. Clinic Growth System image */}
-          <section className="text-center">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-lg md:text-2xl font-black text-slate-900">
-                We Look at the Complete System — Not Just Your Ads
+              <h2 className="pt-4 text-xl md:text-2xl font-black text-slate-900">
+                Think About It This Way…
               </h2>
-              <p className="mt-3 text-sm md:text-base text-slate-700 leading-relaxed">
-                Your clinic's growth usually depends on several connected
-                parts. During the call, we identify what is working, what is
-                missing and what should be fixed first.
-              </p>
-            </div>
-            <div className="mt-6 md:mt-8 mx-auto" style={{ maxWidth: "1100px" }}>
-              <div
-                className="rounded-2xl overflow-hidden shadow-lg ring-1 ring-emerald-200/60 bg-white"
-                style={{ aspectRatio: "4 / 3" }}
-              >
-                <img
-                  src={systemImg.url}
-                  alt="Clinic Growth System connecting clinic offer, sales funnel, Meta Ads, Google Business Profile and WhatsApp follow-up."
-                  width={1400}
-                  height={1050}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-          </section>
+              <P>
+                You know how to do a lot of things yourself. But you still hire an accountant for
+                your taxes and an architect for your building — not because you couldn't learn, but
+                because your time is worth more spent on your business.
+              </P>
+              <P>
+                Marketing is the same. The masterclass gives you the knowledge.{" "}
+                <span className="font-bold">
+                  If you'd rather have it done properly and quickly, our team can build and run the
+                  whole system for you.
+                </span>
+              </P>
 
-          {/* 8. What we'll discuss */}
-          <section className="bg-card rounded-2xl border shadow-sm p-6 md:p-8 max-w-4xl mx-auto w-full">
-            <h2 className="text-lg md:text-2xl font-black text-slate-900">
-              During This Free Strategy Call, We Can Look At:
-            </h2>
-            <ul className="mt-4 grid gap-3">
-              {discussPoints.map((p, i) => {
-                const Icon = [Target, Rocket, Compass, Zap, Users][i] ?? Target;
-                return (
+              <h2 className="pt-4 text-xl md:text-2xl font-black text-slate-900">
+                What Our Team Can Do For Your Business
+              </h2>
+              <ul className="grid gap-3">
+                {doneForYou.map((p) => (
                   <li key={p} className="flex items-start gap-3">
-                    <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                      <Icon className="size-4" />
-                    </span>
-                    <span className="text-sm md:text-base text-slate-800 leading-snug">
-                      {p}
-                    </span>
+                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                    <span className="text-base md:text-lg text-slate-800 leading-snug">{p}</span>
                   </li>
-                );
-              })}
-            </ul>
-          </section>
+                ))}
+              </ul>
+              <P>
+                This is the same system we've used for years to get clients for local businesses
+                across Pakistan — now applied to your business, by our team.
+              </P>
 
-          {/* 9. Who this call is for */}
-          <section className="bg-card rounded-2xl border shadow-sm p-6 md:p-8 max-w-4xl mx-auto w-full">
-            <h2 className="text-lg md:text-2xl font-black text-slate-900">
-              This Call Is For You If You:
-            </h2>
-            <ul className="mt-4 grid gap-2.5">
-              {fitPoints.map((p) => (
-                <li key={p} className="flex items-start gap-2.5">
-                  <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
-                  <span className="text-sm md:text-base text-slate-800 leading-snug">
-                    {p}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <h3 className="mt-6 text-base md:text-lg font-black text-slate-900">
-              It's Probably Not For You (Yet) If:
-            </h3>
-            <ul className="mt-3 grid gap-2.5">
-              {notFitPoints.map((p) => (
-                <li key={p} className="flex items-start gap-2.5">
-                  <XCircle className="mt-0.5 size-5 shrink-0 text-slate-400" />
-                  <span className="text-sm md:text-base text-slate-700 leading-snug">
-                    {p}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-4 text-xs md:text-sm text-slate-500">
-              Not a fit right now? No problem — after the questions we'll show
-              you the best do-it-yourself path for your clinic instead.
-            </p>
-          </section>
-
-          {/* 10. Farhan trust section */}
-          <section className="bg-card rounded-2xl border shadow-sm p-6 md:p-10">
-            <div className="grid gap-8 md:gap-10 md:grid-cols-[58fr_42fr] items-center">
-              <div className="order-2 md:order-1">
-                <div
-                  className="rounded-2xl overflow-hidden shadow-lg ring-1 ring-amber-200/60 bg-white"
-                  style={{ aspectRatio: "4 / 3" }}
-                >
-                  <img
-                    src={farhanImg.url}
-                    alt="Farhan Ali conducting a personalized clinic growth strategy call."
-                    width={1400}
-                    height={1050}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              <div className="order-1 md:order-2">
-                <h2 className="text-xl md:text-3xl font-black leading-tight text-slate-900">
-                  Your Personalized Strategy Call With Farhan Ali
+              <div className="rounded-2xl border-2 border-primary/20 bg-primary/5 p-6 md:p-8 text-center">
+                <h2 className="text-xl md:text-2xl font-black text-slate-900">
+                  Want Help With Implementation? Book a Call With Us.
                 </h2>
-                <p className="mt-3 text-sm md:text-base text-slate-700 leading-relaxed">
-                  This is not a generic agency consultation. We will discuss
-                  your clinic, your current bottlenecks and the most practical
-                  next step for your situation.
+                <p className="mt-3 text-sm md:text-base text-slate-700">
+                  On the call we'll look at your business, your current marketing, and the fastest
+                  way to start getting consistent clients. If we're a fit, we'll show you exactly
+                  how we'd do it.
                 </p>
-                <ul className="mt-5 grid gap-2.5">
-                  {[
-                    "Personalized clinic audit",
-                    "Practical implementation direction",
-                    "Recommendations based on your clinic's situation",
-                  ].map((p) => (
-                    <li key={p} className="flex items-start gap-2.5">
-                      <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
-                      <span className="text-sm md:text-base text-slate-800 leading-snug">
-                        {p}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
                 <div className="mt-6">
-                  <PrimaryCta label="Apply For My Free Strategy Call" />
-                </div>
-                <div className="mt-3">
-                  <SkipLink />
+                  <BookCta />
                 </div>
               </div>
-            </div>
-          </section>
 
-          {/* 11-12. What happens next + process image */}
-          <section className="text-center">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-lg md:text-2xl font-black text-slate-900">
+              <h2 className="pt-4 text-xl md:text-2xl font-black text-slate-900">
+                Why We Ask a Few Questions First
+              </h2>
+              <P>
+                We only take on a limited number of businesses at a time, so every client gets
+                proper attention. The questions help us make sure we can genuinely help you before
+                we book a call.
+              </P>
+
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="rounded-xl border bg-emerald-50/60 border-emerald-200 p-5">
+                  <h3 className="font-black text-slate-900">This call is for you if:</h3>
+                  <ul className="mt-3 grid gap-2.5">
+                    {fitPoints.map((p) => (
+                      <li key={p} className="flex items-start gap-2.5">
+                        <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-emerald-600" />
+                        <span className="text-sm md:text-base text-slate-800 leading-snug">{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-xl border bg-slate-50 p-5">
+                  <h3 className="font-black text-slate-900">It's probably not for you (yet) if:</h3>
+                  <ul className="mt-3 grid gap-2.5">
+                    {notFitPoints.map((p) => (
+                      <li key={p} className="flex items-start gap-2.5">
+                        <XCircle className="mt-0.5 size-5 shrink-0 text-slate-400" />
+                        <span className="text-sm md:text-base text-slate-700 leading-snug">{p}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <P>
+                Not a fit right now? No problem — after the questions we'll show you the best
+                do-it-yourself path for your business instead.
+              </P>
+
+              <h2 className="pt-4 text-xl md:text-2xl font-black text-slate-900">
                 Here's What Happens Next
               </h2>
-              <p className="mt-3 text-sm md:text-base text-slate-700 leading-relaxed">
-                Answer a few quick questions. If your clinic is a fit, pick a
-                time, we review your clinic before the call, and you leave with
-                clear next steps.
-              </p>
-            </div>
-            <div className="mt-6 md:mt-8 mx-auto" style={{ maxWidth: "1050px" }}>
-              <div
-                className="rounded-2xl overflow-hidden shadow-lg ring-1 ring-emerald-200/60 bg-white"
-                style={{ aspectRatio: "4 / 3" }}
-              >
-                <img
-                  src={processImg.url}
-                  alt="Three-step Clinic Growth Strategy Call process: book the call, audit the clinic and receive a growth roadmap."
-                  width={1400}
-                  height={1050}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-          </section>
+              <ol className="grid gap-3">
+                {[
+                  "Click the button and answer a few quick questions.",
+                  "If your business is a fit, pick a time that suits you.",
+                  "We review your business before the call.",
+                  "On the call, you get a clear plan — and if it makes sense, we implement it for you.",
+                ].map((p, i) => (
+                  <li key={p} className="flex items-start gap-3">
+                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground text-sm font-black">
+                      {i + 1}
+                    </span>
+                    <span className="text-base md:text-lg text-slate-800 leading-snug">{p}</span>
+                  </li>
+                ))}
+              </ol>
 
-          {/* 13-14. Final CTA */}
-          <section className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl border border-slate-800 shadow-lg p-6 md:p-10 text-center max-w-4xl mx-auto w-full">
+              <P>
+                Either way, you already have the masterclass. This is simply the shortcut if you'd
+                rather not do it all yourself.
+              </P>
+              <P>
+                Talk soon,
+                <br />
+                <span className="font-black">Farhan Ali</span>
+              </P>
+            </div>
+          </div>
+
+          {/* Final CTA */}
+          <section className="mt-8 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl border border-slate-800 shadow-lg p-6 md:p-10 text-center">
             <Calendar className="mx-auto size-10 text-amber-300" />
             <h2 className="mt-4 text-xl md:text-3xl font-black leading-tight">
-              See If Your Clinic Qualifies
+              Want Help With Implementation?
             </h2>
             <p className="mt-3 text-sm md:text-base text-slate-200 max-w-xl mx-auto">
-              Answer a few quick questions. If it's a fit, you'll pick a time
-              to discuss your clinic, goals and challenges with Farhan Ali.
+              Book a call with us. Answer a few quick questions, and if it's a fit, pick a time to
+              speak with Farhan Ali.
             </p>
-
-            <div className="mt-6 flex justify-center">
-              <PrimaryCta />
+            <div className="mt-6">
+              <BookCta dark />
             </div>
-
             <div className="mt-5">
-              <button
-                type="button"
-                onClick={goToDownsell}
-                className="text-sm md:text-base text-slate-300 hover:text-white underline underline-offset-4"
-              >
-                {fromMembers
-                  ? "No Thanks, Take Me Back to the Members Area"
-                  : "No Thanks, Take Me to the Masterclass Confirmation Page"}
-              </button>
+              <SkipLink dark />
             </div>
           </section>
 
-          {/* 15. Reassurance */}
           {!fromMembers && (
-          <p className="text-center text-xs text-muted-foreground max-w-2xl mx-auto">
-            The strategy call is completely optional. Your Clinic Growth
-            Masterclass registration is already submitted.
-          </p>
+            <p className="mt-6 text-center text-xs text-muted-foreground max-w-2xl mx-auto">
+              This call is completely optional. Your Business Growth Masterclass order has already
+              been received.
+            </p>
           )}
-          </>
-          )}
-        </div>
+        </article>
       </main>
       <Footer />
     </div>
