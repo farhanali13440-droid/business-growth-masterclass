@@ -115,7 +115,7 @@ function Hero() {
 
         {/* Headline */}
         <h1 className="mt-4 md:mt-8 text-center text-[22px] leading-[1.15] sm:text-3xl md:text-5xl lg:text-6xl font-black md:leading-[1.05] uppercase">
-          Discover How Local Business Owners Are Using{" "}
+          Discover How Service-Based Business Owners Are Using{" "}
           <span className="gradient-highlight">AI &amp; Simple Digital Marketing</span>{" "}
           To Get{" "}
           <span className="gradient-highlight">Consistent Clients</span>{" "}
