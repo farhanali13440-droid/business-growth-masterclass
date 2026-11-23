@@ -1,0 +1,216 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-cta-from: var(--cta-from);
+  --color-cta-to: var(--cta-to);
+  --color-highlight-from: var(--highlight-from);
+  --color-highlight-to: var(--highlight-to);
+  --color-topbar: var(--topbar);
+  --color-hero: var(--hero);
+  --color-hero-deep: var(--hero-deep);
+  --font-display: var(--font-display);
+}
+
+:root {
+  --radius: 0.625rem;
+  --font-display: "Montserrat", "Inter", system-ui, sans-serif;
+
+  --background: oklch(0.98 0.005 240);
+  --foreground: oklch(0.18 0.03 250);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.03 250);
+
+  --primary: oklch(0.5 0.2 260);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.95 0.02 250);
+  --secondary-foreground: oklch(0.2 0.04 260);
+  --muted: oklch(0.96 0.01 250);
+  --muted-foreground: oklch(0.45 0.03 250);
+  --accent: oklch(0.95 0.05 50);
+  --accent-foreground: oklch(0.2 0.05 50);
+  --destructive: oklch(0.6 0.22 27);
+  --border: oklch(0.9 0.015 250);
+  --input: oklch(0.93 0.015 250);
+  --ring: oklch(0.6 0.15 260);
+
+  /* Brand */
+  --topbar: oklch(0.55 0.22 260);                   /* bright royal blue */
+  --hero: oklch(0.22 0.12 275);                     /* deep navy/indigo */
+  --hero-deep: oklch(0.13 0.08 275);                /* darker navy */
+  --cta-from: oklch(0.7 0.22 35);                   /* orange */
+  --cta-to: oklch(0.82 0.18 80);                    /* yellow */
+  --highlight-from: oklch(0.65 0.25 20);            /* red/pink */
+  --highlight-to: oklch(0.6 0.22 280);              /* purple/blue */
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-display);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+}
+
+@layer components {
+  .hero-bg {
+    background:
+      radial-gradient(1200px 600px at 50% -10%, oklch(0.32 0.18 275) 0%, transparent 60%),
+      linear-gradient(180deg, var(--hero) 0%, var(--hero-deep) 100%);
+  }
+  .gradient-highlight {
+    background-image: linear-gradient(90deg, var(--highlight-from), var(--highlight-to));
+    color: white;
+    padding: 0 .35em;
+    border-radius: .25rem;
+  }
+  .btn-cta {
+    background-image: linear-gradient(90deg, var(--cta-from), var(--cta-to));
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px -10px oklch(0.7 0.22 35 / 0.6);
+    transition: transform .15s ease, filter .15s ease;
+  }
+  .btn-cta:hover { transform: translateY(-1px); filter: brightness(1.05); }
+  .btn-cta:active { transform: translateY(0); }
+  .btn-cta-arrow { display: inline-block; transition: transform .15s ease; flex-shrink: 0; }
+  .btn-cta:hover .btn-cta-arrow { transform: translateX(4px); }
+
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    gap: 3rem;
+    padding-right: 3rem;
+    min-width: 100%;
+    animation: marquee-scroll 32s linear infinite;
+  }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+}
+
+@utility pam-float {
+  animation: pam-float 6s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes pam-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pam-float { animation: none; }
+}
+
+/* Scoped promotional offer tokens; existing page styling remains unchanged. */
+:root {
+  --promo-surface: #ffffff;
+  --promo-text: #465366;
+  --promo-header-start: #3b82f6;
+  --promo-header-end: #8b5cf6;
+  --promo-overlay: rgb(10 15 28 / 70%);
+  --promo-highlight: #e9f2ff;
+  --promo-highlight-text: #2458b8;
+  --promo-card: #f7f8fa;
+  --promo-border: #e3e7ed;
+  --promo-green: #08b981;
+  --promo-orange: #d97706;
+  --promo-muted: #687384;
+  --promo-cta-end: #1e4fca;
+  --promo-shadow: 0 24px 80px rgb(0 0 0 / 25%);
+  --promo-close-surface: rgb(255 255 255 / 20%);
+}
+.masterclass-promo-overlay { position: fixed; inset: 0; z-index: 1000; background: var(--promo-overlay); }
+.masterclass-promo {
+  position: fixed; z-index: 1001; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 95%; max-width: 660px;
+  max-height: calc(100dvh - 24px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  overflow-y: auto; overscroll-behavior: contain;
+  background: var(--promo-surface); color: var(--promo-text); border-radius: 20px;
+  box-shadow: var(--promo-shadow); outline: none; letter-spacing: 0;
+}
+.masterclass-promo-header {
+  position: relative; background: linear-gradient(110deg, var(--promo-header-start), var(--promo-header-end));
+  padding: 32px 76px 32px 34px; color: var(--promo-surface); text-align: left;
+}
+.masterclass-promo-title { font-size: 28px; font-weight: 800; line-height: 1.3; letter-spacing: 0; }
+.masterclass-promo-close {
+  position: absolute; right: 12px; top: 12px; width: 44px; height: 44px; border-radius: 50%;
+  color: var(--promo-surface); background: var(--promo-close-surface);
+}
+.masterclass-promo-close:hover { background: var(--promo-close-surface); filter: brightness(1.2); }
+.masterclass-promo-body { padding: 32px 34px 28px; text-align: center; }
+.masterclass-promo-copy { display: grid; gap: 28px; font-size: 19px; line-height: 1.65; text-align: left; }
+.masterclass-promo mark { background: var(--promo-highlight); color: var(--promo-highlight-text); border-radius: 4px; padding: 2px 5px; font-weight: 700; box-decoration-break: clone; }
+.masterclass-promo-pricing { background: var(--promo-card); border: 1px solid var(--promo-border); border-radius: 12px; padding: 24px 14px; margin: 32px 0; }
+.masterclass-promo-price-row { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 18px; margin-bottom: 10px; }
+.masterclass-promo-regular { font-size: 23px; font-weight: 800; color: var(--promo-muted); }
+.masterclass-promo-price { color: var(--promo-green); font-size: 48px; font-weight: 800; line-height: 1.25; }
+.masterclass-promo-price span { font-size: 25px; }
+.masterclass-promo-deadline { color: var(--promo-orange); font-size: 15px; font-weight: 700; line-height: 1.65; }
+.masterclass-promo-cta {
+  width: 100%; height: auto; min-height: 60px; padding: 16px 14px; border-radius: 12px;
+  background: linear-gradient(110deg, var(--promo-header-start), var(--promo-cta-end));
+  color: var(--promo-surface); font-weight: 800; font-size: 19px; white-space: normal; line-height: 1.4;
+  transition: filter .15s ease, transform .15s ease;
+}
+.masterclass-promo-cta:hover { filter: brightness(1.08); }
+.masterclass-promo-cta:active { transform: translateY(1px); filter: brightness(.95); }
+.masterclass-promo-support { font-size: 12px; line-height: 1.6; color: var(--promo-muted); margin-top: 16px; }
+@media (max-width: 639px) {
+  .masterclass-promo-header { padding: 24px 66px 24px 20px; }
+  .masterclass-promo-title { font-size: 22px; }
+  .masterclass-promo-body { padding: 22px 20px 20px; }
+  .masterclass-promo-copy { font-size: 16px; gap: 22px; }
+  .masterclass-promo-price { font-size: 40px; }
+  .masterclass-promo-price span { font-size: 21px; }
+  .masterclass-promo-regular { font-size: 18px; }
+  .masterclass-promo-price-row { gap: 12px; }
+  .masterclass-promo-pricing { margin: 20px 0; padding: 18px 10px; }
+  .masterclass-promo-cta { font-size: 18px; }
+  .masterclass-promo-deadline { font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .masterclass-promo-cta { transition: none; }
+}
