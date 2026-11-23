@@ -9,7 +9,6 @@ import { Footer } from "@/components/site/Footer";
 import { CtaButton } from "@/components/site/CtaButton";
 import { OfferPopup } from "@/components/site/OfferPopup";
 import { ProofGallery } from "@/components/site/ProofGallery";
-import { BonusCover, type BonusIcon } from "@/components/site/BgmVisuals";
 import {
   ShieldCheck, CheckCircle2, Lock, BadgeCheck,
   Users, TrendingUp, Gift, Play, ChevronDown, ArrowRight, CreditCard, PlayCircle,
@@ -522,38 +521,34 @@ function WhatsIncludedSection() {
 /* ---------------- BONUSES ---------------- */
 
 function BonusesSection() {
-  const bonuses: { tag: string; title: string; copy: string; value: string; icon: BonusIcon; kind: string }[] = [
+  const bonuses: { tag: string; title: string; copy: string; value: string; image: string }[] = [
     {
       tag: "Fast Start Bonus #1",
       title: "Google Business Profile Ranking Checklist",
       copy: "The exact checklist to set up and optimize your Google profile so people searching in your city find YOU first.",
       value: "Rs. 8,000",
-      icon: "map",
-      kind: "Checklist",
+      image: "/bonus-1-gbp-ranking-checklist.webp",
     },
     {
       tag: "Fast Start Bonus #2",
       title: "WhatsApp Inquiry-to-Client SOP",
       copy: "Step-by-step replies and follow-ups that turn \"price?\" messages into paying clients — no more ghosting.",
       value: "Rs. 10,000",
-      icon: "whatsapp",
-      kind: "SOP",
+      image: "/bonus-2-whatsapp-sop.webp",
     },
     {
       tag: "Fast Start Bonus #3",
       title: "Meta Ads Launch Cheat Sheet",
       copy: "A one-page guide to set up your first local Facebook & Instagram ad the right way — targeting, budget and creative.",
       value: "Rs. 8,000",
-      icon: "cheatsheet",
-      kind: "Cheat Sheet",
+      image: "/bonus-3-meta-ads-cheat-sheet.webp",
     },
     {
       tag: "Fast Start Bonus #4",
       title: "30-Day Business Growth Action Plan",
       copy: "A day-by-day checklist so you implement the masterclass in 30 days instead of \"someday\".",
       value: "Rs. 7,000",
-      icon: "checklist",
-      kind: "Checklist",
+      image: "/bonus-4-30-day-action-plan.webp",
     },
   ];
 
@@ -567,7 +562,9 @@ function BonusesSection() {
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           {bonuses.map((b) => (
             <div key={b.title} className="rounded-2xl border bg-card overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-              <BonusCover icon={b.icon} kind={b.kind} title={b.title} />
+              <div className="bg-secondary">
+                <img src={b.image} alt={b.title} className="w-full h-auto block" loading="lazy" />
+              </div>
               <div className="p-6">
                 <div className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
                   <Gift className="size-4" /> {b.tag}
