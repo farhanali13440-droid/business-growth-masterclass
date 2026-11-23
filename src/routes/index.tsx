@@ -142,9 +142,9 @@ function Hero() {
                 </div>
               ) : (
                 <img
-                  src={PRODUCT_STACK_IMG}
-                  alt="Business Growth Masterclass product stack"
-                  className="w-full h-auto block bg-white"
+                  src="/bgm-hero-before-after.webp"
+                  alt="A worried business owner in an empty office, and the same owner busy with clients after getting his marketing right"
+                  className="w-full h-auto block"
                 />
               )}
             </div>
