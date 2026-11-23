@@ -9,7 +9,7 @@ import { Footer } from "@/components/site/Footer";
 import { CtaButton } from "@/components/site/CtaButton";
 import { OfferPopup } from "@/components/site/OfferPopup";
 import { ProofGallery } from "@/components/site/ProofGallery";
-import { ProductStackVisual, BonusCover, type BonusIcon } from "@/components/site/BgmVisuals";
+import { BonusCover, type BonusIcon } from "@/components/site/BgmVisuals";
 import {
   ShieldCheck, CheckCircle2, Lock, BadgeCheck,
   Users, TrendingUp, Gift, Play, ChevronDown, ArrowRight, CreditCard, PlayCircle,
@@ -36,6 +36,8 @@ import {
  * it, then set this to true.
  */
 const SHOW_VSL = false;
+
+const PRODUCT_STACK_IMG = "/bgm-product-stack.webp";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -137,7 +139,11 @@ function Hero() {
                   />
                 </div>
               ) : (
-                <ProductStackVisual />
+                <img
+                  src={PRODUCT_STACK_IMG}
+                  alt="Business Growth Masterclass product stack"
+                  className="w-full h-auto block bg-white"
+                />
               )}
             </div>
 
@@ -157,7 +163,11 @@ function Hero() {
           {/* Order summary card */}
           <aside className="md:col-span-2 bg-card text-card-foreground rounded-xl shadow-2xl overflow-hidden">
             <div className="bg-gradient-to-br from-indigo-50 to-white p-3 border-b">
-              <ProductStackVisual compact />
+              <img
+                src={PRODUCT_STACK_IMG}
+                alt="Business Growth Masterclass product stack"
+                className="w-full h-auto"
+              />
             </div>
             <div className="p-6 text-center">
               <div className="text-lg font-extrabold">TODAY'S SPECIAL PRICE</div>
@@ -476,8 +486,13 @@ function WhatsIncludedSection() {
           Not just a video — the tools to implement it fast.
         </p>
         <div className="mt-10 grid md:grid-cols-[1fr_1.2fr] gap-8 items-center">
-          <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-border">
-            <ProductStackVisual />
+          <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-border bg-white">
+            <img
+              src={PRODUCT_STACK_IMG}
+              alt="Business Growth Masterclass product stack"
+              className="w-full h-auto"
+              loading="lazy"
+            />
           </div>
           <ul className="space-y-3">
             {items.map((it) => (

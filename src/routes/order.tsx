@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { ProductStackVisual, PromptVaultThumb } from "@/components/site/BgmVisuals";
+import { PromptVaultThumb } from "@/components/site/BgmVisuals";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Footer } from "@/components/site/Footer";
 import { PROOFS } from "@/components/site/ProofGallery";
@@ -504,9 +504,11 @@ function OrderPage() {
                 <div className="bg-gradient-to-r from-sky-600 to-blue-700 text-white text-center py-2.5 font-black uppercase tracking-wider text-xs">
                   Order Summary
                 </div>
-                <div className="p-3 bg-slate-50 border-b border-slate-100">
-                  <ProductStackVisual compact />
-                </div>
+                <img
+                  src="/bgm-product-stack.webp"
+                  alt="Business Growth Masterclass product stack"
+                  className="w-full h-auto"
+                />
                 <div className="p-5">
                   <div className="space-y-2 text-sm">
                     {items.map((i) => (
