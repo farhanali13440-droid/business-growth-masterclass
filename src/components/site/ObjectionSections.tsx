@@ -1,31 +1,30 @@
-import { CheckCircle2, ShieldCheck, Wallet, Sparkles, Users2, PlayCircle, Handshake, HeartHandshake, ArrowRight } from "lucide-react";
+import { CheckCircle2, ShieldCheck, Wallet, Sparkles, PlayCircle, ArrowRight } from "lucide-react";
 import { CtaButton } from "@/components/site/CtaButton";
 
 /* --------- 1. Is This For You? --------- */
 export function IsThisForYouSection() {
   const bullets = [
-    "How to attract local patients in your city",
-    "How to create an offer for your specific specialty",
-    "How to turn inquiries into booked appointments",
-    "How to build trust even if you don't have a large social following",
+    "How to get found by people searching for your service in your city",
+    "How to create an offer for your specific business",
+    "How to turn WhatsApp inquiries into paying clients",
+    "How to build trust even if you don't have a big social following",
   ];
   return (
     <section className="py-12 md:py-20 bg-white">
       <div className="mx-auto max-w-4xl px-4">
         <h2 className="text-center text-2xl md:text-4xl font-black">
-          Will This Work for Your <span className="gradient-highlight">Specialty & City?</span>
+          Will This Work for Your <span className="gradient-highlight">Business & City?</span>
         </h2>
         <p className="mt-5 text-base md:text-lg leading-relaxed text-slate-700">
-          Whether you're a doctor, dentist, nutritionist, physiotherapist, psychologist,
-          dermatologist, gynecologist, or clinic owner…
+          Whether you run a real estate agency, interior design studio, construction company,
+          restaurant, salon, barber shop, boutique or any other local service business…
         </p>
         <p className="mt-3 text-base md:text-lg leading-relaxed text-slate-700">
-          This masterclass is designed to help healthcare practitioners attract more local patient
-          inquiries through Facebook, Instagram, Google, content, and WhatsApp.
+          This masterclass shows you how to get more local client inquiries through Google, Facebook,
+          Instagram, content and WhatsApp — and how to do it yourself, with AI helping you along the way.
         </p>
         <p className="mt-3 text-base md:text-lg leading-relaxed text-slate-700">
-          You'll learn principles that can be applied according to your specialty, services, city,
-          and patient type.
+          You'll learn principles you can apply to your own business, services, city and type of client.
         </p>
         <ul className="mt-8 grid sm:grid-cols-2 gap-3">
           {bullets.map((b) => (
@@ -43,13 +42,13 @@ export function IsThisForYouSection() {
 /* --------- 2. What You Will Leave With --------- */
 export function WhatYoullLeaveWithSection() {
   const outcomes = [
-    "A clear patient-attraction strategy for your clinic",
-    "A simple, irresistible offer idea for your specialty",
-    "A plan to generate patient inquiries through Meta Ads",
+    "A clear client-getting strategy for your business",
+    "A simple, irresistible offer for your service",
+    "A plan to generate client inquiries through Meta Ads",
     "A Google Business Profile strategy to get found locally",
-    "A content system to build trust with potential patients",
-    "A WhatsApp follow-up process to convert inquiries into appointments",
-    "A low-ticket to high-ticket patient journey framework",
+    "An AI-powered content system to build trust with potential clients",
+    "A WhatsApp follow-up process to convert inquiries into sales",
+    "A path to turn one-time clients into repeat clients and referrals",
   ];
   return (
     <section className="py-12 md:py-20 bg-secondary">
@@ -58,8 +57,7 @@ export function WhatYoullLeaveWithSection() {
           This Is Not Just Another <span className="gradient-highlight">Marketing Lecture</span>
         </h2>
         <p className="mt-4 text-center text-base md:text-lg text-slate-700 max-w-3xl mx-auto">
-          By the end of the masterclass, you'll have clarity on exactly what to do next to grow your
-          clinic.
+          By the end of the masterclass, you'll know exactly what to do next to grow your business.
         </p>
         <div className="mt-10 grid md:grid-cols-2 gap-4">
           {outcomes.map((o) => (
@@ -72,11 +70,11 @@ export function WhatYoullLeaveWithSection() {
           ))}
         </div>
         <p className="mt-8 text-center text-sm md:text-base font-bold text-slate-900 bg-yellow-100 border border-yellow-300 rounded-xl px-4 py-3 max-w-3xl mx-auto">
-          You don't need to implement everything in one day. You'll leave knowing the next practical
-          steps for your clinic.
+          You don't need to implement everything in one day. The checklists and SOPs take you through
+          it one step at a time.
         </p>
         <div className="mt-8 max-w-md mx-auto">
-          <CtaButton subtitle="Clinic Growth Masterclass — Rs. 999">Yes, I Want More Patient Appointments</CtaButton>
+          <CtaButton subtitle="Business Growth Masterclass — Rs. 999">Yes, I Want More Clients</CtaButton>
         </div>
       </div>
     </section>
@@ -86,10 +84,10 @@ export function WhatYoullLeaveWithSection() {
 /* --------- 3. No Marketing or Technical Experience Needed --------- */
 export function NotTechnicalSection() {
   const items = [
-    "What actually matters for getting more patient appointments",
-    "What you can do yourself",
-    "What you can delegate later",
-    "Where not to waste money on random agencies or unnecessary marketing activities",
+    "What actually matters for getting more clients",
+    "What you can do yourself — with AI's help",
+    "What you can hand to a staff member later",
+    "Where not to waste money on agencies, boosts and random marketing activities",
   ];
   return (
     <section className="py-12 md:py-16 bg-white">
@@ -98,12 +96,11 @@ export function NotTechnicalSection() {
           No Marketing or <span className="gradient-highlight">Technical Experience Needed</span>
         </h2>
         <p className="mt-5 text-base md:text-lg text-slate-700 leading-relaxed">
-          You don't need to be an expert in Meta Ads, websites, pixels, automation, funnels, or
+          You don't need to be an expert in Meta Ads, websites, pixels, automation, funnels or
           Google Business Profile.
         </p>
         <p className="mt-3 text-base md:text-lg text-slate-700 leading-relaxed">
-          Everything will be explained in simple, practical language specifically for healthcare
-          practitioners. You will understand:
+          Everything is explained in simple, practical language for busy business owners. You will understand:
         </p>
         <ul className="mt-6 space-y-3">
           {items.map((i) => (
@@ -121,10 +118,10 @@ export function NotTechnicalSection() {
 /* --------- 4. You Do Not Need a Huge Budget --------- */
 export function BudgetSection() {
   const bullets = [
-    "Start with the services you already offer",
-    "Start with a manageable local ad budget",
-    "Use simple tools before investing in advanced systems",
-    "Focus on booked appointments, not vanity metrics like likes and followers",
+    "Start with the services you already sell",
+    "Start with a small local ad budget",
+    "Use free tools and AI before paying for advanced systems",
+    "Focus on paying clients, not vanity metrics like likes and followers",
   ];
   return (
     <section className="py-12 md:py-16 bg-secondary">
@@ -138,9 +135,8 @@ export function BudgetSection() {
           You Don't Need a <span className="gradient-highlight">Huge Budget to Start</span>
         </h2>
         <p className="mt-5 text-base md:text-lg text-slate-700 leading-relaxed text-center max-w-3xl mx-auto">
-          The purpose of this masterclass is not to force you into spending a large amount on ads or
-          software. You'll learn how to start with a simple patient acquisition system and scale
-          only when you see what's working.
+          This masterclass won't push you into spending a lot on ads or software. You'll learn how to
+          start with a simple client-getting system and scale only when you see what's working.
         </p>
         <ul className="mt-8 grid sm:grid-cols-2 gap-3">
           {bullets.map((b) => (
@@ -151,36 +147,36 @@ export function BudgetSection() {
           ))}
         </ul>
         <p className="mt-8 text-center text-sm md:text-base font-bold text-emerald-900 bg-emerald-50 border-2 border-emerald-200 rounded-xl px-4 py-3 max-w-3xl mx-auto">
-          The goal isn't to spend more. The goal is to make every rupee you spend on marketing more
-          intentional.
+          The goal isn't to spend more. The goal is to make every rupee you spend on marketing bring
+          back clients.
         </p>
       </div>
     </section>
   );
 }
 
-/* --------- 5. Built For Healthcare Practitioners (patient journey flow) --------- */
+/* --------- 5. The complete client journey --------- */
 export function CredibilitySection() {
   const flow = [
     "Offer",
     "Ads / Google / Content",
-    "Patient Inquiry",
+    "Client Inquiry",
     "WhatsApp Follow-Up",
-    "Booked Appointment",
-    "Repeat Patient / Higher-Value Service",
+    "Paying Client",
+    "Repeat Client / Referral",
   ];
   return (
     <section className="py-12 md:py-20 bg-white">
       <div className="mx-auto max-w-5xl px-4">
         <h2 className="text-center text-2xl md:text-4xl font-black">
-          Built Specifically for <span className="gradient-highlight">Healthcare Practitioners</span>
+          Built For <span className="gradient-highlight">Local Service Businesses</span>
         </h2>
         <p className="mt-5 text-center text-base md:text-lg text-slate-700 max-w-3xl mx-auto">
-          Clinic Growth Masterclass is created for practitioners who want more than random posting,
-          boosted posts, and agency promises.
+          The Business Growth Masterclass is for owners who want more than random posting, boosted
+          posts and agency promises.
         </p>
         <p className="mt-3 text-center text-base md:text-lg text-slate-700 max-w-3xl mx-auto">
-          This training focuses on the complete patient journey:
+          It covers the complete client journey:
         </p>
 
         <div className="mt-8 rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-indigo-50 via-white to-emerald-50 p-5 md:p-8">
@@ -202,15 +198,15 @@ export function CredibilitySection() {
         </div>
 
         <p className="mt-8 text-center text-sm md:text-base text-slate-700 max-w-3xl mx-auto">
-          You'll learn the same framework that can be adapted for clinics, hospitals, private
-          practices, aesthetic clinics, therapy practices, dental clinics, and wellness businesses.
+          Most businesses only work on one step — usually the ad. That's why the inquiries don't
+          turn into sales. This masterclass connects all six.
         </p>
       </div>
     </section>
   );
 }
 
-/* --------- 6. Busy With Patients? Lifetime Recording Access --------- */
+/* --------- 6. Busy running your business? Lifetime access --------- */
 export function LiveReplayAccessSection() {
   return (
     <section className="py-12 md:py-16 bg-secondary">
@@ -221,19 +217,19 @@ export function LiveReplayAccessSection() {
           </div>
         </div>
         <h2 className="text-center text-2xl md:text-4xl font-black">
-          Busy With Patients? <span className="gradient-highlight">You'll Still Have Access</span>
+          Busy Running Your Business? <span className="gradient-highlight">Watch Anytime</span>
         </h2>
         <p className="mt-5 text-base md:text-lg text-slate-700 leading-relaxed text-center max-w-3xl mx-auto">
-          No need to block out your clinic hours. Watch the masterclass whenever it suits you —
-          between patients, in the evening, or on your day off.
+          No need to close your shop or block out a whole day. Watch the masterclass whenever it suits
+          you — after work, in the evening, or on your day off.
         </p>
         <div className="mt-8 rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-6 md:p-8 text-center max-w-2xl mx-auto">
           <div className="text-xs font-bold uppercase tracking-wider text-emerald-700">Included</div>
           <div className="mt-2 text-xl md:text-2xl font-black text-emerald-900">
-            Every registered participant gets lifetime recording access.
+            Lifetime access to the complete masterclass.
           </div>
           <p className="mt-3 text-sm md:text-base text-emerald-900/80">
-            Watch at your own pace and revisit the important parts whenever you need.
+            Watch at your own pace and come back to the important parts whenever you need.
           </p>
         </div>
       </div>
@@ -241,14 +237,15 @@ export function LiveReplayAccessSection() {
   );
 }
 
-/* --------- 7. Not Generic Advice (specialty examples) --------- */
+/* --------- 7. Not Generic Advice (business examples) --------- */
 export function NotGenericSection() {
   const examples = [
-    { s: "Dermatologist", f: "Skin analysis offer → treatment plan → procedures" },
-    { s: "Gynecologist", f: "Consultation offer → follow-up → maternity / treatment services" },
-    { s: "Dentist", f: "Check-up or smile consultation → treatment plan → dental procedures" },
-    { s: "Nutritionist", f: "Assessment offer → personalized plan → long-term coaching" },
-    { s: "Physiotherapist", f: "Pain assessment → treatment sessions → recovery plan" },
+    { s: "Real Estate", f: "Free property consultation → site visit → closed deal" },
+    { s: "Interior Designer", f: "Free design consultation → design package → full project" },
+    { s: "Construction Company", f: "Free site visit & estimate → contract → referrals" },
+    { s: "Restaurant / Food Chain", f: "First-visit offer → WhatsApp list → repeat orders" },
+    { s: "Salon / Barber", f: "First-visit offer → package or membership → regular clients" },
+    { s: "Tailor / Boutique", f: "Seasonal offer → custom order → repeat & referrals" },
   ];
   return (
     <section className="py-12 md:py-20 bg-white">
@@ -257,8 +254,8 @@ export function NotGenericSection() {
           Not Generic <span className="gradient-highlight">Marketing Advice</span>
         </h2>
         <p className="mt-5 text-center text-base md:text-lg text-slate-700 max-w-3xl mx-auto">
-          This isn't a training filled with vague motivation like "post consistently" or "make better
-          reels." You'll learn how to apply the system to your own specialty.
+          This isn't vague motivation like "post consistently" or "make better reels." You'll learn how
+          to apply the system to your own business.
         </p>
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {examples.map((e) => (
@@ -275,93 +272,21 @@ export function NotGenericSection() {
   );
 }
 
-/* --------- 8. Support / Community Section --------- */
-export function SupportSection() {
-  const bullets = [
-    "Ask questions after the training",
-    "Get practical reminders and implementation guidance",
-    "Receive useful templates, ideas, and updates",
-    "Learn alongside other healthcare practitioners",
-  ];
-  return (
-    <section className="py-12 md:py-16 bg-secondary">
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="flex items-center justify-center mb-4">
-          <div className="size-14 rounded-full bg-primary/10 grid place-items-center">
-            <Users2 className="size-7 text-primary" />
-          </div>
-        </div>
-        <h2 className="text-center text-2xl md:text-4xl font-black">
-          You Won't Be Left <span className="gradient-highlight">Confused After the Session</span>
-        </h2>
-        <p className="mt-5 text-base md:text-lg text-slate-700 leading-relaxed text-center max-w-3xl mx-auto">
-          After enrolling, you'll also get access to the Clinic Growth community where you can stay
-          connected, receive updates, and get support around the concepts taught in the masterclass.
-        </p>
-        <ul className="mt-8 grid sm:grid-cols-2 gap-3">
-          {bullets.map((b) => (
-            <li key={b} className="flex items-start gap-3 rounded-xl bg-card border p-4">
-              <HeartHandshake className="size-5 text-primary shrink-0 mt-0.5" />
-              <span className="text-sm md:text-base font-semibold">{b}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-/* --------- 9. Transparency Section --------- */
-export function TransparencySection() {
-  return (
-    <section className="py-12 md:py-16 bg-white">
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="flex items-center justify-center mb-4">
-          <div className="size-14 rounded-full bg-amber-100 grid place-items-center">
-            <Handshake className="size-7 text-amber-600" />
-          </div>
-        </div>
-        <h2 className="text-center text-2xl md:text-4xl font-black">
-          Will You Be Pitched <span className="gradient-highlight">Another Service Later?</span>
-        </h2>
-        <p className="mt-5 text-base md:text-lg text-slate-700 leading-relaxed">
-          Yes — there may be an option for doctors who want done-for-you implementation support
-          after the masterclass.
-        </p>
-        <p className="mt-3 text-base md:text-lg text-slate-700 leading-relaxed">
-          However, the Clinic Growth Masterclass itself is designed to give you real value,
-          practical strategies, and a complete roadmap even if you never purchase any other service
-          from us.
-        </p>
-        <div className="mt-6 rounded-xl border-2 border-amber-300 bg-amber-50 p-5 md:p-6">
-          <p className="text-sm md:text-base font-bold text-amber-900 text-center">
-            You can attend the masterclass, apply the strategies yourself, and still get full value
-            from your registration.
-          </p>
-        </div>
-        <div className="mt-8 max-w-md mx-auto">
-          <CtaButton subtitle="Clinic Growth Masterclass — Rs. 999">Reserve My Masterclass Seat</CtaButton>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* --------- Checkout: Before You Register reassurance --------- */
 export function BeforeYouRegisterBox() {
   const items = [
-    "Clinic Growth Masterclass access",
-    "Lifetime recording access",
-    "Patient acquisition strategy for healthcare practitioners",
-    "Offer creation framework for your specialty",
-    "Meta Ads, Google Business Profile, content & WhatsApp booking guidance",
-    "Access to the Clinic Growth community",
+    "Business Growth Masterclass access",
+    "Lifetime access",
+    "Implementation checklists",
+    "Digital marketing cheat sheets",
+    "Step-by-step SOPs",
+    "Google, Meta Ads, AI content & WhatsApp sales guidance",
   ];
   return (
     <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">
       <div className="flex items-center gap-2 mb-4">
         <ShieldCheck className="size-5 text-sky-600" />
-        <h2 className="text-base font-black text-slate-900">Before You Register — Your Registration Includes:</h2>
+        <h2 className="text-base font-black text-slate-900">Before You Enroll — Your Order Includes:</h2>
       </div>
       <ul className="grid sm:grid-cols-2 gap-x-4 gap-y-2.5">
         {items.map((it) => (
@@ -374,7 +299,7 @@ export function BeforeYouRegisterBox() {
         ))}
       </ul>
       <p className="mt-4 rounded-lg bg-sky-50 border border-sky-200 px-4 py-3 text-xs sm:text-sm font-bold text-sky-900 text-center">
-        This is for healthcare practitioners who want more patient appointments — not just more followers.
+        This is for business owners who want more paying clients — not just more followers.
       </p>
     </section>
   );
@@ -383,12 +308,12 @@ export function BeforeYouRegisterBox() {
 /* --------- Checkout: FAQ --------- */
 export function CheckoutFAQ() {
   const faqs = [
-    { q: "Is this only for doctors?", a: "No. It's suitable for doctors, dentists, nutritionists, physiotherapists, psychologists, aesthetic practitioners, clinic owners, and other healthcare professionals." },
-    { q: "Do I need previous marketing experience?", a: "No. The training is designed for beginners and explained in simple language." },
-    { q: "Will this work in my city?", a: "Yes. The strategies are built around attracting local patients in your city through Google, Meta Ads, content, and WhatsApp." },
-    { q: "What if I can't attend on the day?", a: "Every registered participant gets lifetime access to the recording." },
-    { q: "Will I need a big advertising budget?", a: "No. You'll learn how to start with a practical budget and scale based on results." },
-    { q: "Is this only a sales pitch?", a: "No. The masterclass provides a complete actionable roadmap that you can apply yourself, whether or not you choose any future implementation service." },
+    { q: "Who is this for?", a: "Owners of local service businesses in Pakistan — real estate, interior design, construction, restaurants and food chains, salons, barbers, tailors, gyms and similar businesses." },
+    { q: "Do I need previous marketing experience?", a: "No. The training is made for beginners and explained in simple language. AI helps you with most of the work." },
+    { q: "Will this work in my city?", a: "Yes. The strategies are built around getting local clients in your own city through Google, Meta Ads, content and WhatsApp." },
+    { q: "When can I watch it?", a: "Anytime. You get lifetime access, so you can watch at your own pace and come back to it whenever you need." },
+    { q: "Will I need a big advertising budget?", a: "No. You'll learn how to start with a small budget and scale based on results. Some strategies, like Google Business Profile, are free." },
+    { q: "Do I have to hire an agency after this?", a: "No. The masterclass is designed so you can run the system yourself. It gives you a complete roadmap you can apply on your own." },
   ];
   return (
     <section className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-6">

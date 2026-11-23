@@ -1,26 +1,28 @@
 import { useEffect, useState } from "react";
-import { Calendar, Clock } from "lucide-react";
+import { Tag, Clock } from "lucide-react";
+import { getDailyOfferDeadline } from "@/lib/daily-offer";
 
-// Cohort date/time is defined in src/lib/cohort.ts (single source of truth).
+// Cohort date/time is still defined in src/lib/cohort.ts for the email schedulers.
 export { MASTERCLASS_DATE_ISO, MASTERCLASS_DATE_LABEL } from "@/lib/cohort";
-import { MASTERCLASS_DATE_ISO } from "@/lib/cohort";
 
+/**
+ * The Business Growth Masterclass is watched on demand, so the countdown runs
+ * to the end of today's special price (11:59 PM PKT) — the same deadline the
+ * offer popup uses (see src/lib/daily-offer.ts).
+ */
 
 type TimeLeft = {
-  days: number;
   hours: number;
   minutes: number;
   seconds: number;
-  done: boolean;
 };
 
 function getTimeLeft(target: number): TimeLeft {
   const diff = Math.max(0, target - Date.now());
-  const days = Math.floor(diff / 86_400_000);
-  const hours = Math.floor((diff % 86_400_000) / 3_600_000);
+  const hours = Math.floor(diff / 3_600_000);
   const minutes = Math.floor((diff % 3_600_000) / 60_000);
   const seconds = Math.floor((diff % 60_000) / 1000);
-  return { days, hours, minutes, seconds, done: diff === 0 };
+  return { hours, minutes, seconds };
 }
 
 type Props = {
@@ -34,20 +36,14 @@ export function MasterclassCountdown({
   showDateLine = true,
   className = "",
 }: Props) {
-  const target = new Date(MASTERCLASS_DATE_ISO).getTime();
-  const [t, setT] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-    done: false,
-  });
+  const [t, setT] = useState<TimeLeft>({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    setT(getTimeLeft(target));
-    const id = setInterval(() => setT(getTimeLeft(target)), 1000);
+    const tick = () => setT(getTimeLeft(getDailyOfferDeadline().expiresAtMs));
+    tick();
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, [target]);
+  }, []);
 
   const isDark = variant === "dark";
   const wrap = isDark
@@ -60,7 +56,6 @@ export function MasterclassCountdown({
   const subClr = isDark ? "text-white/70" : "text-[#0b1735]/70";
 
   const items: [number, string][] = [
-    [t.days, "Days"],
     [t.hours, "Hours"],
     [t.minutes, "Minutes"],
     [t.seconds, "Seconds"],
@@ -70,16 +65,15 @@ export function MasterclassCountdown({
     <div className={`rounded-2xl p-4 sm:p-5 ${wrap} ${className}`}>
       {showDateLine && (
         <div className="flex items-center justify-center gap-2 text-center font-bold text-sm sm:text-base">
-          <Calendar className="size-4 sm:size-5 text-yellow-300 shrink-0" />
+          <Tag className="size-4 sm:size-5 text-yellow-300 shrink-0" />
           <span>
-            Masterclass:{" "}
-            <span className="gradient-highlight">23rd (Mon) November</span> at{" "}
-            <span className="gradient-highlight">5:00 PM – 7:30 PM</span> Pakistan Standard Time
+            Today's special price of <span className="gradient-highlight">Rs. 999</span> ends at{" "}
+            <span className="gradient-highlight">11:59 PM</span> Pakistan Time
           </span>
         </div>
       )}
 
-      <div className="mt-3 sm:mt-4 grid grid-cols-4 gap-2 sm:gap-3">
+      <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-2 sm:gap-3">
         {items.map(([val, label]) => (
           <div
             key={label}
@@ -97,7 +91,7 @@ export function MasterclassCountdown({
 
       <p className={`mt-3 text-center text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 ${subClr}`}>
         <Clock className="size-3.5 sm:size-4" />
-        Seats are limited. Registration closes when the timer hits zero.
+        Enroll before the timer hits zero to lock in Rs. 999.
       </p>
     </div>
   );

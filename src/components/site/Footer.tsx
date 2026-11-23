@@ -12,7 +12,7 @@ export function Footer() {
           <a href="#" className="underline mx-2">Terms &amp; Conditions</a>|
           <a href="#" className="underline mx-2">Disclaimer</a>
         </p>
-        <p className="text-white/50">© {new Date().getFullYear()} Clinic Growth Masterclass — Farhan Ali. All rights reserved.</p>
+        <p className="text-white/50">© {new Date().getFullYear()} Business Growth Masterclass — Farhan Ali. All rights reserved.</p>
       </div>
     </footer>
   );

@@ -78,8 +78,8 @@ export function OfferPopup() {
           <div className="masterclass-promo-body">
             <DialogPrimitive.Description asChild>
               <div className="masterclass-promo-copy">
-                <p>After hearing from many of you, we've decided to keep our Clinic Growth Masterclass fee at <mark>PKR {PROMO_PRICE.toLocaleString("en-PK")}</mark> for a little longer. No change until <mark>{deadline?.promotionalDateLabel}</mark>.</p>
-                <p>Secure your seat at today's special price before <mark>11:59 PM PKT tonight, {deadline?.promotionalDateLabel}</mark>.</p>
+                <p>After hearing from many of you, we've decided to keep our Business Growth Masterclass fee at <mark>PKR {PROMO_PRICE.toLocaleString("en-PK")}</mark> for a little longer. No change until <mark>{deadline?.promotionalDateLabel}</mark>.</p>
+                <p>Get access at today's special price before <mark>11:59 PM PKT tonight, {deadline?.promotionalDateLabel}</mark>.</p>
                 <p>Due to the rising cost of managing a high number of students, the price may soon adjust to <mark>PKR {PROMO_REGULAR_PRICE.toLocaleString("en-PK")}</mark>.</p>
               </div>
             </DialogPrimitive.Description>
@@ -90,8 +90,8 @@ export function OfferPopup() {
               </div>
               <p className="masterclass-promo-deadline" aria-live="polite">Offer ends: {deadline?.promotionalDateLabel} at 11:59 PM PKT</p>
             </div>
-            <Button className="masterclass-promo-cta" onClick={goToEnrollment}>👉 Enroll Now &amp; Secure Your Seat</Button>
-            <p className="masterclass-promo-support">Practical Strategies for Clinic Growth | Designed for Doctors</p>
+            <Button className="masterclass-promo-cta" onClick={goToEnrollment}>👉 Enroll Now &amp; Get Instant Access</Button>
+            <p className="masterclass-promo-support">Practical Strategies for Business Growth | Designed for Local Business Owners</p>
           </div>
         </DialogPrimitive.Content>
       </DialogPrimitive.Portal>

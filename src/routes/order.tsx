@@ -1,7 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import productStack from "@/assets/product-stack.png.asset.json";
 
-import bumpPromptsImg from "@/assets/bump-prompts.png.asset.json";
+import { ProductStackVisual, PromptVaultThumb } from "@/components/site/BgmVisuals";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Footer } from "@/components/site/Footer";
 import { PROOFS } from "@/components/site/ProofGallery";
@@ -34,8 +33,8 @@ export const Route = createFileRoute("/order")({
   }),
   head: () => ({
     meta: [
-      { title: "Checkout — Clinic Growth Masterclass" },
-      { name: "description", content: "Secure your seat in the Clinic Growth Masterclass for Rs. 999. Add high-converting order bumps to maximize your results." },
+      { title: "Checkout — Business Growth Masterclass" },
+      { name: "description", content: "Get instant access to the Business Growth Masterclass for Rs. 999." },
     ],
   }),
   component: OrderPage,
@@ -47,7 +46,6 @@ type Bump = {
   shortTitle: string;
   price: number;
   badge: string;
-  image: string;
   checkboxHeadline: string;
   description: string;
 };
@@ -55,27 +53,26 @@ type Bump = {
 const BUMPS: readonly Bump[] = [
   {
     id: "prompts",
-    title: "AI Prompt Vault for Doctors & Clinics",
+    title: "AI Prompt Vault for Business Owners",
     shortTitle: "AI Prompt Vault",
     price: 699,
     badge: "Recommended Add-On",
-    image: bumpPromptsImg.url,
     checkboxHeadline: "Yes! Add the AI Prompt Vault to My Order",
     description:
-      "Create clinic ads, video scripts, social posts, WhatsApp messages and website copy in minutes using ready-to-use AI prompts designed for doctors.",
+      "Create ads, video scripts, social posts, WhatsApp sales messages and website copy for your business in minutes using ready-to-use AI prompts designed for local business owners.",
   },
 ] as const;
 
 const INCLUDED_ITEMS: { label: string; highlight?: boolean }[] = [
-  { label: "Complete Clinic Growth Masterclass Training" },
-  { label: "Local Patient Domination System" },
-  { label: "Doctor Personal Brand Blueprint" },
-  { label: "2-Hour Content Creation System" },
-  { label: "Patient Acquisition via Meta Ads" },
-  { label: "Irresistible Clinic Offer Framework" },
-  { label: "Patient Acquisition Machine" },
-  { label: "4+ Additional Bonuses", highlight: true },
-  { label: "Chance To Win A FREE Professional Clinic Website", highlight: true },
+  { label: "Complete Business Growth Masterclass — Lifetime Access" },
+  { label: "Local Business Domination System" },
+  { label: "Business Brand & Trust Blueprint" },
+  { label: "2-Hour AI Content System" },
+  { label: "Client Acquisition With Meta Ads" },
+  { label: "Irresistible Offer Framework" },
+  { label: "Client Acquisition Machine" },
+  { label: "Implementation Checklists, Cheat Sheets & SOPs", highlight: true },
+  { label: "4 Fast Start Bonuses", highlight: true },
 ];
 
 
@@ -85,7 +82,7 @@ const PAYMENT_ACCOUNTS = {
 } as const;
 type PayMethod = keyof typeof PAYMENT_ACCOUNTS;
 
-const MAIN_PRODUCT = { title: "Clinic Growth Masterclass", price: 999 };
+const MAIN_PRODUCT = { title: "Business Growth Masterclass", price: 999 };
 
 const SHOW_ORDER_BUMPS = true;
 
@@ -275,7 +272,7 @@ function OrderPage() {
       fbqTrack("Purchase", {
         value: total,
         currency: "PKR",
-        content_name: "Clinic Growth Masterclass",
+        content_name: "Business Growth Masterclass",
       });
       console.log("Meta Pixel Purchase fired after payment screenshot submit");
     }
@@ -294,16 +291,16 @@ function OrderPage() {
       {/* Top blue bar */}
       <div className="bg-gradient-to-r from-sky-600 to-blue-700 text-white text-center py-2.5 px-4 text-xs sm:text-sm font-bold tracking-wider uppercase flex items-center justify-center gap-2">
         <Lock className="size-3.5 sm:size-4" />
-        <span>Secure Checkout • Clinic Growth Masterclass</span>
+        <span>Secure Checkout • Business Growth Masterclass</span>
       </div>
 
       {/* Headline */}
       <div className="px-4 pt-8 pb-6 text-center max-w-3xl mx-auto">
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 leading-tight">
-          You're One Step Away From <span className="text-sky-600">Filling Your Clinic</span>
+          You're One Step Away From <span className="text-sky-600">Getting Consistent Clients</span>
         </h1>
         <p className="mt-3 text-slate-600 text-sm sm:text-base">
-          Complete your order below to confirm your seat.
+          Complete your order below to get instant access.
         </p>
       </div>
 
@@ -385,12 +382,7 @@ function OrderPage() {
 
                         {/* Thumbnail */}
                         <div className="w-24 sm:w-28 shrink-0">
-                          <img
-                            src={b.image}
-                            alt={b.title}
-                            loading="lazy"
-                            className="block w-full h-auto rounded-lg border border-slate-200 bg-slate-50"
-                          />
+                          <PromptVaultThumb />
                         </div>
 
                         {/* Price */}
@@ -512,11 +504,9 @@ function OrderPage() {
                 <div className="bg-gradient-to-r from-sky-600 to-blue-700 text-white text-center py-2.5 font-black uppercase tracking-wider text-xs">
                   Order Summary
                 </div>
-                <img
-                  src={productStack.url}
-                  alt="Clinic Growth Masterclass"
-                  className="w-full h-auto"
-                />
+                <div className="p-3 bg-slate-50 border-b border-slate-100">
+                  <ProductStackVisual compact />
+                </div>
                 <div className="p-5">
                   <div className="space-y-2 text-sm">
                     {items.map((i) => (
@@ -558,7 +548,7 @@ function OrderPage() {
                 <div>
                   <h3 className="font-black text-sm text-slate-900">7-Day Money-Back Guarantee</h3>
                   <p className="text-xs text-slate-600 mt-1">
-                    Attend, implement — if it doesn't help, message us within 7 days for a full refund.
+                    Watch, implement — if it doesn't help, message us within 7 days for a full refund.
                   </p>
                 </div>
               </div>
@@ -605,10 +595,10 @@ function OrderPage() {
           <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5 sm:p-8">
             <div className="text-center mb-6 sm:mb-8">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 tracking-tight">
-                Real Reviews From <span className="text-sky-600">Masterclass Attendees</span>
+                Real Reviews Of <span className="text-sky-600">Farhan's Training</span>
               </h2>
               <p className="mt-2 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
-                Feedback and payment proofs from doctors who joined the Clinic Growth Masterclass.
+                Feedback and payment proofs from doctors and clinic owners who joined Farhan's Clinic Growth Masterclass.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">

@@ -1,12 +1,4 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import productStack from "@/assets/product-stack.png.asset.json";
-import clinicGrowthHeroStack from "@/assets/masterclass-banner.png.asset.json";
-import bonus1 from "@/assets/bonus-1-cheatsheet.png.asset.json";
-import bonus2 from "@/assets/bonus-2-worksheet.png.asset.json";
-import bonus3 from "@/assets/bonus-3-whatsapp.png.asset.json";
-import bonus4 from "@/assets/bonus-4-community.png.asset.json";
-import emanLogo from "@/assets/eman-medical-tower-logo.jpg.asset.json";
-import drManalReview from "@/assets/dr-manal-whatsapp-review.jpeg.asset.json";
 import drManalFatimahReview from "@/assets/dr-manal-fatimah-review.jpeg.asset.json";
 import drJasimReview from "@/assets/dr-jasim-mumtaz-review.jpeg.asset.json";
 import drMehwishReview from "@/assets/dr-mehwish-rasheed-review.jpeg.asset.json";
@@ -17,9 +9,10 @@ import { Footer } from "@/components/site/Footer";
 import { CtaButton } from "@/components/site/CtaButton";
 import { OfferPopup } from "@/components/site/OfferPopup";
 import { ProofGallery } from "@/components/site/ProofGallery";
+import { ProductStackVisual, BonusCover, type BonusIcon } from "@/components/site/BgmVisuals";
 import {
-  Star, ShieldCheck, CheckCircle2, PlayCircle, Lock, BadgeCheck, Volume2,
-  Stethoscope, Users, TrendingUp, Calendar, Gift, Play, ChevronDown, ArrowRight,
+  ShieldCheck, CheckCircle2, Lock, BadgeCheck,
+  Users, TrendingUp, Gift, Play, ChevronDown, ArrowRight, CreditCard, PlayCircle,
 } from "lucide-react";
 import farhanInstructor from "@/assets/farhan-instructor.jpeg.asset.json";
 import vslVideo from "@/assets/vsl-cgm.mp4.asset.json";
@@ -34,17 +27,23 @@ import {
   CredibilitySection,
   LiveReplayAccessSection,
   NotGenericSection,
-  SupportSection,
-  
 } from "@/components/site/ObjectionSections";
+
+/**
+ * The current VSL video was recorded for doctors (Clinic Growth Masterclass).
+ * Until a Business Growth Masterclass VSL is uploaded, the hero shows the
+ * product visual instead. Upload the new video, point vslVideo / vslPoster at
+ * it, then set this to true.
+ */
+const SHOW_VSL = false;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Clinic Growth Masterclass — Get 20–25 Patients Every Week" },
-      { name: "description", content: "Masterclass by Farhan Ali for Pakistani doctors. Get 20–25 new patients every week without spending hours on digital marketing. Only Rs. 999." },
-      { property: "og:title", content: "Clinic Growth Masterclass — Farhan Ali" },
-      { property: "og:description", content: "Discover how busy doctors are getting 20–25 patients every week — without ads, social media, or personal branding headaches." },
+      { title: "Business Growth Masterclass — Get Consistent Clients With AI & Digital Marketing" },
+      { name: "description", content: "Masterclass by Farhan Ali for Pakistani local business owners. Learn to get consistent clients yourself using AI, Google, Meta Ads and WhatsApp — without hiring an agency. Only Rs. 999." },
+      { property: "og:title", content: "Business Growth Masterclass — Farhan Ali" },
+      { property: "og:description", content: "How local business owners in Pakistan are using AI and simple digital marketing to get consistent clients — without hiring an agency." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -55,7 +54,7 @@ export const Route = createFileRoute("/")({
 function LandingPage() {
   useEffect(() => {
     fbqTrack("ViewContent", {
-      content_name: "Clinic Growth Masterclass",
+      content_name: "Business Growth Masterclass",
       content_category: "Masterclass",
       value: 999,
       currency: "PKR",
@@ -64,14 +63,13 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      
       <Topbar />
       <Hero />
       <SocialProofBar />
 
       <WhatIsItSection />
       <IsThisForYouSection />
-      <WebsiteGiveawaySection />
+      <WhatsIncludedSection />
       <BonusesSection />
       <NotTechnicalSection />
       <BudgetSection />
@@ -83,105 +81,13 @@ function LandingPage() {
       <LiveReplayAccessSection />
       <TrainerSection />
       <WhatYoullLeaveWithSection />
-      <SupportSection />
-      
+
       <GuaranteeSection />
       <FAQSection />
       <FinalCta />
       <Footer />
       <OfferPopup />
     </div>
-  );
-}
-
-/* ---------------- ANNOUNCEMENT BAR ---------------- */
-
-function AnnouncementBar() {
-  const scrollToGiveaway = (e: React.MouseEvent) => {
-    e.preventDefault();
-    const el = document.getElementById("free-website-giveaway");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-  return (
-    <div className="sticky top-0 z-50 w-full bg-[#0b1735] text-white border-b border-white/10 shadow-md">
-      <div className="mx-auto max-w-7xl px-3 py-2 flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-3 text-center text-[12px] sm:text-sm">
-        <span className="flex items-center gap-2 leading-snug">
-          <span className="bg-yellow-400 text-[#0b1735] font-extrabold px-2 py-0.5 rounded tracking-wider text-[11px] sm:text-xs whitespace-nowrap">
-            🎁 SPECIAL BONUS
-          </span>
-          <span className="text-white/95">
-            <span className="font-extrabold text-yellow-300">2 Doctors</span>, Nutritionists &amp; Healthcare Practitioners Will Be Selected For A <span className="font-bold">FREE Professional Clinic Website Setup</span>
-          </span>
-        </span>
-        <a
-          href="#free-website-giveaway"
-          onClick={scrollToGiveaway}
-          className="text-emerald-300 hover:text-emerald-200 underline font-bold whitespace-nowrap"
-        >
-          See Bonus Details →
-        </a>
-      </div>
-    </div>
-  );
-}
-
-/* ---------------- WEBSITE GIVEAWAY ---------------- */
-
-function WebsiteGiveawaySection() {
-  const benefits = [
-    "Professional Clinic Website",
-    "Mobile-Friendly Design",
-    "WhatsApp Integration",
-    "Appointment Booking Form",
-    "Services & About Pages",
-    "Basic SEO Setup",
-  ];
-  return (
-    <section id="free-website-giveaway" className="py-12 md:py-20 bg-white">
-      <div className="mx-auto max-w-4xl px-4">
-        <div className="relative rounded-3xl border-2 border-yellow-400/70 bg-gradient-to-br from-[#0b1735] via-[#101f47] to-[#0b1735] text-white p-8 md:p-12 shadow-[0_20px_60px_-15px_rgba(250,204,21,0.35)] overflow-hidden">
-          <div className="absolute -top-24 -right-24 size-72 rounded-full bg-yellow-400/20 blur-3xl pointer-events-none" />
-          <div className="absolute -bottom-24 -left-24 size-72 rounded-full bg-emerald-400/15 blur-3xl pointer-events-none" />
-
-          <div className="relative">
-            <div className="inline-flex items-center gap-2 bg-yellow-400 text-[#0b1735] font-extrabold px-3 py-1 rounded-full text-xs tracking-widest uppercase shadow">
-              <Gift className="size-4" /> Special Bonus Opportunity
-            </div>
-            <h2 className="mt-5 text-3xl md:text-5xl font-black leading-tight">
-              <span className="text-yellow-300">2 Doctors</span> Will Receive A <span className="text-yellow-300">FREE Professional Clinic Website</span> Setup
-            </h2>
-            <p className="mt-5 text-base md:text-lg text-white/85 leading-relaxed">
-              At the end of the Clinic Growth Masterclass, only <span className="font-extrabold text-yellow-300">2 doctors</span>, nutritionists, or healthcare practitioners will be selected to receive a professionally designed clinic website — completely FREE.
-
-            </p>
-
-            <div className="mt-8 grid sm:grid-cols-2 gap-3">
-              {benefits.map((b) => (
-                <div key={b} className="flex items-center gap-3 rounded-xl bg-white/5 ring-1 ring-white/10 px-4 py-3 backdrop-blur-sm">
-                  <CheckCircle2 className="size-5 text-emerald-400 shrink-0" />
-                  <span className="font-semibold">{b}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-8 inline-block bg-yellow-400 text-[#0b1735] font-black px-4 py-2 rounded-lg shadow text-sm md:text-base">
-              Estimated Value: PKR 30,000+
-            </div>
-
-            <div className="mt-6 rounded-2xl border border-yellow-400/60 bg-yellow-400/10 p-5 md:p-6">
-              <p className="text-sm md:text-base text-white/95 leading-relaxed">
-                <span className="font-extrabold text-yellow-300">🎁 FREE Website Giveaway:</span>{" "}
-                At the end of this masterclass, only <span className="font-extrabold text-yellow-300">2 doctors</span>, nutritionists, or healthcare practitioners will be selected to receive a FREE professional clinic website setup (Value: PKR 30,000+).
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 max-w-md mx-auto">
-          <CtaButton subtitle="Reserve Your Seat + Bonus Chance">YES! I Want In</CtaButton>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -198,99 +104,83 @@ function Hero() {
               <BadgeCheck className="size-3 sm:size-4 text-yellow-300" />
             </span>
             <span className="text-[10px] sm:text-sm font-semibold tracking-wide text-white/95 leading-snug text-center">
-              Attended by Doctors, Nutritionists &amp; Clinic owners across Pakistan
+              For Pakistani Local Business Owners — Salons, Restaurants, Real Estate, Interior Design, Construction &amp; More
             </span>
           </div>
         </div>
 
         {/* Headline */}
         <h1 className="mt-4 md:mt-8 text-center text-[22px] leading-[1.15] sm:text-3xl md:text-5xl lg:text-6xl font-black md:leading-[1.05] uppercase">
-          Discover How Busy Doctors Are Getting{" "}
-          <span className="gradient-highlight">20–25 Patients</span>{" "}
-          Every Week Without Spending Hours On{" "}
-          <span className="gradient-highlight">Digital Marketing</span>!
+          Discover How Local Business Owners Are Using{" "}
+          <span className="gradient-highlight">AI &amp; Simple Digital Marketing</span>{" "}
+          To Get{" "}
+          <span className="gradient-highlight">Consistent Clients</span>{" "}
+          Every Week — Without Hiring An Agency!
         </h1>
         <p className="mt-3 md:mt-6 text-center max-w-3xl mx-auto text-sm md:text-xl text-white/85 leading-snug">
-          Even if you've struggled with ads, social media, or personal branding before.
+          Even if you've tried ads before and only got "price?" messages that never turned into paying clients.
         </p>
 
-
-        {/* Two column: Video + Order card */}
+        {/* Two column: Video/visual + Order card */}
         <div className="mt-5 md:mt-10 grid md:grid-cols-5 gap-5 md:gap-6 items-start">
-          {/* Video */}
           <div className="md:col-span-3">
             <div className="rounded-lg overflow-hidden shadow-2xl ring-1 ring-white/10">
               <div className="bg-topbar text-white text-center py-1.5 md:py-2 px-3 text-[11px] md:text-sm font-semibold leading-snug">
-                What Medical Schools Missed: Patient Acquisition, Authority & Clinic Growth
+                What Nobody Taught You About Getting Clients: Visibility, Trust &amp; Closing On WhatsApp
               </div>
-              <div className="relative bg-black" style={{ paddingTop: "56.25%" }}>
-                <VslPlayer
-                  src={vslVideo.url}
-                  poster={vslPoster.url}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              </div>
+              {SHOW_VSL ? (
+                <div className="relative bg-black" style={{ paddingTop: "56.25%" }}>
+                  <VslPlayer
+                    src={vslVideo.url}
+                    poster={vslPoster.url}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </div>
+              ) : (
+                <ProductStackVisual />
+              )}
             </div>
 
             <div className="mt-4 md:mt-6">
               <MasterclassCountdown variant="dark" className="mb-3 md:mb-4" />
-              <CtaButton subtitle="Enroll in just 999 PKR">
-                YES! I Want My Patient-Getting System
+              <CtaButton subtitle="Enroll for just 999 PKR">
+                YES! I Want My Client-Getting System
               </CtaButton>
               <div className="mt-3 text-center text-[11px] md:text-xs font-bold text-yellow-300 uppercase tracking-wider">
-                ✅ Get Lifetime Recording Access
+                ✅ Instant, Lifetime Access — Watch At Your Own Pace
               </div>
             </div>
 
             <TopTestimonials />
-
-
-
-            <div className="mt-5 md:mt-8 rounded-2xl overflow-hidden bg-white/5 ring-1 ring-white/10 p-2 md:p-3 shadow-2xl">
-              <img
-                src={clinicGrowthHeroStack.url}
-                alt="Clinic Growth Masterclass product stack"
-                className="w-full h-auto rounded-xl"
-              />
-            </div>
-
-
-
-
           </div>
-
 
           {/* Order summary card */}
           <aside className="md:col-span-2 bg-card text-card-foreground rounded-xl shadow-2xl overflow-hidden">
-            <div className="bg-gradient-to-br from-indigo-50 to-white p-5 border-b">
-              <img
-                src={productStack.url}
-                alt="Clinic Growth Masterclass product mockup"
-                className="w-full h-auto"
-              />
+            <div className="bg-gradient-to-br from-indigo-50 to-white p-3 border-b">
+              <ProductStackVisual compact />
             </div>
             <div className="p-6 text-center">
-              <div className="text-lg font-extrabold">ONLY A FEW SPOTS LEFT</div>
+              <div className="text-lg font-extrabold">TODAY'S SPECIAL PRICE</div>
               <div className="mt-2 text-3xl font-black text-destructive">
                 ONLY <span>Rs. 999</span>
               </div>
 
               <p className="mt-4 text-sm">
-                Get Your Seat For just <span className="font-bold">Rs. 999!</span><br />
-                On Zoom — Monday, 23rd November 2026.
+                Get the complete <span className="font-bold">Business Growth Masterclass</span> + checklists,
+                cheat sheets &amp; SOPs for just <span className="font-bold">Rs. 999</span>.
               </p>
 
               <div className="mt-3 inline-block rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
-                ✅ Get Lifetime Recording Access
+                ✅ Lifetime Access
               </div>
               <p className="mt-2 text-xs text-slate-600 max-w-xs mx-auto">
-                Every registered participant gets lifetime access to the recording.
+                Watch anytime, on your phone or laptop, as many times as you want.
               </p>
 
               <InlineLeadForm />
 
               <div className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-                <Lock className="size-3.5" /> 100% Secure 256-Bit Encrypted Checkout
+                <Lock className="size-3.5" /> 100% Secure Checkout
               </div>
             </div>
           </aside>
@@ -299,7 +189,6 @@ function Hero() {
     </section>
   );
 }
-
 
 function InlineLeadForm() {
   const navigate = useNavigate();
@@ -337,7 +226,7 @@ function InlineLeadForm() {
           return;
         }
         if (!spec) {
-          setError("Please enter your medical speciality / field of practice.");
+          setError("Please enter your type of business.");
           return;
         }
 
@@ -346,7 +235,7 @@ function InlineLeadForm() {
         // Fire pixel immediately so it isn't blocked by the network round trip.
         try {
           fbqTrack("Lead", {
-            content_name: "Clinic Growth Masterclass — Step 1 Opt-In",
+            content_name: "Business Growth Masterclass — Step 1 Opt-In",
             value: 0,
             currency: "PKR",
             vsl_percent_watched: getVslMaxPct(),
@@ -355,8 +244,7 @@ function InlineLeadForm() {
         logVsl("optin");
 
         // Save lead in the background — do NOT block navigation on the server function.
-        // Checkout receives all fields via URL search params, so the DB row is not
-        // required to render the next page. If the request fails we log and move on.
+        // The business type is stored in the existing `specialty` column.
         void (async () => {
           try {
             const { upsertLead } = await import("@/lib/leads.functions");
@@ -380,7 +268,6 @@ function InlineLeadForm() {
         params.set("whatsapp", wa);
         params.set("specialty", spec);
         navigate({ to: "/order", search: Object.fromEntries(params) });
-
       }}
     >
       <input
@@ -415,7 +302,7 @@ function InlineLeadForm() {
         type="text"
         value={specialty}
         onChange={(e) => setSpecialty(e.target.value)}
-        placeholder="Medical Speciality / Field of Practice*"
+        placeholder="Your Business* (e.g. Salon, Real Estate, Restaurant)"
         maxLength={120}
         className="w-full rounded-md border border-input bg-background px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
       />
@@ -432,7 +319,7 @@ function InlineLeadForm() {
           <ArrowRight className="btn-cta-arrow size-5" aria-hidden="true" />
         </span>
         <div className="text-xs font-medium normal-case tracking-normal opacity-95">
-          Reserve Your Spot Now
+          Get Instant Access Now
         </div>
       </button>
       <p className="text-[11px] text-center text-muted-foreground">
@@ -442,61 +329,46 @@ function InlineLeadForm() {
   );
 }
 
+/* ---------------- TESTIMONIALS (from Farhan's previous masterclass) ---------------- */
+
 function ReviewCard() {
+  const reviews = [
+    { img: drManalFatimahReview.url, name: "Dr. Manal Fatimah", place: "Lahore, Pakistan" },
+    { img: drJasimReview.url, name: "Dr. Jasim Mumtaz", place: "Peshawar" },
+    { img: drMehwishReview.url, name: "Dr. Mehwish Rasheed", place: "" },
+  ];
   return (
     <>
-      <div className="mt-6 rounded-lg bg-white/5 ring-1 ring-white/10 p-3 sm:p-4 text-white/95">
-        <img
-          src={drManalFatimahReview.url}
-          alt="WhatsApp review screenshot from Dr. Manal Fatimah about the Clinic Growth Masterclass"
-          className="w-full h-auto rounded-md ring-1 ring-white/10 shadow-md object-contain"
-          loading="lazy"
-        />
-        <div className="mt-3 px-1">
-          <p className="font-bold leading-tight">- Dr. Manal Fatimah</p>
-          <p className="text-xs sm:text-sm text-white/80 leading-snug">Lahore, Pakistan</p>
+      {reviews.map((r, i) => (
+        <div key={r.name} className={`${i === 0 ? "mt-6" : "mt-5"} rounded-lg bg-white/5 ring-1 ring-white/10 p-3 sm:p-4 text-white/95`}>
+          <img
+            src={r.img}
+            alt={`WhatsApp review screenshot from ${r.name} about Farhan Ali's masterclass`}
+            className="w-full h-auto rounded-md ring-1 ring-white/10 shadow-md object-contain"
+            loading="lazy"
+          />
+          <div className="mt-3 px-1">
+            <p className="font-bold leading-tight">- {r.name}</p>
+            {r.place && <p className="text-xs sm:text-sm text-white/80 leading-snug">{r.place}</p>}
+          </div>
         </div>
-      </div>
-      <div className="mt-5 rounded-lg bg-white/5 ring-1 ring-white/10 p-3 sm:p-4 text-white/95">
-        <img
-          src={drJasimReview.url}
-          alt="WhatsApp review screenshot from Dr. Jasim Mumtaz about the Clinic Growth Masterclass"
-          className="w-full h-auto rounded-md ring-1 ring-white/10 shadow-md object-contain"
-          loading="lazy"
-        />
-        <div className="mt-3 px-1">
-          <p className="font-bold leading-tight">- Dr. Jasim Mumtaz</p>
-          <p className="text-xs sm:text-sm text-white/80 leading-snug">Peshawar</p>
-        </div>
-      </div>
-      <div className="mt-5 rounded-lg bg-white/5 ring-1 ring-white/10 p-3 sm:p-4 text-white/95">
-        <img
-          src={drMehwishReview.url}
-          alt="WhatsApp review screenshot from Dr. Mehwish Rasheed about the Clinic Growth Masterclass"
-          className="w-full h-auto rounded-md ring-1 ring-white/10 shadow-md object-contain"
-          loading="lazy"
-        />
-        <div className="mt-3 px-1">
-          <p className="font-bold leading-tight">- Dr. Mehwish Rasheed</p>
-        </div>
-      </div>
+      ))}
       <div className="mt-7 mb-2 max-w-md mx-auto">
-        <CtaButton>YES! I WANT TO ENROLL NOW →</CtaButton>
+        <CtaButton>YES! I WANT TO ENROLL NOW</CtaButton>
       </div>
     </>
   );
 }
-
 
 function TopTestimonials() {
   return (
     <div className="mt-6 md:mt-8">
       <div className="text-center mb-5 md:mb-6">
         <h2 className="text-2xl md:text-3xl font-extrabold text-white">
-          What Our <span className="text-yellow-400">Masterclass Attendees</span> Say
+          What People Say About <span className="text-yellow-400">Farhan's Training</span>
         </h2>
         <p className="mt-2 text-white/70 text-sm md:text-base">
-          Real feedback from doctors and healthcare practitioners who attended the masterclass.
+          Real feedback from doctors and clinic owners who attended Farhan's Clinic Growth Masterclass.
         </p>
       </div>
       <ReviewCard />
@@ -504,14 +376,13 @@ function TopTestimonials() {
   );
 }
 
-
 /* ---------------- SOCIAL PROOF BAR ---------------- */
 
 function SocialProofBar() {
   return (
     <section className="bg-white py-10 border-b">
       <div className="mx-auto max-w-6xl px-4 text-center">
-        <h2 className="text-xl md:text-2xl font-extrabold mb-8">Trusted By Leading Clinics &amp; Doctors Across Pakistan</h2>
+        <h2 className="text-xl md:text-2xl font-extrabold mb-8">Farhan Has Built Client-Getting Systems For Businesses Like</h2>
         <div className="marquee">
           {[0, 1].map((dup) => (
             <div key={dup} className="marquee-track" aria-hidden={dup === 1}>
@@ -543,42 +414,90 @@ function WhatIsItSection() {
       <div className="mx-auto max-w-4xl px-4">
         <h2 className="text-2xl md:text-5xl font-black text-center">
           What is the <br className="md:hidden" />
-          <span className="gradient-highlight">Clinic Growth Masterclass?</span>
+          <span className="gradient-highlight">Business Growth Masterclass?</span>
         </h2>
         <p className="mt-6 text-lg leading-relaxed">
-          The Clinic Growth Masterclass is the fastest way to get a fully mapped patient-acquisition system,
-          tailored to your clinic.
+          The Business Growth Masterclass is the fastest way for a local business owner to build a
+          simple, predictable client-getting system — and run it yourself, with the help of AI.
           <br /><br />
-          without spending hours on YouTube tutorials, expensive agencies, or
-          gambling on ads that don't convert.
+          Without spending months on YouTube tutorials, paying an agency every month, or
+          gambling money on ads that only bring "price?" messages.
         </p>
         <p className="mt-4 text-lg leading-relaxed">
-          Because let's face it - you already know digital marketing works.&nbsp;
+          Because let's be honest — you already know digital marketing works.&nbsp;
           <br /><br />
-          You've seen other doctors blow up on Instagram. You've heard the gurus preach personal branding.
-          You've probably even tried running an ad or two yourself…
+          You've seen competitors in your city getting busy from Facebook, Instagram and Google.
+          You've probably boosted a post or run an ad or two yourself…
         </p>
         <p className="mt-4 text-lg leading-relaxed">
           <span className="inline-block bg-red-600 text-white font-bold px-3 py-1 rounded-md ring-2 ring-red-700/40 shadow-sm">
-            But the part nobody talks about? What to actually do.
+            But the part nobody teaches you? What to actually do.
           </span>
         </p>
         <p className="mt-4 text-lg leading-relaxed">
-          What should your offer be… your hook… your follow-up… your booking process?
+          What should your offer be… your ad… your Google profile… and what do you say on WhatsApp so the
+          inquiry actually becomes a paying client?
         </p>
         <p className="mt-4 text-lg leading-relaxed">
           <span className="inline-block bg-red-600 text-white font-bold px-3 py-1 rounded-md ring-2 ring-red-700/40 shadow-sm">
-            The Clinic Growth Masterclass flips the script.
+            The Business Growth Masterclass flips the script.
           </span>
           <br /><br />
-          I've eliminated months of guesswork so you can get a predictable flow of 20–25 patients every week.
+          I've taken out the guesswork so you can follow one clear system, use AI to do the heavy
+          lifting, and become the go-to business in your city and your niche.
         </p>
 
         <CurriculumAccordion />
 
-
         <div className="mt-10 max-w-md mx-auto">
-          <CtaButton subtitle="Clinic Growth Masterclass — Limited Seats">YES! Reserve My Seat Now</CtaButton>
+          <CtaButton subtitle="Business Growth Masterclass — Rs. 999">YES! Give Me Access Now</CtaButton>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- WHAT'S INCLUDED (core product stack) ---------------- */
+
+function WhatsIncludedSection() {
+  const items: { title: string; desc: string; value: string }[] = [
+    { title: "The Complete Business Growth Masterclass", desc: "All 6 modules — the full client-getting system, step by step. Lifetime access.", value: "Rs. 15,000" },
+    { title: "Implementation Checklists", desc: "Tick-box checklists for every module so you know exactly what to do next — nothing gets missed.", value: "Rs. 5,000" },
+    { title: "Digital Marketing Cheat Sheets", desc: "One-page quick guides for Google Business Profile, Meta Ads and AI content — keep them open while you work.", value: "Rs. 5,000" },
+    { title: "Step-by-Step SOPs", desc: "Standard operating procedures you can follow yourself or hand to a staff member to run every week.", value: "Rs. 7,000" },
+  ];
+  return (
+    <section className="py-12 md:py-20 bg-secondary">
+      <div className="mx-auto max-w-5xl px-4">
+        <h2 className="text-center text-2xl md:text-5xl font-black">
+          Here's Everything You Get <span className="gradient-highlight">Today</span>
+        </h2>
+        <p className="mt-3 text-center text-muted-foreground max-w-2xl mx-auto">
+          Not just a video — the tools to implement it fast.
+        </p>
+        <div className="mt-10 grid md:grid-cols-[1fr_1.2fr] gap-8 items-center">
+          <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-border">
+            <ProductStackVisual />
+          </div>
+          <ul className="space-y-3">
+            {items.map((it) => (
+              <li key={it.title} className="flex items-start gap-3 rounded-xl bg-card border p-4 shadow-sm">
+                <CheckCircle2 className="size-6 text-emerald-600 shrink-0 mt-0.5" />
+                <div className="min-w-0">
+                  <div className="font-extrabold">{it.title}</div>
+                  <div className="text-sm text-muted-foreground mt-0.5">{it.desc}</div>
+                  <div className="mt-1.5 text-xs font-bold text-primary">Value: {it.value}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <p className="mt-10 text-center text-lg font-semibold">
+          Total Value: <span className="line-through">Rs. 32,000</span> —{" "}
+          <span className="text-destructive">yours today for just Rs. 999.</span>
+        </p>
+        <div className="mt-8 max-w-md mx-auto">
+          <CtaButton subtitle="Instant Access — Only Rs. 999">YES! I Want Everything</CtaButton>
         </div>
       </div>
     </section>
@@ -588,34 +507,38 @@ function WhatIsItSection() {
 /* ---------------- BONUSES ---------------- */
 
 function BonusesSection() {
-  const bonuses = [
+  const bonuses: { tag: string; title: string; copy: string; value: string; icon: BonusIcon; kind: string }[] = [
     {
       tag: "Fast Start Bonus #1",
-      title: "Authority Content Cheat Sheet for Doctors",
-      copy: "30 ready-to-use post ideas to position yourself as the go-to authority in your specialty — paste, post, and grow.",
-      value: "Rs. 15,000",
-      image: bonus1.url,
+      title: "Google Business Profile Ranking Checklist",
+      copy: "The exact checklist to set up and optimize your Google profile so people searching in your city find YOU first.",
+      value: "Rs. 8,000",
+      icon: "map",
+      kind: "Checklist",
     },
     {
       tag: "Fast Start Bonus #2",
-      title: "Doctor Personal Brand Positioning Worksheet",
-      copy: "Define your niche, unique angle and patient promise so the right patients pick you instantly.",
+      title: "WhatsApp Inquiry-to-Client SOP",
+      copy: "Step-by-step replies and follow-ups that turn \"price?\" messages into paying clients — no more ghosting.",
       value: "Rs. 10,000",
-      image: bonus2.url,
+      icon: "whatsapp",
+      kind: "SOP",
     },
     {
       tag: "Fast Start Bonus #3",
-      title: "Clinic WhatsApp Follow-Up Scripts",
-      copy: "Plug-and-play scripts that turn website inquiries into booked appointments — no more ghosting.",
+      title: "Meta Ads Launch Cheat Sheet",
+      copy: "A one-page guide to set up your first local Facebook & Instagram ad the right way — targeting, budget and creative.",
       value: "Rs. 8,000",
-      image: bonus3.url,
+      icon: "cheatsheet",
+      kind: "Cheat Sheet",
     },
     {
       tag: "Fast Start Bonus #4",
-      title: "Private Doctor Growth Community",
-      copy: "Get ongoing support, case studies, and updates with other ambitious doctors growing their practice.",
-      value: "Rs. 12,000",
-      image: bonus4.url,
+      title: "30-Day Business Growth Action Plan",
+      copy: "A day-by-day checklist so you implement the masterclass in 30 days instead of \"someday\".",
+      value: "Rs. 7,000",
+      icon: "checklist",
+      kind: "Checklist",
     },
   ];
 
@@ -624,14 +547,12 @@ function BonusesSection() {
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="text-center text-2xl md:text-5xl font-black">
           You Also Unlock Instant Access To<br />
-          <span className="gradient-highlight">4 Additional Bonuses!</span>
+          <span className="gradient-highlight">4 Fast Start Bonuses!</span>
         </h2>
         <div className="mt-12 grid md:grid-cols-2 gap-8">
           {bonuses.map((b) => (
             <div key={b.title} className="rounded-2xl border bg-card overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-              <div className="bg-secondary">
-                <img src={b.image} alt={b.title} className="w-full h-auto block" loading="lazy" />
-              </div>
+              <BonusCover icon={b.icon} kind={b.kind} title={b.title} />
               <div className="p-6">
                 <div className="text-sm font-bold uppercase tracking-wider text-primary flex items-center gap-2">
                   <Gift className="size-4" /> {b.tag}
@@ -646,11 +567,11 @@ function BonusesSection() {
           ))}
         </div>
         <p className="mt-10 text-center text-lg font-semibold">
-          Total Bonus Value: <span className="line-through">Rs. 45,000</span> —{" "}
-          <span className="text-destructive">included FREE with your seat today.</span>
+          Total Bonus Value: <span className="line-through">Rs. 33,000</span> —{" "}
+          <span className="text-destructive">included FREE today.</span>
         </p>
         <div className="mt-10 max-w-md mx-auto">
-          <CtaButton subtitle="Get Your Seat + All 4 Bonuses For Rs. 999">YES! I Want The Bonuses</CtaButton>
+          <CtaButton subtitle="Masterclass + All 4 Bonuses For Rs. 999">YES! I Want The Bonuses</CtaButton>
         </div>
       </div>
     </section>
@@ -661,18 +582,18 @@ function BonusesSection() {
 
 function HowItWorks() {
   const steps = [
-    { icon: Calendar, title: "Step 1 — Reserve Your Seat", text: "Lock in your Rs. 999 spot and get the Zoom link instantly in your email." },
-    { icon: Stethoscope, title: "Step 2 — Attend on Zoom", text: "Join the 2.5-hour deep-dive on Monday, 23rd November 2026 — interactive and personal." },
-    { icon: TrendingUp, title: "Step 3 — Get 20–25 New Patients/Week", text: "Implement the system the same week and watch your appointment book fill up." },
+    { icon: CreditCard, title: "Step 1 — Get Access", text: "Enroll for Rs. 999 and get instant, lifetime access to the masterclass and all resources." },
+    { icon: PlayCircle, title: "Step 2 — Watch & Implement", text: "Watch at your own pace and follow the checklists, cheat sheets and SOPs — with AI doing the heavy lifting." },
+    { icon: TrendingUp, title: "Step 3 — Get Consistent Clients", text: "Turn your Google profile, ads and WhatsApp into a system that brings clients every week." },
   ];
   return (
     <section className="py-12 md:py-20 bg-secondary">
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="text-center text-2xl md:text-5xl font-black">
-          How Does The <span className="gradient-highlight">Clinic Growth Masterclass</span> Work?
+          How Does The <span className="gradient-highlight">Business Growth Masterclass</span> Work?
         </h2>
         <p className="mt-3 text-center text-muted-foreground">
-          A predictable patient-getting system mapped out for you in just 3 steps…
+          A predictable client-getting system mapped out for you in just 3 steps…
         </p>
         <div className="mt-12 grid md:grid-cols-3 gap-6">
           {steps.map((s) => (
@@ -690,65 +611,19 @@ function HowItWorks() {
   );
 }
 
-/* ---------------- TESTIMONIALS ---------------- */
-
-function TestimonialsWall() {
-  const reviews = [
-    { name: "Dr. Sara K.", spec: "Dentist, Lahore", text: "We went from 8 to 26 booked appointments per week in 3 weeks. The system just works." },
-    { name: "Dr. Bilal R.", spec: "Cardiologist, Karachi", text: "Finally a Pakistan-specific marketing system. No fluff. I implemented Module 1 the same day." },
-    { name: "Dr. Hina M.", spec: "Dietitian, Islamabad", text: "My DMs are full of qualified patients. The content cheat sheet alone is worth 10x the price." },
-    { name: "Dr. Junaid A.", spec: "Orthopedic, Rawalpindi", text: "I stopped wasting money on the wrong ads. ROI is finally positive — and predictable." },
-    { name: "Dr. Ayesha Z.", spec: "Psychologist, Lahore", text: "Loved the live Q&A. Farhan diagnosed my bottleneck in 5 minutes." },
-    { name: "Dr. Faisal H.", spec: "IVF Specialist, Karachi", text: "We crossed 100 new patient inquiries in 30 days. Strongly recommended." },
-  ];
-  return (
-    <section className="py-12 md:py-20 bg-white">
-      <div className="mx-auto max-w-6xl px-4">
-        <p className="text-center font-bold uppercase text-sm text-primary">Excellent — based on dozens of reviews</p>
-        <h2 className="mt-3 text-center text-3xl md:text-5xl font-black tracking-tight">
-          What Our <span className="text-primary">Masterclass Attendees</span> Say
-        </h2>
-        <p className="mt-3 text-center text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
-          Real feedback from doctors and healthcare practitioners who attended the masterclass.
-        </p>
-        <div className="mt-12 grid md:grid-cols-3 gap-6">
-          <div className="rounded-xl border bg-card p-3 shadow-sm flex items-center justify-center overflow-hidden">
-            <img
-              src={drManalReview.url}
-              alt="WhatsApp review screenshot from Dr. Manal about the Clinic Growth Masterclass"
-              className="w-full h-auto rounded-lg ring-1 ring-border shadow-md object-contain"
-              loading="lazy"
-            />
-          </div>
-          {reviews.slice(1).map((r) => (
-            <div key={r.name} className="rounded-xl border bg-card p-6 shadow-sm">
-              <div className="flex gap-0.5 text-yellow-500">
-                {Array.from({ length: 5 }).map((_, i) => <Star key={i} className="size-4 fill-yellow-500" />)}
-              </div>
-              <p className="mt-3 italic">"{r.text}"</p>
-              <p className="mt-3 font-bold">{r.name}</p>
-              <p className="text-sm text-muted-foreground">{r.spec}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* ---------------- WHO FOR ---------------- */
 
 function WhoFor() {
   const list = [
-    "Doctors (MBBS, specialists, consultants)",
-    "Dental clinic owners",
-    "Nutritionists & dietitians",
-    "Psychologists & therapists",
-    "Eye specialists / ophthalmologists",
-    "Orthopedic doctors",
-    "Homeopathy & alternative medicine",
-    "IVF & fertility specialists",
-    "Physiotherapists",
+    "Real estate agents & agencies",
+    "Interior designers",
+    "Construction companies & contractors",
+    "Restaurants, cafés & food chains",
+    "Salons & beauty parlours",
+    "Barbers & grooming studios",
+    "Tailors & boutiques",
+    "Gyms & fitness studios",
+    "Any local service business",
   ];
   return (
     <section className="py-12 md:py-20 bg-secondary">
@@ -764,8 +639,12 @@ function WhoFor() {
             </div>
           ))}
         </div>
+        <p className="mt-8 text-center text-base md:text-lg font-semibold max-w-3xl mx-auto">
+          Especially if you've tried digital marketing before and it didn't bring clients — or you
+          don't have a proper Google, Facebook or Instagram presence yet.
+        </p>
         <div className="mt-10 max-w-md mx-auto">
-          <CtaButton subtitle="Only Rs. 999 — Limited Seats">Register Now</CtaButton>
+          <CtaButton subtitle="Only Rs. 999 — Instant Access">Enroll Now</CtaButton>
         </div>
       </div>
     </section>
@@ -781,7 +660,7 @@ function TrainerSection() {
         <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-border">
           <img
             src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/gEjfcPU9sJhDOS0NobUy/media/b28682be-8ac2-41b4-9a64-ad8c57ac0bb7.jpeg"
-            alt="Farhan Ali — Healthcare Digital Marketing Expert"
+            alt="Farhan Ali — Digital Marketing Expert"
             className="w-full h-auto"
           />
         </div>
@@ -789,23 +668,26 @@ function TrainerSection() {
           <p className="uppercase tracking-widest text-primary font-bold text-sm">Meet Your Trainer</p>
           <h2 className="mt-2 text-4xl md:text-5xl font-black">Farhan Ali</h2>
           <p className="mt-2 text-lg font-semibold text-muted-foreground">
-            Digital Marketing Expert for Doctors, Clinics &amp; Hospitals
+            Digital Marketing Expert &amp; Founder of Zero Apple A Day
           </p>
           <p className="mt-4 leading-relaxed">
-            Farhan is a Healthcare Digital Marketing Expert with 3+ years of hands-on experience helping
-            doctors and clinic owners grow their practice through proven, Pakistan-specific patient acquisition
-            systems.
+            For 3+ years, Farhan has built client-acquisition systems for local businesses in Pakistan —
+            mainly hospitals, clinics and doctors, where trust is everything and every client is hard won.
           </p>
-          <p className="mt-3 leading-relaxed">He has worked closely with:</p>
-          <ul className="mt-3 grid grid-cols-2 gap-y-2">
-            {["Diabetologists","Nutritionists","Psychologists","Cardiologists","Dentists","Endocrinologists"].map((s) => (
-              <li key={s} className="flex items-center gap-2"><BadgeCheck className="size-4 text-primary" />{s}</li>
+          <p className="mt-3 leading-relaxed">The same system works for any local service business:</p>
+          <ul className="mt-3 grid grid-cols-1 gap-y-2">
+            {[
+              "Get found on Google in your city",
+              "Run Meta Ads that bring real buyers",
+              "Turn WhatsApp inquiries into paying clients",
+              "Use AI to create content and ads in minutes",
+            ].map((s) => (
+              <li key={s} className="flex items-center gap-2"><BadgeCheck className="size-4 text-primary shrink-0" />{s}</li>
             ))}
           </ul>
           <p className="mt-4 leading-relaxed">
-            Farhan specializes in patient acquisition systems, clinic branding, and lead generation designed
-            specifically for healthcare professionals in Pakistan — without wasting money on ads or relying on
-            complicated tactics.
+            In the Business Growth Masterclass he shows you how to run this system yourself — without
+            hiring an agency and without wasting money on random tactics.
           </p>
         </div>
       </div>
@@ -817,14 +699,13 @@ function TrainerSection() {
 
 function GuaranteeSection() {
   const accessPoints: { title: string; desc: string }[] = [
-    { title: "Local Patient Domination System", desc: "Get found by more local patients." },
-    { title: "Doctor Personal Brand Blueprint", desc: "Build trust and stand out online." },
-    { title: "2-Hour Content Creation System", desc: "Create weeks of content faster with AI." },
-    { title: "Patient Acquisition Through Digital Marketing", desc: "Attract patients with simple Meta ad strategies." },
-    { title: "Irresistible Clinic Offer Framework", desc: "Create offers patients actually respond to." },
-    { title: "Patient Acquisition Machine", desc: "Turn visibility into inquiries and appointments." },
+    { title: "Local Business Domination System", desc: "Become the first business people find in your city." },
+    { title: "Business Brand & Trust Blueprint", desc: "Stand out from competitors and build trust online." },
+    { title: "2-Hour AI Content System", desc: "Create weeks of content in one sitting with AI." },
+    { title: "Client Acquisition With Meta Ads", desc: "Ads that bring buyers, not just \"price?\" messages." },
+    { title: "Irresistible Offer Framework", desc: "Offers people respond to — without heavy discounts." },
+    { title: "Client Acquisition Machine", desc: "Turn inquiries into paying, repeat clients on WhatsApp." },
   ];
-
 
   const reassurance = [
     "No complicated forms.",
@@ -836,7 +717,6 @@ function GuaranteeSection() {
     <section className="py-12 md:py-20 bg-hero-deep">
       <div className="mx-auto max-w-3xl px-4">
         <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/10 bg-[#FFF8E7]">
-          {/* Headline box */}
           <div
             className="relative px-5 py-8 md:px-10 md:py-10 text-center text-white"
             style={{
@@ -851,28 +731,24 @@ function GuaranteeSection() {
               7-Day Money-Back Guarantee
             </p>
             <h2 className="mt-2 text-2xl md:text-4xl font-black leading-tight">
-              The Best Money-Back Guarantee for Doctors Who Want More Patients
+              The Best Money-Back Guarantee for Business Owners Who Want More Clients
             </h2>
           </div>
 
-          {/* Body */}
           <div className="px-5 py-8 md:px-10 md:py-12 text-foreground">
             <div className="space-y-4 text-base md:text-lg leading-relaxed">
-              <p>Before enrolling in any training, you deserve to know exactly what you are getting.</p>
+              <p>Before you buy any training, you deserve to know exactly what you are getting.</p>
               <p>And more importantly…</p>
-              <p className="font-bold">You deserve to know that your investment is protected.</p>
-              <p>
-                I want you to feel completely comfortable joining the Clinic Growth Masterclass.
-              </p>
+              <p className="font-bold">You deserve to know that your money is protected.</p>
+              <p>I want you to feel completely comfortable joining the Business Growth Masterclass.</p>
               <p>Even though the investment is only <span className="font-bold">PKR 999</span>.</p>
               <p>
-                Because this is not another motivational webinar where you leave with notes but no clear
+                Because this is not another motivational video where you take notes but have no clear
                 action plan.
               </p>
             </div>
 
-            {/* Access list */}
-            <h3 className="mt-10 text-xl md:text-2xl font-black">Here Is What You Will Learn Inside the Clinic Growth Masterclass:</h3>
+            <h3 className="mt-10 text-xl md:text-2xl font-black">Here Is What You Will Learn Inside the Business Growth Masterclass:</h3>
             <ul className="mt-5 space-y-2.5">
               {accessPoints.map((p) => (
                 <li key={p.title} className="flex items-start gap-2.5 rounded-lg bg-white/60 border border-emerald-100 px-3 py-2">
@@ -885,17 +761,14 @@ function GuaranteeSection() {
               ))}
             </ul>
 
-
-
-            {/* Guarantee copy */}
             <div className="mt-10 space-y-4 text-base md:text-lg leading-relaxed">
               <p>Watch the training.</p>
               <p>Apply the strategies.</p>
-              <p>Choose at least one action step for your clinic.</p>
+              <p>Choose at least one action step for your business.</p>
               <p className="font-bold">Then make up your own mind.</p>
               <p>
                 If you genuinely feel that the masterclass did not give you practical, useful ideas to
-                help you attract more patients and grow your clinic…
+                help you get more clients and grow your business…
               </p>
               <p>
                 Simply message us within <span className="font-bold">7 days</span> of joining and ask for
@@ -904,7 +777,6 @@ function GuaranteeSection() {
               <p className="font-bold text-emerald-700">We will return your PKR 999.</p>
             </div>
 
-            {/* Reassurance box */}
             <div className="mt-8 rounded-2xl border-2 border-dashed border-emerald-500/50 bg-emerald-50 p-5 md:p-6">
               <ul className="space-y-2.5">
                 {reassurance.map((r) => (
@@ -917,17 +789,16 @@ function GuaranteeSection() {
             </div>
 
             <p className="mt-8 text-center text-base md:text-lg italic text-muted-foreground">
-              That is how confident we are that this masterclass can help you build a stronger, more
-              independent patient-acquisition system.
+              That is how confident we are that this masterclass can help you build your own
+              client-getting system — without depending on an agency.
             </p>
 
-            {/* CTA */}
             <div className="mt-8 max-w-md mx-auto">
-              <CtaButton subtitle="Only Rs. 999 — Monday, 23rd November">
-                Join Clinic Growth Masterclass Risk-Free →
+              <CtaButton subtitle="Only Rs. 999 — Instant Lifetime Access">
+                Join Business Growth Masterclass Risk-Free
               </CtaButton>
               <p className="mt-3 text-center text-xs md:text-sm text-muted-foreground font-medium">
-                7-Day Money-Back Guarantee • Secure Payment • Instant Access
+                7-Day Money-Back Guarantee • Secure Payment • Lifetime Access
               </p>
             </div>
           </div>
@@ -942,25 +813,28 @@ function GuaranteeSection() {
 function FAQSection() {
   const faqs = [
     {
-      q: "1. How will the training be conducted?",
-      a: "The training will be conducted on Zoom. You'll receive the meeting link in your email immediately after registration.",
+      q: "1. How will I access the masterclass?",
+      a: "After you complete your payment, you get access to the masterclass and all checklists, cheat sheets and SOPs. Watch on your phone or laptop, anytime.",
     },
     {
-      q: "2. Do I need any prior marketing experience?",
-      a: "Not at all. This masterclass is designed for busy doctors with zero marketing experience. We teach the system step-by-step.",
+      q: "2. How long will I have access?",
+      a: "Lifetime. Watch at your own pace and come back to any part whenever you need it.",
     },
     {
-      q: "3. Will I get the recording of the program?",
-      a: "Yes. Every registered participant gets lifetime access to the recording, so you can watch it anytime and revisit the important parts whenever you need.",
-
+      q: "3. Do I need any marketing or technical experience?",
+      a: "Not at all. Everything is explained in simple language, step by step, for busy business owners. AI does most of the heavy lifting for you.",
     },
     {
-      q: "4. When is the masterclass?",
-      a: "Monday, 23rd November 2026 — from 5:00 PM to 7:30 PM (PKT). Block your calendar now.",
+      q: "4. Will this work for my type of business?",
+      a: "If you run a local service business — real estate, interior design, construction, restaurant, salon, barber, tailor, gym or similar — yes. You'll see how to apply the system to your own business and city.",
     },
     {
-      q: "5. Is this only for Pakistani doctors?",
-      a: "Yes — every example, ad strategy and follow-up flow is built specifically for the Pakistani healthcare market.",
+      q: "5. I already tried ads and they didn't work. Why would this be different?",
+      a: "Most ads fail because of what happens before and after the ad — the offer, the trust, and the WhatsApp follow-up. The masterclass shows you the complete system, not just how to boost a post.",
+    },
+    {
+      q: "6. Do I need a big ad budget?",
+      a: "No. You'll learn how to start with a small local budget — and some strategies, like Google Business Profile, cost nothing.",
     },
   ];
   return (
@@ -968,7 +842,7 @@ function FAQSection() {
       <div className="mx-auto max-w-3xl px-4">
         <h2 className="text-center text-2xl md:text-5xl font-black">FAQs</h2>
         <p className="text-center text-muted-foreground mt-2">
-          Find answers to commonly asked questions about the Clinic Growth Masterclass.
+          Answers to common questions about the Business Growth Masterclass.
         </p>
         <div className="mt-10 space-y-4">
           {faqs.map((f) => (
@@ -992,20 +866,21 @@ function FinalCta() {
   return (
     <section className="hero-bg text-white py-20">
       <div className="mx-auto max-w-3xl px-4 text-center">
-        <p className="uppercase tracking-widest text-yellow-300 font-bold">Limited-Time Offer</p>
+        <p className="uppercase tracking-widest text-yellow-300 font-bold">Limited-Time Price</p>
         <h2 className="mt-2 text-2xl md:text-5xl font-black">
-          Reserve your spot before all seats fill.
+          Start building your client-getting system today.
         </h2>
         <p className="mt-4 text-lg text-white/85">
-          Price will increase soon — lock in your seat for just <span className="font-bold">Rs. 999</span> today.
+          Get the Business Growth Masterclass, checklists, cheat sheets &amp; SOPs for just{" "}
+          <span className="font-bold">Rs. 999</span>.
         </p>
         <div className="mt-8 max-w-md mx-auto">
           <MasterclassCountdown variant="dark" className="mb-6" />
-          <CtaButton subtitle="Enroll Now — Only Rs. 999">YES! Reserve My Seat</CtaButton>
+          <CtaButton subtitle="Enroll Now — Only Rs. 999">YES! Give Me Access</CtaButton>
           <p className="mt-4 text-sm text-white/85">
-            <span className="font-bold text-yellow-300">✅ Get Lifetime Recording Access</span>
+            <span className="font-bold text-yellow-300">✅ Instant, Lifetime Access</span>
             <br />
-            <span className="text-white/70">Every registered participant gets lifetime access to the recording.</span>
+            <span className="text-white/70">Watch at your own pace, as many times as you want.</span>
           </p>
         </div>
 
@@ -1025,74 +900,74 @@ function CurriculumAccordion() {
   const modules = [
     {
       label: "MODULE #1",
-      title: "Local Patient Domination System",
-      desc: "Position your clinic as the obvious choice in your city using Google Business Profile, local visibility strategies and patient trust signals.",
+      title: "Local Business Domination System",
+      desc: "Make your business the obvious choice in your city using Google Business Profile (GMB), reviews and local trust signals.",
       duration: "Module 01",
-      intro: "Become the #1 search result patients see when they're looking for your specialty in your city.",
+      intro: "Become the first business people see when they search for your service in your city.",
       points: [
-        "Google Business Profile optimization for clinics",
-        "Local visibility strategies that compound weekly",
-        "Patient trust signals that turn views into bookings",
+        "Google Business Profile setup & optimization",
+        "Getting reviews that make people choose you",
+        "Local visibility that keeps growing every week",
       ],
     },
     {
       label: "MODULE #2",
-      title: "Doctor Personal Brand Blueprint",
-      desc: "How doctors and healthcare practitioners can build trust online, stand out from competitors and become the first choice for patients.",
+      title: "Business Brand & Trust Blueprint",
+      desc: "Build a brand people trust online, stand out from competitors and stop competing on price.",
       duration: "Module 02",
-      intro: "Build a doctor-brand patients trust on sight — and pre-choose before they ever call.",
+      intro: "Make people trust your business before they ever message you.",
       points: [
-        "Stand out from every other doctor in your city",
-        "The trust-building content patients actually consume",
-        "Position yourself as the obvious specialist of choice",
+        "Stand out from every competitor in your area",
+        "The proof and content that builds trust fast",
+        "Position yourself so price stops being the first question",
       ],
     },
     {
       label: "MODULE #3",
-      title: "2-Hour Content Creation System",
-      desc: "Create weeks of educational content in a single sitting using patient FAQs, content frameworks and AI-assisted workflows.",
+      title: "2-Hour AI Content System",
+      desc: "Create weeks of posts, reels and captions in one sitting using AI and simple content frameworks.",
       duration: "Module 03",
-      intro: "Stop staring at a blank screen. Batch a month of content in one focused session.",
+      intro: "Stop staring at a blank screen. Let AI help you batch a month of content.",
       points: [
-        "Patient-FAQ content framework that always converts",
-        "AI-assisted workflows tailored for doctors",
-        "Repurpose 1 idea into 10 high-trust pieces",
+        "Content ideas from the questions your clients already ask",
+        "AI workflows for posts, reels scripts and captions",
+        "Turn 1 idea into 10 pieces of content",
       ],
     },
     {
       label: "MODULE #4",
-      title: "Patient Acquisition Through Digital Marketing",
-      desc: "The simple strategy to reach local patients consistently using Meta Ads and digital marketing — without wasting money on random tactics.",
+      title: "Client Acquisition With Meta Ads",
+      desc: "Run simple Facebook & Instagram ads that reach local buyers — without wasting money on boosts and random tactics.",
       duration: "Module 04",
-      intro: "A predictable patient-flow system using Meta Ads — built for Pakistani healthcare.",
+      intro: "A predictable client flow from Meta Ads, built for Pakistani local businesses.",
       points: [
-        "Meta Ads setup that targets real local patients",
-        "Ad creatives proven to work for clinics",
-        "Track every rupee back to a booked appointment",
+        "Ad setup that targets real local buyers",
+        "Creatives and copy you can make with AI",
+        "Track every rupee back to an inquiry and a sale",
       ],
     },
     {
       label: "MODULE #5",
-      title: "Irresistible Clinic Offer Framework",
-      desc: "Create offers patients actually respond to — instead of promoting generic consultations and services.",
+      title: "Irresistible Offer Framework",
+      desc: "Create offers people actually respond to — instead of posting \"services available, DM for price\".",
       duration: "Module 05",
-      intro: "The exact offer structure that gets your phone ringing this week.",
+      intro: "The offer structure that gets your phone ringing.",
       points: [
-        "The Irresistible Offer formula for clinics",
-        "Pricing & positioning that doesn't cheapen your brand",
-        "Hook patients without discounting your services",
+        "The irresistible offer formula for local businesses",
+        "Pricing and positioning that doesn't cheapen your brand",
+        "Attract clients without constant discounts",
       ],
     },
     {
       label: "MODULE #6",
-      title: "Patient Acquisition Machine",
-      desc: "Build a simple patient acquisition system that turns strangers into inquiries, inquiries into appointments, and appointments into long-term patients.",
+      title: "Client Acquisition Machine",
+      desc: "Connect everything into one system that turns strangers into inquiries, inquiries into paying clients, and clients into repeat business.",
       duration: "Module 06",
-      intro: "Connect every piece into one self-running machine that fills your appointment book weekly.",
+      intro: "Put every piece together into a machine that brings clients every week.",
       points: [
-        "End-to-end patient journey mapping",
-        "WhatsApp + booking automation that converts",
-        "Retain patients for long-term clinic growth",
+        "WhatsApp follow-up that closes inquiries into sales",
+        "Simple automation so no lead is forgotten",
+        "Repeat business and referrals for long-term growth",
       ],
     },
   ];
@@ -1106,7 +981,7 @@ function CurriculumAccordion() {
           Training Curriculum
         </div>
         <h3 className="mt-2 text-2xl md:text-4xl font-black uppercase tracking-tight">
-          What You'll Learn Inside The Clinic Growth Masterclass
+          What You'll Learn Inside The Business Growth Masterclass
         </h3>
       </div>
 
@@ -1196,4 +1071,3 @@ function CurriculumAccordion() {
     </div>
   );
 }
-

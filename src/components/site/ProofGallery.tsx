@@ -95,11 +95,11 @@ export function ProofGallery() {
           Real Proof Gallery
         </p>
         <h2 className="mt-3 text-3xl md:text-5xl font-black tracking-tight">
-          More Real Reviews From{" "}
-          <span className="text-[oklch(0.82_0.18_80)]">Masterclass Attendees</span>
+          More Real Reviews Of{" "}
+          <span className="text-[oklch(0.82_0.18_80)]">Farhan's Training</span>
         </h2>
         <p className="mt-3 text-sm md:text-base text-white/70 max-w-2xl mx-auto">
-          Feedback, payment proofs, and real responses from doctors and healthcare practitioners who joined the Clinic Growth Masterclass.
+          Feedback, payment proofs and real responses from doctors and clinic owners who joined Farhan's Clinic Growth Masterclass.
         </p>
       </div>
 
