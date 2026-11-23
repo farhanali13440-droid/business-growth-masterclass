@@ -17,7 +17,7 @@ export function IsThisForYouSection() {
         </h2>
         <p className="mt-5 text-base md:text-lg leading-relaxed text-slate-700">
           Whether you run a real estate agency, interior design studio, construction company,
-          restaurant, salon, barber shop, boutique or any other local service business…
+          restaurant, barber shop, boutique or any other local service business…
         </p>
         <p className="mt-3 text-base md:text-lg leading-relaxed text-slate-700">
           This masterclass shows you how to get more local client inquiries through Google, Facebook,
@@ -244,7 +244,7 @@ export function NotGenericSection() {
     { s: "Interior Designer", f: "Free design consultation → design package → full project" },
     { s: "Construction Company", f: "Free site visit & estimate → contract → referrals" },
     { s: "Restaurant / Food Chain", f: "First-visit offer → WhatsApp list → repeat orders" },
-    { s: "Salon / Barber", f: "First-visit offer → package or membership → regular clients" },
+    { s: "Barber / Grooming Studio", f: "First-visit offer → package or membership → regular clients" },
     { s: "Tailor / Boutique", f: "Seasonal offer → custom order → repeat & referrals" },
   ];
   return (
@@ -308,7 +308,7 @@ export function BeforeYouRegisterBox() {
 /* --------- Checkout: FAQ --------- */
 export function CheckoutFAQ() {
   const faqs = [
-    { q: "Who is this for?", a: "Owners of local service businesses in Pakistan — real estate, interior design, construction, restaurants and food chains, salons, barbers, tailors, gyms and similar businesses." },
+    { q: "Who is this for?", a: "Owners of local service businesses in Pakistan — real estate, interior design, construction, restaurants and food chains, barbers, tailors, gyms and similar businesses." },
     { q: "Do I need previous marketing experience?", a: "No. The training is made for beginners and explained in simple language. AI helps you with most of the work." },
     { q: "Will this work in my city?", a: "Yes. The strategies are built around getting local clients in your own city through Google, Meta Ads, content and WhatsApp." },
     { q: "When can I watch it?", a: "Anytime. You get lifetime access, so you can watch at your own pace and come back to it whenever you need." },

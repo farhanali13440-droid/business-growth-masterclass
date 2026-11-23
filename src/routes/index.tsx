@@ -108,7 +108,7 @@ function Hero() {
               <BadgeCheck className="size-3 sm:size-4 text-yellow-300" />
             </span>
             <span className="text-[10px] sm:text-sm font-semibold tracking-wide text-white/95 leading-snug text-center">
-              For Pakistani Local Business Owners — Salons, Restaurants, Real Estate, Interior Design, Construction &amp; More
+              For Pakistani Local Business Owners
             </span>
           </div>
         </div>
@@ -129,9 +129,6 @@ function Hero() {
         <div className="mt-5 md:mt-10 grid md:grid-cols-5 gap-5 md:gap-6 items-start">
           <div className="md:col-span-3">
             <div className="rounded-lg overflow-hidden shadow-2xl ring-1 ring-white/10">
-              <div className="bg-topbar text-white text-center py-1.5 md:py-2 px-3 text-[11px] md:text-sm font-semibold leading-snug">
-                What Nobody Taught You About Getting Clients: Visibility, Trust &amp; Closing On WhatsApp
-              </div>
               {SHOW_VSL ? (
                 <div className="relative bg-black" style={{ paddingTop: "56.25%" }}>
                   <VslPlayer
@@ -314,7 +311,7 @@ function InlineLeadForm() {
         type="text"
         value={specialty}
         onChange={(e) => setSpecialty(e.target.value)}
-        placeholder="Your Business* (e.g. Salon, Real Estate, Restaurant)"
+        placeholder="Your Business* (e.g. Real Estate, Restaurant)"
         maxLength={120}
         className="w-full rounded-md border border-input bg-background px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
       />
@@ -634,7 +631,7 @@ function WhoFor() {
     "Interior designers",
     "Construction companies & contractors",
     "Restaurants, cafés & food chains",
-    "Salons & beauty parlours",
+    "Car showrooms & dealers",
     "Barbers & grooming studios",
     "Tailors & boutiques",
     "Gyms & fitness studios",
@@ -841,7 +838,7 @@ function FAQSection() {
     },
     {
       q: "4. Will this work for my type of business?",
-      a: "If you run a local service business — real estate, interior design, construction, restaurant, salon, barber, tailor, gym or similar — yes. You'll see how to apply the system to your own business and city.",
+      a: "If you run a local service business — real estate, interior design, construction, restaurant, barber, tailor, gym or similar — yes. You'll see how to apply the system to your own business and city.",
     },
     {
       q: "5. I already tried ads and they didn't work. Why would this be different?",
