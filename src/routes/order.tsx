@@ -3,7 +3,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { PromptVaultThumb } from "@/components/site/BgmVisuals";
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Footer } from "@/components/site/Footer";
-import { PROOFS } from "@/components/site/ProofGallery";
+import { BUSINESS_PROOFS as PROOFS } from "@/components/site/ProofGallery";
 import { Lock, ShieldCheck, ArrowRight, ChevronDown, CreditCard, Upload, ImageIcon, Check, Gift, CheckCircle2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { fbqTrack } from "@/lib/fbpixel";
@@ -600,7 +600,7 @@ function OrderPage() {
                 Real Reviews Of <span className="text-sky-600">Farhan's Training</span>
               </h2>
               <p className="mt-2 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
-                Feedback and payment proofs from doctors and clinic owners who joined Farhan's Clinic Growth Masterclass.
+                Feedback and payment proofs from people who joined Farhan's masterclass.
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">

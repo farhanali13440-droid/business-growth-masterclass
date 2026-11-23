@@ -8,7 +8,7 @@ import { Topbar } from "@/components/site/Topbar";
 import { Footer } from "@/components/site/Footer";
 import { CtaButton } from "@/components/site/CtaButton";
 import { OfferPopup } from "@/components/site/OfferPopup";
-import { ProofGallery } from "@/components/site/ProofGallery";
+import { ProofGallery, BUSINESS_PROOFS } from "@/components/site/ProofGallery";
 import {
   ShieldCheck, CheckCircle2, Lock, BadgeCheck,
   Users, TrendingUp, Gift, Play, ChevronDown, ArrowRight, CreditCard, PlayCircle,
@@ -29,7 +29,7 @@ import {
 } from "@/components/site/ObjectionSections";
 
 /**
- * The current VSL video was recorded for doctors (Clinic Growth Masterclass).
+ * The current VSL video was recorded for the previous (healthcare) offer.
  * Until a Business Growth Masterclass VSL is uploaded, the hero shows the
  * product visual instead. Upload the new video, point vslVideo / vslPoster at
  * it, then set this to true.
@@ -76,7 +76,10 @@ function LandingPage() {
       <BudgetSection />
       <HowItWorks />
       <NotGenericSection />
-      <ProofGallery />
+      <ProofGallery
+        proofs={BUSINESS_PROOFS}
+        subtitle="Feedback, payment proofs and real responses from people who joined Farhan's masterclass."
+      />
       <CredibilitySection />
       <WhoFor />
       <LiveReplayAccessSection />
@@ -342,23 +345,23 @@ function InlineLeadForm() {
 
 function ReviewCard() {
   const reviews = [
-    { img: drManalFatimahReview.url, name: "Dr. Manal Fatimah", place: "Lahore, Pakistan" },
-    { img: drJasimReview.url, name: "Dr. Jasim Mumtaz", place: "Peshawar" },
-    { img: drMehwishReview.url, name: "Dr. Mehwish Rasheed", place: "" },
+    { img: drManalFatimahReview.url, place: "Lahore, Pakistan" },
+    { img: drJasimReview.url, place: "Peshawar" },
+    { img: drMehwishReview.url, place: "Pakistan" },
   ];
   return (
     <>
       {reviews.map((r, i) => (
-        <div key={r.name} className={`${i === 0 ? "mt-6" : "mt-5"} rounded-lg bg-white/5 ring-1 ring-white/10 p-3 sm:p-4 text-white/95`}>
+        <div key={r.img} className={`${i === 0 ? "mt-6" : "mt-5"} rounded-lg bg-white/5 ring-1 ring-white/10 p-3 sm:p-4 text-white/95`}>
           <img
             src={r.img}
-            alt={`WhatsApp review screenshot from ${r.name} about Farhan Ali's masterclass`}
+            alt="WhatsApp review screenshot about Farhan Ali's masterclass"
             className="w-full h-auto rounded-md ring-1 ring-white/10 shadow-md object-contain"
             loading="lazy"
           />
           <div className="mt-3 px-1">
-            <p className="font-bold leading-tight">- {r.name}</p>
-            {r.place && <p className="text-xs sm:text-sm text-white/80 leading-snug">{r.place}</p>}
+            <p className="font-bold leading-tight">- Masterclass Student</p>
+            <p className="text-xs sm:text-sm text-white/80 leading-snug">{r.place}</p>
           </div>
         </div>
       ))}
@@ -377,7 +380,7 @@ function TopTestimonials() {
           What People Say About <span className="text-yellow-400">Farhan's Training</span>
         </h2>
         <p className="mt-2 text-white/70 text-sm md:text-base">
-          Real feedback from doctors and clinic owners who attended Farhan's Clinic Growth Masterclass.
+          Real feedback from business owners who attended Farhan's masterclass.
         </p>
       </div>
       <ReviewCard />
@@ -684,7 +687,7 @@ function TrainerSection() {
           </p>
           <p className="mt-4 leading-relaxed">
             For 3+ years, Farhan has built client-acquisition systems for local businesses in Pakistan —
-            mainly hospitals, clinics and doctors, where trust is everything and every client is hard won.
+            in industries where trust is everything and every client is hard won.
           </p>
           <p className="mt-3 leading-relaxed">The same system works for any local service business:</p>
           <ul className="mt-3 grid grid-cols-1 gap-y-2">

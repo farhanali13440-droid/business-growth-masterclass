@@ -27,7 +27,7 @@ import payEpAdeel from "@/assets/proof/pay-easypaisa-adeel-999.jpg.asset.json";
 import payEpShaheen from "@/assets/proof/pay-easypaisa-shaheen-999.jpg.asset.json";
 import payEpUmair from "@/assets/proof/pay-easypaisa-umair-1999.jpg.asset.json";
 
-export type Proof = { url: string; kind: "text" | "payment"; alt: string };
+export type Proof = { url: string; kind: "text" | "payment"; alt: string; healthcare?: boolean };
 
 // Alternating text → payment → text → payment ...
 export const PROOFS: Proof[] = [
@@ -47,19 +47,22 @@ export const PROOFS: Proof[] = [
   { url: payEp1000.url, kind: "payment", alt: "Easypaisa payment proof Rs. 1,000" },
   { url: textTanveerHr.url, kind: "text", alt: "WhatsApp feedback from Tanveer Ahmad: Bundle of knowledge, simple action steps" },
   { url: payEpQuick.url, kind: "payment", alt: "Easypaisa quick send payment proof Rs. 999" },
-  { url: textAmazingWorthy.url, kind: "text", alt: "WhatsApp feedback: Clinic Growth Masterclass truly amazing and worthy" },
+  { url: textAmazingWorthy.url, kind: "text", alt: "WhatsApp feedback: Clinic Growth Masterclass truly amazing and worthy", healthcare: true },
   { url: payEpJasam.url, kind: "payment", alt: "Easypaisa payment proof Rs. 999 — Jasam Mumtaz" },
-  { url: textDrAmnah.url, kind: "text", alt: "WhatsApp feedback from Dr. Amnah: Most valuable lesson was Google My Business strategy" },
+  { url: textDrAmnah.url, kind: "text", alt: "WhatsApp feedback from Dr. Amnah: Most valuable lesson was Google My Business strategy", healthcare: true },
   { url: payRaastIqra.url, kind: "payment", alt: "Raast bank transfer proof PKR 999 — Iqra Siddique" },
-  { url: textDrManalFull.url, kind: "text", alt: "WhatsApp feedback from Dr. Manal: Personal profile building & audience targeting" },
+  { url: textDrManalFull.url, kind: "text", alt: "WhatsApp feedback from Dr. Manal: Personal profile building & audience targeting", healthcare: true },
   { url: payEpAdeel.url, kind: "payment", alt: "Easypaisa payment proof Rs. 999 — Adeel ur Rehman" },
-  { url: textDrManalCrop.url, kind: "text", alt: "WhatsApp feedback from Dr. Manal: Recommends masterclass to doctors & practitioners" },
+  { url: textDrManalCrop.url, kind: "text", alt: "WhatsApp feedback from Dr. Manal: Recommends masterclass to doctors & practitioners", healthcare: true },
   { url: payEpShaheen.url, kind: "payment", alt: "Easypaisa payment proof Rs. 999 — Shaheen Fatima" },
-  { url: textPatientJourney.url, kind: "text", alt: "WhatsApp feedback: Patient-centric journey converting first-time visitors into loyal patients" },
+  { url: textPatientJourney.url, kind: "text", alt: "WhatsApp feedback: Patient-centric journey converting first-time visitors into loyal patients", healthcare: true },
   { url: payEpUmair.url, kind: "payment", alt: "Easypaisa payment proof Rs. 1,999 — Umair Akbar" },
-  { url: textSocialAds.url, kind: "text", alt: "WhatsApp feedback: Improved patient numbers via social media ads & clinical strategies" },
-  { url: textAbdulHaq.url, kind: "text", alt: "Facebook recommendation from Abdul Haq: Beneficial for medical practitioners & consultants" },
+  { url: textSocialAds.url, kind: "text", alt: "WhatsApp feedback: Improved patient numbers via social media ads & clinical strategies", healthcare: true },
+  { url: textAbdulHaq.url, kind: "text", alt: "Facebook recommendation from Abdul Haq: Beneficial for medical practitioners & consultants", healthcare: true },
 ]
+
+/** Proofs whose screenshots don't mention doctors, clinics or patients — used on the Business Growth Masterclass pages. */
+export const BUSINESS_PROOFS: Proof[] = PROOFS.filter((p) => !p.healthcare);
 
 function ProofCard({ p }: { p: Proof }) {
   const badge = p.kind === "payment" ? "Payment Proof" : "Feedback";
@@ -87,7 +90,10 @@ function ProofCard({ p }: { p: Proof }) {
   );
 }
 
-export function ProofGallery() {
+export function ProofGallery({
+  proofs = PROOFS,
+  subtitle = "Feedback, payment proofs and real responses from doctors and clinic owners who joined Farhan's Clinic Growth Masterclass.",
+}: { proofs?: Proof[]; subtitle?: string } = {}) {
   return (
     <section className="py-14 md:py-20 bg-[oklch(0.13_0.06_275)] text-white">
       <div className="mx-auto max-w-6xl px-4 text-center">
@@ -99,7 +105,7 @@ export function ProofGallery() {
           <span className="text-[oklch(0.82_0.18_80)]">Farhan's Training</span>
         </h2>
         <p className="mt-3 text-sm md:text-base text-white/70 max-w-2xl mx-auto">
-          Feedback, payment proofs and real responses from doctors and clinic owners who joined Farhan's Clinic Growth Masterclass.
+          {subtitle}
         </p>
       </div>
 
@@ -109,7 +115,7 @@ export function ProofGallery() {
           className="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory px-4 md:px-10 pb-6 scroll-smooth"
           style={{ scrollbarWidth: "thin" }}
         >
-          {PROOFS.map((p, i) => (
+          {proofs.map((p, i) => (
             <ProofCard key={i} p={p} />
           ))}
           <div className="shrink-0 w-4" aria-hidden />

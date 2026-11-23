@@ -3,7 +3,7 @@ import type { ComponentType } from "react";
 
 /**
  * Code-drawn product visuals for the Business Growth Masterclass.
- * They replace the old clinic-branded PNG mockups, so they need no image assets
+ * They replace the old PNG mockups, so they need no image assets
  * and stay on-brand with the site's navy / indigo / gold palette.
  */
 
