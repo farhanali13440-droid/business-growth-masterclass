@@ -766,7 +766,7 @@ function TrainerSection() {
           <p className="uppercase tracking-widest text-primary font-bold text-sm">Meet Your Trainer</p>
           <h2 className="mt-2 text-4xl md:text-5xl font-black">Farhan Ali</h2>
           <p className="mt-2 text-lg font-semibold text-muted-foreground">
-            Digital Marketing Expert &amp; Founder of Zero Apple A Day
+            Digital Marketing Expert &amp; Founder of Self Marketer AI
           </p>
           <p className="mt-4 leading-relaxed">
             For 3+ years, Farhan has built client-acquisition systems for local businesses in Pakistan —
