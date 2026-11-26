@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { Tag, Clock } from "lucide-react";
 import { getDailyOfferDeadline } from "@/lib/daily-offer";
+import { useCoupon } from "@/hooks/use-coupon";
+import { BASE_PRICE, COUPON_CODE, COUPON_DISCOUNT } from "@/lib/coupon";
 
 // Cohort date/time is still defined in src/lib/cohort.ts for the email schedulers.
 export { MASTERCLASS_DATE_ISO, MASTERCLASS_DATE_LABEL } from "@/lib/cohort";
 
 /**
- * The Business Growth Masterclass is watched on demand, so the countdown runs
- * to the end of today's special price (11:59 PM PKT) — the same deadline the
- * offer popup uses (see src/lib/daily-offer.ts).
+ * While the visitor's 15-minute coupon window is open (started by the offer
+ * popup), this countdown runs to the COUPON expiry — the same clock as the
+ * "Expires in mm:ss" line in the form — so the page never shows two different
+ * deadlines. Before the popup has started the coupon, or after it expires, it
+ * falls back to today's special price deadline (11:59 PM PKT, src/lib/daily-offer.ts).
  */
 
 type TimeLeft = {
@@ -36,14 +40,21 @@ export function MasterclassCountdown({
   showDateLine = true,
   className = "",
 }: Props) {
+  const { state: coupon, applied } = useCoupon();
+  const couponMode = coupon.active && coupon.expiresAtMs != null;
+  const target = couponMode ? (coupon.expiresAtMs as number) : null;
+
   const [t, setT] = useState<TimeLeft>({ hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const tick = () => setT(getTimeLeft(getDailyOfferDeadline().expiresAtMs));
+    const tick = () =>
+      setT(getTimeLeft(target ?? getDailyOfferDeadline().expiresAtMs));
     tick();
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [target]);
+
+  const couponPrice = BASE_PRICE - COUPON_DISCOUNT;
 
   const isDark = variant === "dark";
   const wrap = isDark
@@ -55,25 +66,38 @@ export function MasterclassCountdown({
   const labelClr = isDark ? "text-white/70" : "text-white/80";
   const subClr = isDark ? "text-white/70" : "text-[#0b1735]/70";
 
-  const items: [number, string][] = [
-    [t.hours, "Hours"],
-    [t.minutes, "Minutes"],
-    [t.seconds, "Seconds"],
-  ];
+  // The coupon window is only 15 minutes, so show Minutes / Seconds only.
+  const items: [number, string][] = couponMode
+    ? [
+        [t.hours * 60 + t.minutes, "Minutes"],
+        [t.seconds, "Seconds"],
+      ]
+    : [
+        [t.hours, "Hours"],
+        [t.minutes, "Minutes"],
+        [t.seconds, "Seconds"],
+      ];
 
   return (
     <div className={`rounded-2xl p-4 sm:p-5 ${wrap} ${className}`}>
       {showDateLine && (
         <div className="flex items-center justify-center gap-2 text-center font-bold text-sm sm:text-base">
           <Tag className="size-4 sm:size-5 text-yellow-300 shrink-0" />
-          <span>
-            Today's special price of <span className="gradient-highlight">Rs. 999</span> ends at{" "}
-            <span className="gradient-highlight">11:59 PM</span> Pakistan Time
-          </span>
+          {couponMode ? (
+            <span>
+              {applied ? "Your coupon " : "Coupon "}
+              <span className="gradient-highlight">{COUPON_CODE}</span> (Rs. {COUPON_DISCOUNT} off) expires in
+            </span>
+          ) : (
+            <span>
+              Today's special price of <span className="gradient-highlight">Rs. {BASE_PRICE}</span> ends at{" "}
+              <span className="gradient-highlight">11:59 PM</span> Pakistan Time
+            </span>
+          )}
         </div>
       )}
 
-      <div className="mt-3 sm:mt-4 grid grid-cols-3 gap-2 sm:gap-3">
+      <div className={`mt-3 sm:mt-4 grid ${couponMode ? "grid-cols-2" : "grid-cols-3"} gap-2 sm:gap-3`}>
         {items.map(([val, label]) => (
           <div
             key={label}
@@ -91,7 +115,9 @@ export function MasterclassCountdown({
 
       <p className={`mt-3 text-center text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 ${subClr}`}>
         <Clock className="size-3.5 sm:size-4" />
-        Enroll before the timer hits zero to lock in Rs. 999.
+        {couponMode
+          ? `Enroll before the timer hits zero to lock in Rs. ${couponPrice}.`
+          : `Enroll before the timer hits zero to lock in Rs. ${BASE_PRICE}.`}
       </p>
     </div>
   );
