@@ -13,20 +13,20 @@ import {
  * Strategy-call application (post-masterclass purchase).
  * Scores the answers on the server, saves them on the buyer's clinic_growth_leads row
  * (as an entry in selected_order_bumps with id "call-application", so it shows on /admin/leads1340),
- * and only returns the booking link to qualified applicants.
+ * and returns the booking link to every applicant (answers are used to prepare for the call).
  *
  * The first submission is locked: pressing Back and changing answers returns the original result.
  */
 
-// Booking link — only ever sent to qualified applicants.
+// Booking link — every applicant can book; the tier is only a lead score for Farhan.
 const BOOKING_URL = "https://calendly.com/farhanali13440/30min";
 
 export const APPLICATION_ID = "call-application";
 
 const TIER_TITLE: Record<Tier, string> = {
   qualified: "Strategy Call Application — QUALIFIED",
-  almost: "Strategy Call Application — ALMOST (1:1 / Mini MBA)",
-  diy: "Strategy Call Application — Mini MBA (not qualified)",
+  almost: "Strategy Call Application — ALMOST",
+  diy: "Strategy Call Application — LOW FIT",
 };
 
 const schema = z.object({
@@ -36,7 +36,12 @@ const schema = z.object({
 
 type Bump = { id?: string; [k: string]: unknown };
 
-export type ApplicationResult = { tier: Tier; bookingUrl: string | null };
+export type ApplicationResult = {
+  tier: Tier;
+  bookingUrl: string;
+  name: string | null;
+  email: string | null;
+};
 
 export const submitCallApplication = createServerFn({ method: "POST" })
   .inputValidator((data) => schema.parse(data))
@@ -51,7 +56,7 @@ export const submitCallApplication = createServerFn({ method: "POST" })
 
     const { data: lead, error } = await db
       .from("clinic_growth_leads")
-      .select("id, selected_order_bumps")
+      .select("id, full_name, email, selected_order_bumps")
       .eq("id", data.leadId)
       .maybeSingle();
     if (error) throw error;
@@ -65,7 +70,7 @@ export const submitCallApplication = createServerFn({ method: "POST" })
     const existing = bumps.find((b) => b && typeof b === "object" && b.id === APPLICATION_ID);
     if (existing && typeof existing.tier === "string") {
       const tier = existing.tier as Tier;
-      return { tier, bookingUrl: tier === "qualified" ? BOOKING_URL : null };
+      return { tier, bookingUrl: BOOKING_URL, name: lead.full_name ?? null, email: lead.email ?? null };
     }
 
     const tier = scoreApplication(answers);
@@ -88,5 +93,5 @@ export const submitCallApplication = createServerFn({ method: "POST" })
       .eq("id", data.leadId);
     if (upErr) throw upErr;
 
-    return { tier, bookingUrl: tier === "qualified" ? BOOKING_URL : null };
+    return { tier, bookingUrl: BOOKING_URL, name: lead.full_name ?? null, email: lead.email ?? null };
   });

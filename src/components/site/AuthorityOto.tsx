@@ -2,7 +2,7 @@
  * Google Ads for Clinics — one-time offer (upsell, PKR 5,000) and downsell (PKR 3,000).
  * Funnel: /authority → /authority-order → /authority-oto → (no) /authority-downsell → /authority-thank-you
  * "diy" variant — Mini MBA for Your Business (PKR 5,000), the downsell for masterclass buyers who don't qualify
- * for done-for-you: /order → /strategy-call (application) → /google-ads-diy → /thank-you
+ * for done-for-you: /order → /strategy-call (application + Calendly) → /thank-you
  * Layout/copy structure modelled on a proven upsell → "meet halfway" downsell funnel.
  */
 import { useEffect, useRef, useState } from "react";
