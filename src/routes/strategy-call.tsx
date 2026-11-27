@@ -183,7 +183,7 @@ function StrategyCallPage() {
       onClick={goToDownsell}
       className={`text-sm md:text-base underline underline-offset-4 ${dark ? "text-slate-300 hover:text-white" : "text-slate-600 hover:text-slate-900"}`}
     >
-      {fromMembers ? "No thanks, back to the members area" : "No thanks, take me to my confirmation page"}
+      {fromMembers ? "No thanks, back to the members area" : "No thanks, I'll figure out my business growth on my own"}
     </button>
   );
 
@@ -194,7 +194,7 @@ function StrategyCallPage() {
       onClick={goToDownsell}
       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-6 py-3 text-sm md:text-base font-bold text-slate-700 shadow-sm hover:border-slate-500 hover:bg-slate-50 hover:text-slate-900 transition"
     >
-      {fromMembers ? "No Thanks — Back to the Members Area" : "No Thanks — Take Me to My Confirmation Page"}
+      {fromMembers ? "No Thanks — Back to the Members Area" : "No Thanks, I Don't Want My Free Business Audit & Strategy"}
       <ArrowRight className="size-4" aria-hidden="true" />
     </button>
   );
