@@ -187,6 +187,18 @@ function StrategyCallPage() {
     </button>
   );
 
+  /** Clearly visible "No thanks" button (people often miss a plain text link). */
+  const NoThanksButton = () => (
+    <button
+      type="button"
+      onClick={goToDownsell}
+      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-6 py-3 text-sm md:text-base font-bold text-slate-700 shadow-sm hover:border-slate-500 hover:bg-slate-50 hover:text-slate-900 transition"
+    >
+      {fromMembers ? "No Thanks — Back to the Members Area" : "No Thanks — Take Me to My Confirmation Page"}
+      <ArrowRight className="size-4" aria-hidden="true" />
+    </button>
+  );
+
   /* ---------------- QUESTIONS ---------------- */
   if (view === "apply") {
     const q = QUESTIONS[step];
@@ -416,6 +428,9 @@ function StrategyCallPage() {
               </p>
               <div className="mt-7">
                 <BookCta label="Book My Free Strategy Call" />
+              </div>
+              <div className="mt-4">
+                <NoThanksButton />
               </div>
             </div>
 
