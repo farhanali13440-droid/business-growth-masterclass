@@ -23,7 +23,7 @@ function ThankYouPage() {
   const navigate = useNavigate();
   const waCommunity = "https://chat.whatsapp.com/E8wlMUmC2BHKzr9zD69881";
   const waSupport = `https://wa.me/923135944817?text=${encodeURIComponent(
-    "Assalam-o-Alaikum, I need help with my Clinic Growth Masterclass order.",
+    "Assalam-o-Alaikum, I need help with my Business Growth Masterclass order.",
   )}`;
 
   
@@ -32,6 +32,7 @@ function ThankYouPage() {
   const [gateChecked, setGateChecked] = useState(false);
   const [leadIdState, setLeadIdState] = useState<string | null>(null);
   const [adminMode, setAdminMode] = useState(false);
+  const [booked, setBooked] = useState(false);
 
   useEffect(() => {
     // GATE: only real buyers (with a lead id from checkout) may see this page.
@@ -40,6 +41,7 @@ function ThankYouPage() {
     try {
       const url = new URL(window.location.href);
       leadId = url.searchParams.get("lead") || localStorage.getItem("cgm_last_lead");
+      setBooked(url.searchParams.get("booked") === "1");
     } catch {}
 
     const admin = isAdminPreview();
@@ -79,6 +81,18 @@ function ThankYouPage() {
 
       <main className="bg-secondary flex-1">
         <div className="mx-auto max-w-3xl px-4 py-12 space-y-6">
+          {booked && (
+            <section className="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-6 md:p-8 text-center shadow-sm">
+              <h2 className="text-2xl md:text-3xl font-black text-emerald-900">You're booked! 🎉</h2>
+              <p className="mt-3 text-base text-emerald-900/90">
+                Farhan Ali will call you at the time you picked. Your confirmation, with an
+                "Add to Calendar" link, has been sent to your email.
+              </p>
+              <p className="mt-2 text-sm text-emerald-900/80">
+                To make your plan sharper, watch the masterclass before the call.
+              </p>
+            </section>
+          )}
           {/* Success */}
           <section className="bg-card rounded-2xl border shadow-sm p-8 text-center">
             <div className="mx-auto size-16 rounded-full bg-emerald-100 grid place-items-center">

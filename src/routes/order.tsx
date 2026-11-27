@@ -315,6 +315,13 @@ function OrderPage() {
     try {
       if (typeof window !== "undefined") {
         localStorage.setItem("cgm_last_lead", savedLeadId);
+        // Used by /strategy-call to prefill Calendly and the confirmation bar.
+        if (!isDirect) {
+          localStorage.setItem(
+            "cgm_last_buyer",
+            JSON.stringify({ name: leadFullName, email: leadEmail, whatsapp: leadWhatsapp }),
+          );
+        }
       }
     } catch {}
 
