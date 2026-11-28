@@ -1,5 +1,5 @@
 /**
- * Clinic Growth Masterclass — members area modules (titles & descriptions).
+ * Business Growth Masterclass — members area modules (titles & descriptions).
  * Order here = order members watch them in. Each module unlocks after the previous one is completed.
  *
  * The VIDEO LINKS are NOT here (this file is sent to the browser). Paste them in
@@ -19,22 +19,22 @@ export const MEMBER_MODULES: MemberModule[] = [
   {
     id: "m1",
     label: "Part 1",
-    title: "Part 1: Clinic Growth Masterclass",
-    desc: "Clinic Growth Masterclass recording — Part 1 of 3. Watch the full video to unlock Part 2.",
+    title: "Part 1: Business Growth Masterclass",
+    desc: "Business Growth Masterclass recording — Part 1 of 3. Watch the full video to unlock Part 2.",
     points: [],
   },
   {
     id: "m2",
     label: "Part 2",
-    title: "Part 2: Clinic Growth Masterclass",
-    desc: "Clinic Growth Masterclass recording — Part 2 of 3. Watch the full video to unlock Part 3.",
+    title: "Part 2: Business Growth Masterclass",
+    desc: "Business Growth Masterclass recording — Part 2 of 3. Watch the full video to unlock Part 3.",
     points: [],
   },
   {
     id: "m3",
     label: "Part 3",
-    title: "Part 3: Clinic Growth Masterclass",
-    desc: "Clinic Growth Masterclass recording — Part 3 of 3.",
+    title: "Part 3: Business Growth Masterclass",
+    desc: "Business Growth Masterclass recording — Part 3 of 3.",
     points: [],
   },
 ];

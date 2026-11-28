@@ -9,7 +9,7 @@ import { AdminPreviewBadge } from "@/components/site/AdminPreviewBadge";
 export const Route = createFileRoute("/members/login")({
   head: () => ({
     meta: [
-      { title: "Log In — Clinic Growth Masterclass Members Area" },
+      { title: "Log In — Business Growth Masterclass Members Area" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
@@ -83,7 +83,7 @@ function MembersLogin() {
           </h1>
           <p className="mt-2 text-center text-sm text-slate-600">
             {mode === "login"
-              ? "Watch the Clinic Growth Masterclass recordings."
+              ? "Watch the Business Growth Masterclass recordings."
               : "Enter your email and we'll send you a link to set a new password."}
           </p>
 
@@ -151,7 +151,7 @@ function MembersLogin() {
         </div>
 
         <a
-          href={`https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Assalam-o-Alaikum, I need help logging in to the Clinic Growth Masterclass members area.")}`}
+          href={`https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent("Assalam-o-Alaikum, I need help logging in to the Business Growth Masterclass members area.")}`}
           target="_blank"
           rel="noopener noreferrer"
           className="mt-5 flex items-center justify-center gap-1.5 text-sm text-slate-600 hover:text-slate-900"

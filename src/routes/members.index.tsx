@@ -30,7 +30,7 @@ export const Route = createFileRoute("/members/")({
   }),
   head: () => ({
     meta: [
-      { title: "Members Area — Clinic Growth Masterclass" },
+      { title: "Members Area — Business Growth Masterclass" },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
@@ -168,12 +168,12 @@ function MembersArea() {
             <Lock className="mx-auto size-8 text-slate-400" />
             <h1 className="mt-3 text-xl font-black text-slate-900">No Masterclass Access Found</h1>
             <p className="mt-2 text-sm text-slate-600">
-              We couldn't find a Clinic Growth Masterclass order for{" "}
+              We couldn't find a Business Growth Masterclass order for{" "}
               <span className="font-semibold">{area.email}</span>. If you've paid, message us and
               we'll sort it out quickly.
             </p>
             <a
-              href={`https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent(`Assalam-o-Alaikum, I bought the Clinic Growth Masterclass but can't access the members area. My email: ${area.email}`)}`}
+              href={`https://wa.me/${SUPPORT_WA}?text=${encodeURIComponent(`Assalam-o-Alaikum, I bought the Business Growth Masterclass but can't access the members area. My email: ${area.email}`)}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-5 inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700"
@@ -225,7 +225,7 @@ function MembersArea() {
         <Rocket className="size-4" /> Want it done for you?
       </div>
       <h3 className={`mt-2 font-black leading-snug ${compact ? "text-base" : "text-lg"}`}>
-        Need help implementing this in your clinic?
+        Need help implementing this in your business?
       </h3>
       <a
         href={callHref}
@@ -263,7 +263,7 @@ function MembersArea() {
                   Good news: you can now watch the Masterclass anytime
                 </p>
                 <p className="mt-1 text-sm leading-relaxed text-slate-700">
-                  At the request of many busy doctors, the live masterclass is now a recorded
+                  At the request of many busy business owners, the live masterclass is now a recorded
                   course — watch at your own pace. — Farhan
                 </p>
               </div>
@@ -277,7 +277,7 @@ function MembersArea() {
               Welcome{firstName ? `, ${firstName}` : ""} 👋
             </p>
             <h1 className="text-xl md:text-3xl font-black text-slate-900">
-              Clinic Growth Masterclass
+              Business Growth Masterclass
             </h1>
           </div>
           <div className="w-full sm:w-64">
@@ -390,7 +390,7 @@ function MembersArea() {
               {isLast && completed.has(current.id) && (
                 <div className="mt-5 rounded-xl border-2 border-emerald-200 bg-emerald-50 p-4">
                   <p className="font-black text-emerald-900">
-                    🎉 You've completed the Clinic Growth Masterclass!
+                    🎉 You've completed the Business Growth Masterclass!
                   </p>
                 </div>
               )}

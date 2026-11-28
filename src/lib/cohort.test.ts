@@ -8,7 +8,7 @@ import {
   getCohortStartMs,
 } from "./cohort.ts";
 
-describe("Clinic Growth Masterclass cohort", () => {
+describe("Business Growth Masterclass cohort", () => {
   test("starts on 23 November 2026 at 5:00 PM Pakistan time", () => {
     assert.equal(MASTERCLASS_DATE_ISO, "2026-11-23T12:00:00Z");
     assert.equal(getCohortStartMs(), Date.parse("2026-11-23T12:00:00Z"));

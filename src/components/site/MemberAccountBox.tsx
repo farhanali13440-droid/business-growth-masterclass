@@ -23,7 +23,7 @@ export function MemberAccountBox({ leadId }: { leadId: string }) {
     (async () => {
       // Admin preview of the thank-you page: show the form with a sample email.
       if (leadId === PREVIEW_LEAD_ID) {
-        setEmail("doctor@example.com");
+        setEmail("owner@example.com");
         setState("form");
         return;
       }
@@ -129,7 +129,7 @@ export function MemberAccountBox({ leadId }: { leadId: string }) {
             Create Your Members Area Password
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            This is where you'll watch the Clinic Growth Masterclass, module by module. Choose a
+            This is where you'll watch the Business Growth Masterclass, module by module. Choose a
             password for <span className="font-semibold text-slate-900">{email}</span>.
           </p>
           <form onSubmit={onSubmit} className="mx-auto mt-5 max-w-sm space-y-3 text-left">
@@ -168,7 +168,7 @@ export function MemberAccountBox({ leadId }: { leadId: string }) {
             ✅ Your Members Area Is Ready
           </h2>
           <p className="mt-2 text-sm text-slate-600">
-            Watch the Clinic Growth Masterclass recordings, one module at a time.
+            Watch the Business Growth Masterclass recordings, one module at a time.
           </p>
           <LinkBox />
           <a

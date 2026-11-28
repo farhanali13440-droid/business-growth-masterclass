@@ -4,7 +4,7 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { MEMBER_MODULES, toEmbedUrl } from "@/lib/members-modules";
 
 /**
- * Clinic Growth Masterclass members area.
+ * Business Growth Masterclass members area.
  * - Account = Supabase Auth user (email + password) created from the thank-you page.
  * - Access  = the email has a Masterclass order whose status is paid-like
  *   ("Pending Payment…", "Paid…", "Confirmed…", "Registered…"). If you change an order's

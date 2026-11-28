@@ -134,11 +134,11 @@ function ThankYouPage() {
                 <h2 className="text-lg md:text-xl font-extrabold">🎁 Your Bonus Is Ready</h2>
               </div>
               <p className="mt-3 font-semibold text-slate-900">
-                You have unlocked the AI Content Prompt Vault for Doctors &amp; Healthcare Practitioners.
+                You have unlocked the AI Prompt Vault for Business Owners.
               </p>
               <p className="mt-2 text-sm text-muted-foreground">
                 Use these ready-made prompts to create Facebook and Instagram video ads, Reels,
-                patient education posts, captions, WhatsApp follow-ups, and 7-day / 30-day content
+                educational posts, captions, WhatsApp follow-ups, and 7-day / 30-day content
                 plans in minutes.
               </p>
               <a

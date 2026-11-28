@@ -1,4 +1,4 @@
-// Single source of truth for the current Clinic Growth Masterclass cohort
+// Single source of truth for the current Business Growth Masterclass cohort
 // date/time. Import from here in both the sales page components and the
 // server-side email schedulers so a new cohort only needs to change one line.
 //

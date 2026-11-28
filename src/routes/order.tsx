@@ -9,15 +9,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { fbqTrack } from "@/lib/fbpixel";
 import { createScreenshotSignedUrl } from "@/lib/payment-screenshot.functions";
 import { BeforeYouRegisterBox, CheckoutFAQ } from "@/components/site/ObjectionSections";
-import { useCoupon } from "@/hooks/use-coupon";
-import { COUPON_CODE, COUPON_DISCOUNT, checkCoupon, couponMessage, formatMmSs, readCouponStartedAt, setCouponApplied } from "@/lib/coupon";
 
 type OrderSearch = {
   name?: string;
   email?: string;
   phone?: string;
   specialty?: string;
-  coupon?: string;
 };
 
 function pickStr(...vals: unknown[]): string | undefined {
@@ -33,7 +30,6 @@ export const Route = createFileRoute("/order")({
     email: pickStr(search.email),
     phone: pickStr(search.phone, search.whatsapp, search.mobile),
     specialty: pickStr(search.specialty, search.speciality, search.field),
-    coupon: pickStr(search.coupon),
   }),
   head: () => ({
     meta: [
@@ -155,40 +151,21 @@ function OrderPage() {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const purchaseFiredRef = useRef(false);
 
-  const coupon = useCoupon();
-  // A coupon passed from the sales page is re-checked here (it must still be inside its 15 minutes).
   useEffect(() => {
-    if (search.coupon && checkCoupon(search.coupon, Date.now(), readCouponStartedAt()).ok) {
-      setCouponApplied(true);
-    }
-  }, [search.coupon]);
-
-  const initFiredRef = useRef(false);
-  useEffect(() => {
-    if (initFiredRef.current) return;
-    initFiredRef.current = true;
-    const applied = !!search.coupon && checkCoupon(search.coupon, Date.now(), readCouponStartedAt()).ok;
-    fbqTrack("InitiateCheckout", {
-      value: MAIN_PRODUCT.price - (applied ? COUPON_DISCOUNT : 0),
-      currency: "PKR",
-      content_name: "Business Growth Masterclass",
-    });
-  }, [search.coupon]);
+    fbqTrack("InitiateCheckout", { value: 999, currency: "PKR", content_name: "Business Growth Masterclass" });
+  }, []);
 
   const items = useMemo(() => {
     const list: { id: string; title: string; price: number; qty: number }[] = [
       { id: "main", title: MAIN_PRODUCT.title, price: MAIN_PRODUCT.price, qty: 1 },
     ];
-    if (coupon.applied) {
-      list.push({ id: "coupon", title: `Coupon ${COUPON_CODE}`, price: -COUPON_DISCOUNT, qty: 1 });
-    }
     if (SHOW_ORDER_BUMPS) {
       for (const b of BUMPS) {
         if (bumps[b.id]) list.push({ id: b.id, title: b.shortTitle, price: b.price, qty: 1 });
       }
     }
     return list;
-  }, [bumps, coupon.applied]);
+  }, [bumps]);
 
   const total = items.reduce((sum, i) => sum + i.price * i.qty, 0);
 
@@ -221,14 +198,11 @@ function OrderPage() {
     }
     setSubmitting(true);
 
-    const selectedBumps: { id: string; title: string; price: number }[] = BUMPS.filter((b) => bumps[b.id]).map((b) => ({
+    const selectedBumps = BUMPS.filter((b) => bumps[b.id]).map((b) => ({
       id: b.id,
       title: b.title,
       price: b.price,
     }));
-    if (coupon.applied) {
-      selectedBumps.push({ id: "coupon", title: `Coupon ${COUPON_CODE} (Rs. ${COUPON_DISCOUNT} off)`, price: -COUPON_DISCOUNT });
-    }
 
     const stored = getLead();
     const isDirect = !stored;
@@ -304,8 +278,8 @@ function OrderPage() {
           currency: "PKR",
           content_name: "Business Growth Masterclass",
           content_type: "product",
-          content_ids: items.filter((i) => i.price > 0).map((i) => i.id),
-          num_items: items.filter((i) => i.price > 0).length,
+          content_ids: items.map((i) => i.id),
+          num_items: items.length,
         },
         savedLeadId,
       );
@@ -358,12 +332,9 @@ function OrderPage() {
                 {items.map((i) => (
                   <div key={i.id} className="flex items-center justify-between gap-3 py-3 first:pt-0 last:pb-0">
                     <div className="min-w-0 text-sm text-slate-700 break-words">{i.title}</div>
-                    <div className={`text-sm font-bold whitespace-nowrap ${i.price < 0 ? "text-emerald-600" : "text-slate-900"}`}>{i.price < 0 ? `− Rs. ${Math.abs(i.price).toLocaleString()}` : `Rs. ${i.price.toLocaleString()}`}</div>
+                    <div className="text-sm font-bold text-slate-900 whitespace-nowrap">Rs. {i.price.toLocaleString()}</div>
                   </div>
                 ))}
-              </div>
-              <div className="mt-4 pt-4 border-t border-slate-100">
-                <CheckoutCoupon coupon={coupon} />
               </div>
             </section>
 
@@ -559,7 +530,7 @@ function OrderPage() {
                     {items.map((i) => (
                       <div key={i.id} className="flex justify-between gap-3">
                         <span className="text-slate-700 truncate">{i.title}</span>
-                        <span className={`font-bold whitespace-nowrap ${i.price < 0 ? "text-emerald-600" : "text-slate-900"}`}>{i.price < 0 ? `− Rs. ${Math.abs(i.price).toLocaleString()}` : `Rs. ${i.price.toLocaleString()}`}</span>
+                        <span className="font-bold text-slate-900 whitespace-nowrap">Rs. {i.price.toLocaleString()}</span>
                       </div>
                     ))}
                   </div>
@@ -675,46 +646,6 @@ function OrderPage() {
       </section>
 
       <Footer />
-    </div>
-  );
-}
-
-function CheckoutCoupon({ coupon }: { coupon: ReturnType<typeof useCoupon> }) {
-  const [code, setCode] = useState("");
-  const [msg, setMsg] = useState<string | null>(null);
-  if (coupon.applied) {
-    return (
-      <div className="flex items-center justify-between gap-3 rounded-lg border-2 border-dashed border-emerald-400 bg-emerald-50 px-3 py-2.5 text-sm">
-        <span className="font-bold text-emerald-800">
-          ✅ {COUPON_CODE} applied — Rs. {COUPON_DISCOUNT} off
-          <span className="block text-xs font-semibold text-red-600">Expires in {formatMmSs(coupon.state.remainingMs)}</span>
-        </span>
-        <button type="button" onClick={coupon.remove} className="text-xs text-slate-500 underline">Remove</button>
-      </div>
-    );
-  }
-  return (
-    <div>
-      <div className="flex gap-2">
-        <input
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="Have a coupon code?"
-          autoCapitalize="characters"
-          className="min-w-0 flex-1 rounded-lg border-2 border-slate-200 bg-white px-3 py-2.5 text-sm uppercase outline-none focus:border-sky-500"
-        />
-        <button
-          type="button"
-          onClick={() => {
-            const err = coupon.apply(code);
-            setMsg(err ? couponMessage(err) : null);
-          }}
-          className="rounded-lg bg-sky-600 px-4 text-sm font-bold text-white hover:bg-sky-700"
-        >
-          Apply
-        </button>
-      </div>
-      {msg && <p className="mt-1.5 text-xs font-semibold text-red-600">{msg}</p>}
     </div>
   );
 }

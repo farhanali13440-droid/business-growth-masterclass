@@ -27,14 +27,14 @@ const DEFAULTS = {
 }
 
 const Email = ({
-  name = 'Doctor',
+  name = 'there',
   trainingDate = DEFAULTS.trainingDate,
   trainingTime = DEFAULTS.trainingTime,
   whatsappUrl = DEFAULTS.whatsappUrl,
 }: Props) => (
   <Html lang="en" dir="ltr">
     <Head />
-    <Preview>You're registered for the Clinic Growth Masterclass — details inside</Preview>
+    <Preview>You're registered for the Business Growth Masterclass — details inside</Preview>
     <Body style={main}>
       <Container style={container}>
         <Heading style={h1}>✅ You're Registered!</Heading>
@@ -42,7 +42,7 @@ const Email = ({
         <Text style={text}>Assalam-o-Alaikum {name},</Text>
 
         <Text style={text}>
-          Your registration for the <strong>Clinic Growth Masterclass</strong> has been received successfully.
+          Your registration for the <strong>Business Growth Masterclass</strong> has been received successfully.
         </Text>
 
         <Section style={card}>
@@ -65,7 +65,7 @@ const Email = ({
         </Text>
 
         <Text style={text}>
-          We're excited to help you build your own patient acquisition system.
+          We're excited to help you build your own client-getting system.
         </Text>
 
         <Hr style={hr} />
@@ -73,7 +73,7 @@ const Email = ({
         <Text style={signature}>
           Regards,<br />
           <strong>Team Zero Apple A Day</strong><br />
-          Clinic Growth Masterclass
+          Business Growth Masterclass
         </Text>
       </Container>
     </Body>
@@ -82,7 +82,7 @@ const Email = ({
 
 export const template = {
   component: Email,
-  subject: "✅ You're Registered — Clinic Growth Masterclass Details Inside",
+  subject: "✅ You're Registered — Business Growth Masterclass Details Inside",
   displayName: 'Registration Confirmation',
   previewData: {
     name: 'Dr. Ahmed',

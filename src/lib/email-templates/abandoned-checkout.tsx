@@ -36,14 +36,14 @@ type Copy = {
 const COPY: Record<1 | 2 | 3 | 4, Copy> = {
   1: {
     headline: 'You Were Just One Step Away',
-    preview: 'Your Clinic Growth Masterclass registration is still open',
+    preview: 'Your Business Growth Masterclass registration is still open',
     paragraphs: [
-      'You were just one step away from registering for the Clinic Growth Masterclass… but your registration was not completed.',
+      'You were just one step away from registering for the Business Growth Masterclass… but your registration was not completed.',
       'Maybe you got busy. Maybe you had a question. Or maybe you are still thinking:',
       '“Is 999 PKR really worth it?”',
-      'But Doctor, the real question is:',
-      'Can you afford to keep depending only on referrals and random walk-ins for your clinic growth?',
-      'Inside this masterclass, you will learn how to attract more local patients using Meta Ads, Google Business Profile, content, and WhatsApp follow-up.',
+      'But the real question is:',
+      'Can you afford to keep depending only on referrals and random walk-ins to grow your business?',
+      'Inside this masterclass, you will learn how to attract more local clients using AI, Meta Ads, Google Business Profile, content, and WhatsApp follow-up.',
       'Your registration is still open for now.',
     ],
     cta: 'Complete My Registration',
@@ -51,38 +51,38 @@ const COPY: Record<1 | 2 | 3 | 4, Copy> = {
   },
   2: {
     headline: 'A Respectful But Honest Question',
-    preview: 'Can you not invest even 999 PKR in your clinic’s growth?',
+    preview: 'Can you not invest even 999 PKR in your business growth?',
     paragraphs: [
-      'A respectful but honest question, Doctor:',
-      'You want more patients for your clinic… but can you not invest even 999 PKR to learn a proper patient acquisition system?',
-      'Most practitioners spend years hoping that referrals, random Facebook posts, or occasional boosted ads will somehow bring consistent patients.',
+      'A respectful but honest question:',
+      'You want more clients for your business… but can you not invest even 999 PKR to learn a proper client-getting system?',
+      'Most business owners spend years hoping that referrals, random Facebook posts, or occasional boosted ads will somehow bring consistent clients.',
       'But hope is not a growth strategy.',
-      'The Clinic Growth Masterclass will show you a simple system to:',
+      'The Business Growth Masterclass will show you a simple system to:',
     ],
     bullets: [
-      'Create an offer patients actually respond to',
+      'Create an offer people actually respond to',
       'Build trust through content and personal branding',
-      'Get local patient inquiries through Meta Ads',
-      'Turn inquiries into bookings through WhatsApp',
+      'Get local client inquiries through Meta Ads',
+      'Turn inquiries into paying clients through WhatsApp',
     ],
     closingParagraphs: [
-      'One patient appointment can easily recover your 999 PKR investment.',
+      'One new client can easily recover your 999 PKR investment.',
     ],
     cta: 'Register Now',
     signOff: 'Regards,\nTeam Farhan Ali',
   },
   3: {
     headline: 'Let’s Look At This Practically',
-    preview: 'One new patient recovers your 999 PKR — many times over',
+    preview: 'One new client recovers your 999 PKR — many times over',
     paragraphs: [
       'Your registration is still incomplete.',
       'Let’s look at this practically.',
-      'The Clinic Growth Masterclass costs only 999 PKR.',
-      'For most doctors, dentists, nutritionists, physiotherapists, and healthcare practitioners, even one new patient can recover that amount.',
-      'And what happens when you learn how to consistently generate inquiries instead of waiting for patients to find you?',
+      'The Business Growth Masterclass costs only 999 PKR.',
+      'For most service businesses — real estate, interior design, construction, restaurants, barbers, tailors — even one new client can recover that amount.',
+      'And what happens when you learn how to consistently generate inquiries instead of waiting for clients to find you?',
       'That is exactly what this masterclass is designed to help you understand.',
-      'You will not just learn “how to run ads.” You will learn how to build a complete patient journey:',
-      'Offer → Ad/Content → WhatsApp Inquiry → Appointment',
+      'You will not just learn “how to run ads.” You will learn how to build a complete client journey:',
+      'Offer → Ad/Content → WhatsApp Inquiry → Paying Client',
     ],
     cta: 'Complete My Registration',
     signOff: 'Regards,\nTeam Farhan Ali',
@@ -91,20 +91,20 @@ const COPY: Record<1 | 2 | 3 | 4, Copy> = {
     headline: 'Final Reminder ⏰',
     preview: 'Last reminder — registrations closing soon',
     paragraphs: [
-      'This is the last reminder regarding your incomplete registration for the Clinic Growth Masterclass.',
+      'This is the last reminder regarding your incomplete registration for the Business Growth Masterclass.',
       'We are closing registrations soon so we can focus on the registered participants.',
-      'Inside, you will learn practical strategies to help your clinic:',
+      'Inside, you will learn practical strategies to help your business:',
     ],
     bullets: [
-      'Get discovered by local patients',
+      'Get discovered by local clients',
       'Build trust online',
-      'Create better healthcare offers',
+      'Create better offers',
       'Generate inquiries through Meta Ads',
-      'Convert inquiries into appointments on WhatsApp',
+      'Convert inquiries into sales on WhatsApp',
     ],
     closingParagraphs: [
-      'At 999 PKR, this is one of the easiest investments you can make in your clinic’s growth.',
-      'Don’t stay stuck in the same cycle of inconsistent patients and unpredictable income.',
+      'At 999 PKR, this is one of the easiest investments you can make in your business growth.',
+      'Don’t stay stuck in the same cycle of inconsistent clients and unpredictable income.',
     ],
     cta: 'Complete My Registration Now',
     signOff: 'See you inside,\nTeam Farhan Ali',
@@ -112,7 +112,7 @@ const COPY: Record<1 | 2 | 3 | 4, Copy> = {
 }
 
 const Email = ({
-  name = 'Doctor',
+  name = 'there',
   checkoutUrl = DEFAULTS.checkoutUrl,
   sequenceNumber = 1,
 }: Props) => {
@@ -189,14 +189,14 @@ export const template1 = {
 
 export const template2 = {
   component: (props: Props) => <Email {...props} sequenceNumber={2} />,
-  subject: 'Doctor, Can You Not Invest Even 999 PKR In Your Clinic Growth?',
+  subject: 'Can You Not Invest Even 999 PKR In Your Business Growth?',
   displayName: 'Abandoned Checkout #2 (8 hours)',
   previewData,
 } satisfies TemplateEntry
 
 export const template3 = {
   component: (props: Props) => <Email {...props} sequenceNumber={3} />,
-  subject: 'One New Patient Recovers Your 999 PKR — Let’s Be Practical',
+  subject: 'One New Client Recovers Your 999 PKR — Let’s Be Practical',
   displayName: 'Abandoned Checkout #3 (24 hours)',
   previewData,
 } satisfies TemplateEntry

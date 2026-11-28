@@ -47,7 +47,7 @@ export const PROOFS: Proof[] = [
   { url: payEp1000.url, kind: "payment", alt: "Easypaisa payment proof Rs. 1,000" },
   { url: textTanveerHr.url, kind: "text", alt: "WhatsApp feedback from Tanveer Ahmad: Bundle of knowledge, simple action steps" },
   { url: payEpQuick.url, kind: "payment", alt: "Easypaisa quick send payment proof Rs. 999" },
-  { url: textAmazingWorthy.url, kind: "text", alt: "WhatsApp feedback: Clinic Growth Masterclass truly amazing and worthy", healthcare: true },
+  { url: textAmazingWorthy.url, kind: "text", alt: "WhatsApp feedback: masterclass truly amazing and worthy", healthcare: true },
   { url: payEpJasam.url, kind: "payment", alt: "Easypaisa payment proof Rs. 999 — Jasam Mumtaz" },
   { url: textDrAmnah.url, kind: "text", alt: "WhatsApp feedback from Dr. Amnah: Most valuable lesson was Google My Business strategy", healthcare: true },
   { url: payRaastIqra.url, kind: "payment", alt: "Raast bank transfer proof PKR 999 — Iqra Siddique" },
@@ -92,7 +92,7 @@ function ProofCard({ p }: { p: Proof }) {
 
 export function ProofGallery({
   proofs = PROOFS,
-  subtitle = "Feedback, payment proofs and real responses from doctors and clinic owners who joined Farhan's Clinic Growth Masterclass.",
+  subtitle = "Feedback, payment proofs and real responses from doctors and clinic owners who joined Farhan's masterclass.",
 }: { proofs?: Proof[]; subtitle?: string } = {}) {
   return (
     <section className="py-14 md:py-20 bg-[oklch(0.13_0.06_275)] text-white">

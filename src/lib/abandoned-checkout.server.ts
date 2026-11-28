@@ -13,7 +13,7 @@ import {
   getCohortStartMs,
 } from '@/lib/cohort'
 
-const SITE_NAME = 'Clinic Growth Masterclass'
+const SITE_NAME = 'Business Growth Masterclass'
 const SENDER_DOMAIN = 'notify.zeroappleaday.site'
 const FROM_DOMAIN = 'zeroappleaday.site'
 const CHECKOUT_BASE = 'https://www.zeroappleaday.site/order'
@@ -159,7 +159,7 @@ export async function ensureCohortDeadlineReminders(): Promise<number> {
     if (!byLead.has((row as any).lead_id)) {
       byLead.set((row as any).lead_id, {
         email: (row as any).email,
-        name: (row as any).name ?? 'Doctor',
+        name: (row as any).name ?? 'there',
       })
     }
   }
@@ -277,7 +277,7 @@ export async function sendQueuedAbandonedReminder(queueRow: {
   if (!template) return { ok: false, reason: 'template_missing' }
 
   const templateData: Record<string, any> = {
-    name: queueRow.name || lead.full_name || 'Doctor',
+    name: queueRow.name || lead.full_name || 'there',
     checkoutUrl: buildCheckoutUrl(lead),
   }
   if (queueRow.sequence_number >= 5) {

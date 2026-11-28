@@ -17,8 +17,6 @@ import farhanInstructor from "@/assets/farhan-instructor.jpeg.asset.json";
 import vslVideo from "@/assets/vsl-cgm.mp4.asset.json";
 import vslPoster from "@/assets/vsl-cgm-poster.jpg.asset.json";
 import { MasterclassCountdown } from "@/components/site/MasterclassCountdown";
-import { useCoupon } from "@/hooks/use-coupon";
-import { COUPON_CODE, COUPON_DISCOUNT, BASE_PRICE, couponMessage, formatMmSs, priceWithCoupon } from "@/lib/coupon";
 import { VslPlayer, logVsl, getVslMaxPct } from "@/components/site/VslPlayer";
 import {
   IsThisForYouSection,
@@ -171,9 +169,15 @@ function Hero() {
               />
             </div>
             <div className="p-6 text-center">
-              <CardPrice />
+              <div className="text-lg font-extrabold">TODAY'S SPECIAL PRICE</div>
+              <div className="mt-2 text-3xl font-black text-destructive">
+                ONLY <span>Rs. 999</span>
+              </div>
 
-              <CardBlurb />
+              <p className="mt-4 text-sm">
+                Get the complete <span className="font-bold">Business Growth Masterclass</span> + checklists,
+                cheat sheets &amp; SOPs for just <span className="font-bold">Rs. 999</span>.
+              </p>
 
               <div className="mt-3 inline-block rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-800">
                 ✅ Lifetime Access
@@ -195,96 +199,8 @@ function Hero() {
   );
 }
 
-function CardPrice() {
-  const { applied } = useCoupon();
-  return (
-    <>
-      <div className="text-lg font-extrabold">{applied ? "COUPON PRICE" : "TODAY'S SPECIAL PRICE"}</div>
-      <div className="mt-2 text-3xl font-black text-destructive">
-        ONLY <span>Rs. {priceWithCoupon(applied).toLocaleString()}</span>
-        {applied && (
-          <span className="ml-2 text-lg font-bold text-slate-400 line-through">Rs. {BASE_PRICE}</span>
-        )}
-      </div>
-    </>
-  );
-}
-
-function CardBlurb() {
-  const { applied } = useCoupon();
-  return (
-    <p className="mt-4 text-sm">
-      Get the complete <span className="font-bold">Business Growth Masterclass</span> + checklists,
-      cheat sheets &amp; SOPs for just <span className="font-bold">Rs. {priceWithCoupon(applied)}</span>.
-    </p>
-  );
-}
-
-function CouponField() {
-  const { state, applied, apply, remove } = useCoupon();
-  const [open, setOpen] = useState(false);
-  const [code, setCode] = useState("");
-  const [msg, setMsg] = useState<string | null>(null);
-
-  if (applied) {
-    return (
-      <div className="rounded-md border-2 border-dashed border-emerald-400 bg-emerald-50 px-3 py-2.5 text-sm">
-        <div className="flex items-center justify-between gap-2">
-          <span className="font-bold text-emerald-800">
-            ✅ {COUPON_CODE} applied — Rs. {COUPON_DISCOUNT} off
-          </span>
-          <button type="button" onClick={remove} className="text-xs text-slate-500 underline">
-            Remove
-          </button>
-        </div>
-        <div className="mt-1 text-xs font-semibold text-red-600">
-          Expires in {formatMmSs(state.remainingMs)}
-        </div>
-      </div>
-    );
-  }
-
-  if (!open) {
-    return (
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className="text-xs font-semibold text-primary underline underline-offset-2"
-      >
-        Have a coupon code?
-      </button>
-    );
-  }
-
-  return (
-    <div>
-      <div className="flex gap-2">
-        <input
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder="Coupon code"
-          autoCapitalize="characters"
-          className="min-w-0 flex-1 rounded-md border border-input bg-background px-3 py-2.5 text-sm uppercase outline-none focus:ring-2 focus:ring-ring"
-        />
-        <button
-          type="button"
-          onClick={() => {
-            const err = apply(code);
-            setMsg(err ? couponMessage(err) : null);
-          }}
-          className="rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground"
-        >
-          Apply
-        </button>
-      </div>
-      {msg && <p className="mt-1 text-xs font-semibold text-destructive">{msg}</p>}
-    </div>
-  );
-}
-
 function InlineLeadForm() {
   const navigate = useNavigate();
-  const { applied } = useCoupon();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
@@ -360,7 +276,6 @@ function InlineLeadForm() {
         params.set("email", emailNorm);
         params.set("whatsapp", wa);
         params.set("specialty", spec);
-        if (applied) params.set("coupon", COUPON_CODE);
         navigate({ to: "/order", search: Object.fromEntries(params) });
       }}
     >
@@ -400,7 +315,6 @@ function InlineLeadForm() {
         maxLength={120}
         className="w-full rounded-md border border-input bg-background px-3 py-3 text-sm outline-none focus:ring-2 focus:ring-ring"
       />
-      <CouponField />
       {error && (
         <p className="text-xs font-semibold text-destructive">{error}</p>
       )}

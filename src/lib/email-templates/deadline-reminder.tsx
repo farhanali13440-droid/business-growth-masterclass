@@ -30,14 +30,14 @@ const DEFAULT_CHECKOUT = 'https://www.zeroappleaday.site/order'
 
 const COPY = {
   '4h': {
-    subject: '4 hours left to join the Clinic Growth Masterclass',
+    subject: '4 hours left to join the Business Growth Masterclass',
     preview: 'Starts today — complete your registration before it begins',
     heading: '4 Hours Left',
     body: (name: string, time: string) => [
       `Hi ${name},`,
-      `The Clinic Growth Masterclass starts today at ${time}.`,
+      `The Business Growth Masterclass starts today at ${time}.`,
       'You started your registration but did not complete it.',
-      'This is your chance to learn practical strategies to attract more patients, build trust online, create stronger offers, and turn inquiries into appointments.',
+      'This is your chance to learn practical strategies to attract more clients, build trust online, create stronger offers, and turn inquiries into sales.',
       'You still have time to secure your seat.',
     ],
     cta: 'Complete My Registration',
@@ -45,13 +45,13 @@ const COPY = {
   },
   '1h': {
     subject: 'Starts in 1 hour — last chance to join',
-    preview: 'The Clinic Growth Masterclass begins in 1 hour',
+    preview: 'The Business Growth Masterclass begins in 1 hour',
     heading: 'Starts In 1 Hour ⏰',
     body: (name: string, time: string) => [
       `Hi ${name},`,
-      `The Clinic Growth Masterclass starts in just 1 hour at ${time}.`,
+      `The Business Growth Masterclass starts in just 1 hour at ${time}.`,
       'Registration is closing very soon.',
-      'If you want to learn how to build a practical patient acquisition system for your clinic, complete your registration now.',
+      'If you want to learn how to build a practical client-getting system for your business, complete your registration now.',
     ],
     cta: 'Secure My Seat Now',
     signOff: 'Regards,\nTeam Farhan Ali',
@@ -59,7 +59,7 @@ const COPY = {
 } as const
 
 const Email = ({
-  name = 'Doctor',
+  name = 'there',
   checkoutUrl = DEFAULT_CHECKOUT,
   variant = '4h',
   cohortDate,
@@ -77,7 +77,7 @@ const Email = ({
         <Container style={container}>
           <Heading style={h1}>{c.heading}</Heading>
           <Section style={eventBox}>
-            <Text style={eventLabel}>Clinic Growth Masterclass</Text>
+            <Text style={eventLabel}>Business Growth Masterclass</Text>
             <Text style={eventDetail}>
               {dateLabel} · {timeLabel}
             </Text>

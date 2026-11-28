@@ -21,20 +21,20 @@ export const Route = createFileRoute("/onboarding")({
 });
 
 const GOALS = [
-  "Get more patient appointments",
+  "Get more clients and sales",
   "Start running Meta ads properly",
   "Improve my Google Business Profile",
-  "Build my doctor/clinic personal brand",
+  "Build my personal / business brand",
   "Create better content consistently",
-  "Stop depending only on referrals, Oladoc, or Marham",
-  "Build a complete patient acquisition system",
+  "Stop depending only on referrals and word of mouth",
+  "Build a complete client-getting system",
 ];
 
 const TRIED = [
   "Facebook or Instagram ads",
   "Posting reels or content",
   "Google Business Profile",
-  "Oladoc, Marham, or another platform",
+  "Daraz, OLX, Zameen or another platform",
   "Discounts or offers",
   "Asking for referrals",
   "Nothing consistently yet",
@@ -42,7 +42,7 @@ const TRIED = [
 ];
 
 const DECISION = [
-  "I need more patients urgently",
+  "I need more clients urgently",
   "I want a system instead of random marketing",
   "I want to reduce dependency on third-party platforms",
   "Your ad/content felt relevant to me",
@@ -53,16 +53,16 @@ const DECISION = [
 
 const HELP = [
   "Google Business Profile setup and optimisation",
-  "Clinic website or landing page",
+  "Business website or landing page",
   "Meta ads setup",
   "Content strategy and video ideas",
   "WhatsApp booking and follow-up system",
-  "Complete Patient Acquisition Machine",
+  "Complete Client Acquisition Machine",
   "I want to implement it myself first",
 ];
 
 const DFY_OPTIONS = [
-  "Yes, I would like details for my clinic",
+  "Yes, I would like details for my business",
   "Maybe later, but I am interested",
   "No, I want to implement the masterclass myself first",
 ];
@@ -206,18 +206,18 @@ function OnboardingPage() {
 
           <div className="bg-card rounded-2xl border shadow-sm p-5 md:p-8">
             <h1 className="text-xl md:text-2xl font-black leading-tight">
-              Before You Access Clinic Growth Masterclass, Help Us Personalise Your
+              Before You Access Business Growth Masterclass, Help Us Personalise Your
               Learning Experience
             </h1>
             <p className="mt-3 text-sm md:text-base text-muted-foreground">
               Your answers help us recommend the most relevant strategies,
-              templates, and next steps for your clinic.
+              templates, and next steps for your business.
             </p>
 
             <form onSubmit={onSubmit} className="mt-6 space-y-7">
               <Field
                 num={1}
-                label="What is your biggest goal from Clinic Growth Masterclass right now?"
+                label="What is your biggest goal from Business Growth Masterclass right now?"
               >
                 <CheckboxGroup
                   name="goals"
@@ -229,7 +229,7 @@ function OnboardingPage() {
 
               <Field
                 num={2}
-                label="What have you already tried to get more patients?"
+                label="What have you already tried to get more clients?"
               >
                 <CheckboxGroup
                   name="tried"
@@ -241,7 +241,7 @@ function OnboardingPage() {
 
               <Field
                 num={3}
-                label="What has frustrated you the most about trying to grow your clinic?"
+                label="What has frustrated you the most about trying to grow your business?"
               >
                 <textarea
                   value={frustration}
@@ -255,7 +255,7 @@ function OnboardingPage() {
 
               <Field
                 num={4}
-                label="What made you decide to join Clinic Growth Masterclass today?"
+                label="What made you decide to join Business Growth Masterclass today?"
               >
                 <CheckboxGroup
                   name="decision"
@@ -296,13 +296,13 @@ function OnboardingPage() {
               <Field
                 num={7}
                 required
-                label="Would you be interested in having our team help set up and manage a customised digital marketing system for your clinic — based on your specialty, city, goals, and current situation?"
+                label="Would you be interested in having our team help set up and manage a customised digital marketing system for your business — based on your industry, city, goals, and current situation?"
               >
                 <p className="text-xs text-muted-foreground mb-2">
-                  This can include: clinic website/landing page, Google Business
+                  This can include: business website/landing page, Google Business
                   Profile optimisation, Facebook & Instagram setup/content,
-                  patient-focused ad campaigns, WhatsApp inquiry & appointment
-                  follow-up system, and a complete patient acquisition strategy.
+                  client-focused ad campaigns, WhatsApp inquiry & sales
+                  follow-up system, and a complete client acquisition strategy.
                 </p>
                 <div className="grid gap-2">
                   {DFY_OPTIONS.map((opt) => {
@@ -335,7 +335,7 @@ function OnboardingPage() {
 
               <Field
                 num={8}
-                label="What other training, template, tool, or service would help you get more patients?"
+                label="What other training, template, tool, or service would help you get more clients?"
                 optional
               >
                 <textarea
